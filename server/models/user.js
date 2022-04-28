@@ -56,10 +56,10 @@ const userSchema = mongoose.Schema({
         default: 0
     },
     reviews: [{
-        type: Schema.Types.ObjectId, ref: "Review"
+        type: mongoose.Schema.Types.ObjectId, ref: "Review"
     }],
     chatrooms: [{
-        type: Schema.Types.ObjectId, ref: "Chatroom"
+        type: mongoose.Schema.Types.ObjectId, ref: "Chatroom"
     }],
     location: {
         num: {
