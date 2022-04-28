@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Homepage from "./pages/homepage.js";
+import Homepage from "./pages/Homepage/Homepage.js";
 
 const App = () => {
     return (
-        <div>
+        <div className = "App">
             <Homepage />
         </div>
     );
