@@ -1,3 +1,8 @@
-export const getRentalPage = (req, res) => {
-    res.send("Hello world.");
+
+class rentalPageController {
+    testRender(res, req, next) {
+        req.send('This is rental-page');
+    }
 }
+
+export default new rentalPageController();

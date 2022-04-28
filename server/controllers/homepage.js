@@ -1,10 +1,11 @@
 import User from "../models/user.js";
 
-export const getHomepage = async (req, res) => {
-    try {
-        const users = await User.find();
-        res.status(200).json(users);
-    } catch (error) {
-        res.status(404).json({message: error.message});
+class homepageController {
+    testRender(res, req, next) {
+        req.send('<h1>This is homepage</h1>' 
+        + '<a href="/rental">Rental-page</a></br>'
+        + '<a href="/advertise">Advertise-page</a>');
     }
 }
+
+export default new homepageController();
