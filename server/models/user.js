@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import mongooseUniqueValidator from "mongoose-unique-validator";
-import GeoJSON from "mongoose-geojson-schema";
 
 const userSchema = mongoose.Schema({
     first_name: {
@@ -55,12 +54,14 @@ const userSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    reviews: [{
-        type: mongoose.Schema.Types.ObjectId, ref: "Review"
-    }],
-    chatrooms: [{
-        type: mongoose.Schema.Types.ObjectId, ref: "Chatroom"
-    }],
+    reviews: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review"
+    },
+    chatrooms: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Chatroom"
+    },
     location: {
         num: {
             type: String,
@@ -79,18 +80,19 @@ const userSchema = mongoose.Schema({
             type: String,
             required: true
         },
-        geometry: {
-            coordinates: {
-                type: [Number],
-                index: "2dsphere"
-            }
+        loc: {
+            type: {
+                type: String,
+                enum: ["Point"]
+            },
+            coordinates: [Number],
         }
     }
 });
 
 
-
 userSchema.plugin(mongooseUniqueValidator);
+userSchema.index({"loc": "2dsphere"});
 const User = mongoose.model("User", userSchema);
 
 export default User;
