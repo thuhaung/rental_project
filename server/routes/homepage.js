@@ -1,8 +1,13 @@
 import express from "express";
-import homepageController from "../controllers/homepage.js";
+import * as homepage from "../controllers/homepage.js";
 
 const router = express.Router();
+router.use(express.json());
 
-router.get("/", (req, res) => {});
+// test code
+router.get("/user", homepage.getUser);
+router.post("/user", homepage.postUser);
+router.post("/user/login", homepage.login);
+
 
 export default router;

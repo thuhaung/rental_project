@@ -2,13 +2,11 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
-// import homepageRoutes from "./routes/homepage.js";
-import route from './routes/index.js'
+import router from "./routes/homepage.js";
+
 
 const app = express();
-
-// app.use("/", homepageRoutes)
-route(app);
+app.use("/", router);
 
 
 app.use(bodyParser.json({limit: "50mb", extended: true}));
