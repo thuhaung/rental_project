@@ -7,7 +7,19 @@ const chatroomSchema = mongoose.Schema({
             ref: "User"
         }],
         validate: [(array) => array.length > 2, "Chatroom size exceeds 2 users."]
-    }
+    },
+    messages: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        content: String,
+        image: String,
+        createdAt: {
+            type: Date,
+            default: Date.now
+        }
+    }]
 });
 
 const Chatroom = mongoose.model(chatroomSchema);

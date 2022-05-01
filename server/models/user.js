@@ -62,6 +62,10 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Chatroom"
     },
+    timestamps: {
+        createdAt: "create_at",
+        updatedAt: "updated_at"
+    }
     location: {
         num: {
             type: String,
