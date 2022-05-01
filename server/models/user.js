@@ -65,7 +65,7 @@ const userSchema = mongoose.Schema({
     timestamps: {
         createdAt: "create_at",
         updatedAt: "updated_at"
-    }
+    },
     location: {
         num: {
             type: String,
