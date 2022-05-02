@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({limit: "50mb", extended: true}));
 app.use(cors());
 
 const CONNECTION_URL = "mongodb+srv://mongo:mongo@cluster0.llxlu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+// eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 3000;
 
 mongoose.connect(CONNECTION_URL)
