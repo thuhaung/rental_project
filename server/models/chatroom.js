@@ -22,5 +22,6 @@ const chatroomSchema = mongoose.Schema({
     }]
 });
 
-const Chatroom = mongoose.model(chatroomSchema);
+const Chatroom = mongoose.model("Chatroom", chatroomSchema, "chatroom");
+Chatroom.createCollection();
 export default Chatroom;

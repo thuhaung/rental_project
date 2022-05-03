@@ -5,7 +5,7 @@ const router = express.Router();
 router.use(express.json());
 
 // test code
-router.get("/user", homepage.getUser);
+router.get("/user", homepage.authenticateToken, homepage.getUser);
 router.post("/user", homepage.postUser);
 router.post("/user/login", homepage.login);
 

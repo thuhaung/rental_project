@@ -1,12 +1,18 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import {} from "dotenv/config";
 
 const users = [{
     name: "Ha",
     password: "123"
+},
+{
+    name: "Duy",
+    password: "456"
 }]
 
 export const getUser = (req, res) => {
-    res.json(users);
+    res.json(users.filter(user => user.name == req.user.name));
 }
 
 export const postUser = async (req, res) => {
@@ -27,7 +33,31 @@ export const postUser = async (req, res) => {
 
 export const login = async (req, res) => {
     const user = users.find(user => user.name == req.body.name);
-    if (user == null) {
+    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+    res.json({accessToken: accessToken});
+
+}
+
+export const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    if (token == null) {
+        return res.status(401).send();
+    }
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) {
+            return res.status(403).send();
+        }
+        req.user = user;
+        next();
+    });
+
+}
+
+
+
+/*
+if (user == null) {
         return res.status(400).send("Cannot find user.");
     }
     try {
@@ -42,19 +72,4 @@ export const login = async (req, res) => {
     }
 
 
-}
-
-
-
-
-/*
-
-
-app.get("/user", (req, res) => {
-    
-})
-
-app.post("/user", (req, res) => {
-    
-})
 */
