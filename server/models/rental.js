@@ -27,8 +27,14 @@ const rentalSchema = mongoose.Schema({
         type: String,
         enum: ["TV", "Kitchen", "Parking", "Washer", "AC", "Fridge"]
     },
-    created_at: Date,
-    updated_at: Date,
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+    updated_at: {
+        type: Date,
+        default: Date.now
+    },
     rent: Number,
     deposit: Number,
     electricity: Number,

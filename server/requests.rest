@@ -1,10 +1,33 @@
 GET http://localhost:3000/user
 
+
 ###
 
-POST http://localhost:3000/user/login
+POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-    "name": "Ha"
+    "first_name": "Quang",
+    "middle_name": "Minh",
+    "last_name": "Bui",
+    "birthdate": "2001-05-26",
+    "email": "quang.bui@email.com",
+    "password": "789123456",
+    "phone": "0793936457",
+    "location": {
+        "num": "355/15",
+        "street": "Sư Vạn Hạnh",
+        "ward": "12",
+        "district": "10",
+        "city": "Ho Chi Minh City"
+    }
+}
+
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email": "ha.ung@email.com",
+    "password": "123456789"
 }

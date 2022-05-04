@@ -4,9 +4,6 @@ import LoginPopup from './LoginPopup'
 import "./Nav.css"
 
 function Nav() {
-
-    
-
     return (
         <nav>
             <ul>
@@ -21,7 +18,7 @@ function Nav() {
                 </li>
                 <li>
                     <button>Sign in</button>
-                    <LoginPopup clicked={false}/>
+                    <LoginPopup clicked={true}/>
                 </li>
             </ul>
         </nav>
