@@ -1,5 +1,5 @@
 GET http://localhost:3000/user
-
+auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyMDhmMTEwMGFmY2ZhNTA5ZGM2MDAiLCJpYXQiOjE2NTE2NTA3OTN9.7oEl6caERG2EcnLCfMw5kQg66K8rJv2avoGOlzj_w50
 
 ###
 
