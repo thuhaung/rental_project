@@ -1,8 +1,8 @@
 import React from 'react'
 import "./LoginPopup.css"
 
-function LoginPopup(props) {
-  return props.clicked ? (
+function LoginPopup({open, onClose}) {
+  return open ? (
     <div className="login-popup">
         <div className="inner-popup">
             <h2>Welcome to Casa</h2>
@@ -27,7 +27,7 @@ function LoginPopup(props) {
             </div>
             
             
-            <button className="close-button">close</button>
+            <button className="close-button" onClick={onClose}>close</button>
         </div>
     </div>
   ) : ""

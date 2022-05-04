@@ -8,15 +8,6 @@ const router = express.Router();
 router.get("/user", authenticateToken, homepage.getUser);
 router.post("/register", homepage.registerUser);
 router.post("/login", homepage.userLogin);
-//router.post("/user", homepage.postUser);
-//router.post("/user/login", homepage.login);
-
-// getting
-// creating
-
-
-
-
-
-
+router.post("/token", homepage.generateNewAccessToken);
+router.delete("/logout", homepage.userLogout);
 export default router;

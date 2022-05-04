@@ -1,6 +1,5 @@
 GET http://localhost:3000/user
-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyMDhmMTEwMGFmY2ZhNTA5ZGM2MDAiLCJpYXQiOjE2NTE2NTA3OTN9.7oEl6caERG2EcnLCfMw5kQg66K8rJv2avoGOlzj_w50
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyMDhmMTEwMGFmY2ZhNTA5ZGM2MDAiLCJpYXQiOjE2NTE2OTc2NTcsImV4cCI6MTY1MTY5NzY3N30.wNWebe-nbk7VM6AKQPVPwfHvv-Xyy3yUsfCGpLVE9go
 ###
 
 POST http://localhost:3000/register
@@ -30,4 +29,21 @@ Content-Type: application/json
 {
     "email": "ha.ung@email.com",
     "password": "123456789"
+}
+
+###
+POST http://localhost:3000/token
+Content-Type: application/json
+
+{
+    "user_id": "627208f1100afcfa509dc600",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyMDhmMTEwMGFmY2ZhNTA5ZGM2MDAiLCJpYXQiOjE2NTE2OTc2NDd9.rahdhsMQ9tqgWEv8cDxXUpsWb6R0HDlzdmMopOfel30"
+}
+
+### 
+DELETE http://localhost:3000/logout
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyMDhmMTEwMGFmY2ZhNTA5ZGM2MDAiLCJpYXQiOjE2NTE2OTc2NDd9.rahdhsMQ9tqgWEv8cDxXUpsWb6R0HDlzdmMopOfel30"
 }
