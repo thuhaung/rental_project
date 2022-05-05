@@ -27,9 +27,13 @@ const rentalSchema = mongoose.Schema({
         type: String,
         enum: ["TV", "Kitchen", "Parking", "Washer", "AC", "Fridge"]
     },
-    date_published: {
+    created_at: {
         type: Date,
-        default: new Date.now
+        default: Date.now
+    },
+    updated_at: {
+        type: Date,
+        default: Date.now
     },
     rent: Number,
     deposit: Number,
@@ -60,10 +64,10 @@ const rentalSchema = mongoose.Schema({
                 enum: ["Point"]
             },
             coordinates: [Number]
-        },
-        required: true
+        }
     }
 })
 
-const Rental = mongoose.model(rentalSchema);
+const Rental = mongoose.model("Rental", rentalSchema, "rental");
+Rental.createCollection();
 export default Rental;

@@ -11,7 +11,20 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    birthdate: Date,
+    birthdate: {
+        type: Date,
+        validate: {
+            validator: function(date) {
+                date = new Date(date);
+                return (
+                    date &&
+                    date.getTime() < Date.now() - 24*60*60*365*18*1000 &&
+                    date.getTime() > Date.now() - 24*60*60*365*100*1000
+                );
+            },
+            message: "Must be older than 18 years old."
+        }
+    },
     email: {
         type: String,
         trim: true,
@@ -22,8 +35,7 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minLength: 8,
-        maxLength: 20
+        minLength: 8
     },
     phone: {
         type: String,
@@ -62,10 +74,6 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Chatroom"
     },
-    timestamps: {
-        createdAt: "create_at",
-        updatedAt: "updated_at"
-    },
     location: {
         num: {
             type: String,
@@ -82,6 +90,7 @@ const userSchema = mongoose.Schema({
         },
         city: {
             type: String,
+            enum: ["Ho Chi Minh City", "Hanoi"],
             required: true
         },
         loc: {
@@ -91,12 +100,21 @@ const userSchema = mongoose.Schema({
             },
             coordinates: [Number],
         }
+    },
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+    updated_at: {
+        type: Date,
+        default: Date.now
     }
 });
 
 
 userSchema.plugin(mongooseUniqueValidator);
 userSchema.index({"loc": "2dsphere"});
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema, "user");
+User.createCollection();
 
 export default User;
