@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import router from "./routes/homepage.js";
+import Router from "./routes/routes.js";
 
 
 
@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(cors());
 
+Router(app);
 
 const CONNECTION_URL = "mongodb+srv://mongo:mongo@cluster0.llxlu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 // eslint-disable-next-line no-undef
@@ -26,4 +27,3 @@ mongoose.connect(CONNECTION_URL)
                 .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
                 .catch((error) => console.log(error.message));
 
-app.use("/", router);

@@ -2,12 +2,13 @@ import express from "express";
 import authenticateToken from "./authorization.js";
 import * as homepage from "../controllers/homepage.js";
 
-const router = express.Router();
+const homepageRouter = express.Router();
 
 // test code
-router.get("/user", authenticateToken, homepage.getUser);
-router.post("/register", homepage.registerUser);
-router.post("/login", homepage.userLogin);
-router.post("/token", homepage.generateNewAccessToken);
-router.delete("/logout", homepage.userLogout);
-export default router;
+homepageRouter.get("/user", authenticateToken, homepage.getUser);
+homepageRouter.post("/register", homepage.registerUser);
+homepageRouter.post("/login", homepage.userLogin);
+homepageRouter.post("/token", homepage.generateNewAccessToken);
+homepageRouter.delete("/logout", homepage.userLogout);
+homepageRouter.get('/rental')
+export default homepageRouter;

@@ -1,8 +1,10 @@
 import express from "express";
+import * as rental from "../controllers/rental-page.js"
 
 
-const router = express.Router();
+const rentalPageRouter = express.Router();
 
-router.get("/", () => {});
+rentalPageRouter.get('/search?:param', rental.search)
+rentalPageRouter.get("/", (req, res) => {res.send('Lmao')});
 
-export default router;
+export default rentalPageRouter;

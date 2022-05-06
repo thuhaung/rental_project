@@ -23,10 +23,10 @@ const rentalSchema = mongoose.Schema({
         required: true,
         default: 0
     },
-    amenities: {
+    amenities: [{
         type: String,
-        enum: ["TV", "Kitchen", "Parking", "Washer", "AC", "Fridge"]
-    },
+        enum: ["TV", "Kitchen", "Parking", "Washer", "AC", "Fridge", "Wifi", "Air conditioning"]
+    }],
     created_at: {
         type: Date,
         default: Date.now
@@ -55,6 +55,10 @@ const rentalSchema = mongoose.Schema({
         },
         ward: String,
         district: {
+            type: String,
+            required: true
+        },   
+        city: {
             type: String,
             required: true
         },
