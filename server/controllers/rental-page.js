@@ -41,5 +41,14 @@ export const search = async(req, res) => {
     }
 
     res.json(rentals);
-    
+}
+
+export const recentList = async (req, res) => {
+    const rentals = await Rental.find({});
+
+    let recentList = [];
+    for(let i = (rentals.length - 1); i >= (rentals.length - 6); i--) {
+        recentList = recentList.concat([rentals[i]]);
+    }
+    res.json(recentList);
 }
