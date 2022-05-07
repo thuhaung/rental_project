@@ -1,13 +1,15 @@
 import React from 'react'
 import background from '../../assets/rentalBackground.png'
 import './Rentals.css'
+import SearchBar from '../../components/SearchBar/SearchBar'
 
 function Rentals() {
   return (
-    <div className='container'>
+    <div>
         <div className='main-container'>
           <div className='text-container'>
-            <h1 align='center'>Find your best home</h1>
+            <p>Find your best home</p>
+            <SearchBar/>
           </div>
         </div>
         <div className='sub-container'>
