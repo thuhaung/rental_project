@@ -44,7 +44,7 @@ position: absolute;
 width: 376px;
 height: 36px;
 left: 440px;
-top: 17px;
+top: 21px;
 
 font-family: 'Inter';
 font-style: normal;
@@ -55,6 +55,11 @@ display: flex;
 align-items: center;
 
 color: #A1A1A1;
+
+border-style: hidden;
+}
+.input:focus{
+    outline: none;
 }
 .straight-line1{
     position: absolute;
@@ -166,7 +171,7 @@ color: #4F4F4F;
     line-height: 18px;
     display: flex;
     align-items: center;
-    margin-left: 3px;
+    margin-left: 1px;
     
     color: #4F4F4F;    
 }
@@ -178,7 +183,7 @@ color: #4F4F4F;
     display: flex;
     align-items: center;
     margin-top: 40px;
-    margin-left: 0px;
+    margin-left: -4px;
     color: #A2A2A2;
     border-color: white; 
 }
