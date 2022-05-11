@@ -18,13 +18,14 @@ top: 17px;
 
 background: #7D89DD;
 border-radius: 30px;
+border-style: none;
 }
 .btn-text{
 position: absolute;
 width: 66px;
 height: 42px;
-left: 13px;
-top:-17px;
+left: 12px;
+top:-18px;
 
 font-family: 'Inter';
 font-style: normal;
@@ -122,7 +123,7 @@ margin-left: 10px;
 color: #A2A2A2;
 border-color: white;
 }
-.price-value,.district-value:hover{
+.price-value,.district-value,.city-value:hover{
     cursor: pointer;
 }
 .district{

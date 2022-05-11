@@ -17,7 +17,7 @@ Router(app);
 
 const CONNECTION_URL = "mongodb+srv://mongo:mongo@cluster0.llxlu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 // eslint-disable-next-line no-undef
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 const db = mongoose.connection;
 db.on('error', function() {
     console.log("Error: Could not connect to MongoDB.");
