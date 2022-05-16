@@ -1,84 +1,78 @@
 import React, { useState } from 'react'
 import './SearchBar.css'
 import axios from 'axios'
+import { districtValue1, districtValue2 } from './DistrictValue.js'
 
-function SearchBar() {
-  const [data,setData] = useState({
+function SearchBar(props) {
+  const [data, setData] = useState({
     city: "Ho Chi Minh",
-    district:"1",
-    price:"500",
-    street:""
+    district: "1",
+    price: "500",
+    street: ""
   })
 
-  function handleChange(e){
-    const newData = {...data}
+  function handleChange(e) {
+    const newData = { ...data }
     newData[e.target.id] = e.target.value
     setData(newData)
     console.log(newData)
   }
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     console.log(data)
-    try{
-      const req = await axios.get('http://localhost:5000/rental/search', 
-    { params: { city: data.city, district: data.district, price: data.price, street: data.street} });
-      console.log('This is req',req)
+    try {
+      //get search result
+      const req = await axios.get('http://localhost:5000/rental/search',
+        { params: { city: data.city, district: data.district, price: data.price, street: data.street } });
+      console.log('This is search output:', req)
+
+      //Pass search result to rent page after filter
+      props.history.push('', req)
     }
-    catch(err){
+    catch (err) {
       console.log(err)
     }
   }
 
   return (
-    <div className='search-box'>
-      <form onSubmit={(e)=>handleSubmit(e)}>
-        <div className='city'>
-          <p className='city-text'>City</p>
-          <select onChange={(e)=>handleChange(e)} value={data.city} id = "city" className='city-value'>
+      <form onSubmit={(e) => handleSubmit(e)} className='searchbar-search-box'>
+        <div className='searchbar-city'>
+          <p className='searchbar-city-text'>City</p>
+          <select onChange={(e) => handleChange(e)} value={data.city} id="city" className='searchbar-city-value'>
             <option value='Ho Chi Minh'>Ho Chi Minh city</option>
-            <option value='Ha Noi'>Ha Noi</option>
-          </select>
-        </div>
-        
-        <div className='straight-line1'></div>
-
-        <div className='district'>
-          <p className='district-text'>Disctrict</p>
-          <select onChange={(e)=>handleChange(e)} value={data.district} id = "district" className='district-value'>
-            <option value='1'>District 1</option>
-            <option value='2'>District 2</option>
-            <option value='3'>District 3</option>
-            <option value='4'>District 4</option>
-            <option value='5'>District 5</option>
-            <option value='6'>District 6</option>
-            <option value='7'>District 7</option>
-            <option value='8'>District 8</option>
-            <option value='9'>District 9</option>
-            <option value='10'>District 10</option>
-            <option value='11'>District 11</option>
-            <option value='12'>District 12</option>
+            <option value='Ha Noi'>Ha Noi city</option>
           </select>
         </div>
 
-        <div className='straight-line2'></div>
+        <div className='searchbar-straight-line1'></div>
 
-        <div className='price'>
-          <p className='price-text'>Price Range</p>
-          <select onChange={(e)=>handleChange(e)} value={data.price} id = "price" className='price-value'>
+        <div className='searchbar-district'>
+          <p className='searchbar-district-text'>Disctrict</p>
+          <select onChange={(e) => handleChange(e)} value={data.district} id="district" className='searchbar-district-value'>
+            {data.city == 'Ho Chi Minh'?(districtValue1.map(prod => (
+              <option value={prod.value}>{prod.label}</option>))):((districtValue2.map(prod => (
+                <option value={prod.value}>{prod.label}</option>))))}
+          </select>
+        </div>
+
+        <div className='searchbar-straight-line1'></div>
+
+        <div className='searchbar-price'>
+          <p className='searchbar-price-text'>Price Range</p>
+          <select onChange={(e) => handleChange(e)} value={data.price} id="price" className='searchbar-price-value'>
             <option value='500'>Under $500</option>
             <option value='1000'>Under $1000</option>
             <option value='2000'>Under $2000</option>
           </select>
         </div>
 
-        <div className='straight-line3'></div>
+        <div className='searchbar-straight-line1'></div>
 
-        <input onChange={(e)=>handleChange(e)} value={data.street} id = "street" className='input' type='text' placeholder='Enter a street'></input>
+        <input onChange={(e) => handleChange(e)} value={data.street} id="street" className='searchbar-input' type='text' placeholder='Enter a street'></input>
 
-        <button className='btn' type='submit'><p className='btn-text'>Search</p></button>
+        <button className='searchbar-btn' type='submit'><p className='searchbar-btn-text'>Search</p></button>
       </form>
-    </div>
   )
 }
 
