@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import './SearchBar.css'
 import axios from 'axios'
 import { districtValue1, districtValue2 } from './DistrictValue.js'
+import { useNavigate } from 'react-router-dom'
 
 function SearchBar(props) {
+  const navigate = useNavigate();
+
   const [data, setData] = useState({
     city: "Ho Chi Minh",
     district: "1",
@@ -25,10 +28,10 @@ function SearchBar(props) {
       //get search result
       const req = await axios.get('http://localhost:5000/rental/search',
         { params: { city: data.city, district: data.district, price: data.price, street: data.street } });
-      console.log('This is search output:', req)
+      console.log('This is search output:', req.data)
 
       //Pass search result to rent page after filter
-      props.history.push('', req)
+      navigate('/rental-search',{state: req.data})
     }
     catch (err) {
       console.log(err)
