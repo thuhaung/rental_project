@@ -9,6 +9,6 @@ homepageRouter.get("/user", authenticateToken, homepage.getUser);
 homepageRouter.post("/register", homepage.registerUser);
 homepageRouter.post("/login", homepage.userLogin);
 homepageRouter.post("/token", homepage.generateNewAccessToken);
-homepageRouter.delete("/logout", homepage.userLogout);
+homepageRouter.delete("/logout", authenticateToken, homepage.userLogout);
 homepageRouter.get('/rental')
 export default homepageRouter;

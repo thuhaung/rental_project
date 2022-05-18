@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Rentals.css'
 import SearchBar from '../../components/SearchBar/SearchBar'
-import Nav from '../../components/Nav'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import axios from 'axios'
 import Arrow from '../../assets/Keyboard arrow right.svg'

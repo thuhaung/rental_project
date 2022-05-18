@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Link} from "react-router-dom"
-import LoginPopup from './LoginPopup'
+import LoginPopup from '../Login/LoginPopup'
 import "./Nav.css"
 
 function Nav() {
