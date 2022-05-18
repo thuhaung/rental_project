@@ -42,6 +42,7 @@ Content-Type: application/json
 
 ### 
 DELETE http://localhost:5000/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyMDhmMTEwMGFmY2ZhNTA5ZGM2MDAiLCJpYXQiOjE2NTI4NTE5MTksImV4cCI6MTY1MjkzODMxOX0.yolje7qiBFB2fuKZEUMNFDKHVJUb8LihGt9jqwRgufI
 Content-Type: application/json
 
 {

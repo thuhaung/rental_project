@@ -5,16 +5,6 @@ import {} from "dotenv/config";
 import RefreshToken from "../models/refreshtoken.js";
 
 
-export const getUser = async (req, res) => {
-    try {
-        const user = await User.findOne({_id: req.user._id});
-        res.status(200).json({user: user});
-        console.log(user);
-    } catch (error) {
-        res.status(500).json({message: error.message});
-    }
-}
-
 export const userLogin = async (req, res) => {
     const user = await User.findOne({email: req.body.email});
     if (user == null) {
@@ -39,7 +29,13 @@ export const userLogin = async (req, res) => {
                 refreshToken: refreshToken
             });
             newRefreshToken.save(); // save new refresh token to db
-            return res.status(200).json({accessToken: token, refreshToken: refreshToken});
+
+
+            res.cookie("accessToken", token, { httpOnly: true });
+            res.cookie("refreshToken", refreshToken, { httpOnly: true });
+            res.cookie("userId", user._id);
+            
+            res.status(200).json({accessToken: token, refreshToken: refreshToken, user_id: user._id});
             
             /*
             else {
@@ -47,7 +43,7 @@ export const userLogin = async (req, res) => {
             }*/
         }
         else {
-            return res.send("Incorrect password.");
+            return res.status(400).send("Incorrect password.");
         }
     } catch(error) {
         res.status(500).send(error.message);

@@ -1,7 +1,46 @@
-import React from 'react'
-import "./LoginPopup.css"
+import React, { useState, useEffect } from 'react';
+import useAuth from "../../hooks/useAuth";
+import { useNavigate, useLocation } from "react-router-dom";
+import Cookies from "universal-cookie";
+import "./LoginPopup.css";
+import axios from "axios";
 
 function LoginPopup({ open, onClose }) {
+    const { setIsAuthenticated } = useAuth();
+    const { auth } = useAuth();
+    const cookies = new Cookies();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState();
+    
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname;
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const form = {
+            email: email,
+            password: password
+        }
+        setErrorMessage("");
+
+        axios.post("http://localhost:5000/login", form, { withCredentials: true }).then((response) => {
+            console.log(response.data);
+            
+        }).then(() => {
+            //console.log(cookies.get("userId"));
+            navigate(from, { replace: true });
+        }).catch((error) => {
+            if (!error.response) {
+                setErrorMessage("No Server Response.");
+            }
+            else if (error.response.status === 400) {
+                setErrorMessage("Incorrect username or password.");
+            }
+        })
+    }
+
     return open ? (
         <div className="login-popup">
             <div className="inner-popup">
@@ -11,23 +50,26 @@ function LoginPopup({ open, onClose }) {
                     <h3>Sign up</h3>
                 </div>
                 <hr></hr>
-                <form className="login-form">
+                {errorMessage === null ? "" : 
+                    <p>
+                        {errorMessage}
+                    </p>
+                }
+                <form className="login-form" onSubmit={handleSubmit}>
                     <div className="email-div">
-                        <h3>Email</h3>
-                        <input type="text" name="email" placeholder="Enter email"></input>
+                        <label htmlFor="email"><h3>Email</h3></label>
+                        <input type="text" id="email" placeholder="Enter email" autoComplete="off" required onChange={(e) => setEmail(e.target.value)}></input>
                     </div>
                     <div className="password-div">
-                        <h3>Password</h3>
-                        <input type="password" name="password" placeholder="Enter password"></input>
+                        <label htmlFor="password"><h3>Password</h3></label>
+                        <input type="password" id="password" placeholder="Enter password" required onChange={(e) => setPassword(e.target.value)}></input>
                     </div>
+                    <h4>Forgot your password?</h4>
+                    <div className="submit-div">
+                        <input type="submit" className="submit-button" value="Submit"/>
+                    </div>
+                    <button className="close-button" onClick={onClose}>close</button>
                 </form>
-                <h4>Forgot your password?</h4>
-                <div className="submit-div">
-                    <button className="submit-button">Submit</button>
-                </div>
-
-
-                <button className="close-button" onClick={onClose}>close</button>
             </div>
         </div>
     ) : ""
