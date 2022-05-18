@@ -1,9 +1,9 @@
-.rentalsearch-searchbar {
+.rentalafter-searchbar {
     width: 935px;
     margin-left: 260px;
 }
 
-.rentalsearch-result-container {
+.rentalafter-result-container {
     width: 1259px;
     height: 100%;
     margin-left: 70px;
@@ -11,7 +11,7 @@
     font-family: 'Inter';
 }
 
-.rentalsearch-result-text1 {
+.rentalafter-result-text1 {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
@@ -19,7 +19,7 @@
     line-height: 168.52%;
 }
 
-.rentalsearch-result-text2 {
+.rentalafter-result-text2 {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 300;
@@ -29,7 +29,7 @@
     margin-top: -20px;
 }
 
-.rentalsearch-filter {
+.rentalafter-filter {
     color: #7D89DD;
     font-family: 'Inter';
     font-style: normal;
@@ -38,33 +38,34 @@
     line-height: 168.52%;
     border-color: white;
 }
-.rentalsearch-box1{
+.rentalafter-box1{
     box-sizing: border-box;
     width: 351px;
     height: 425px;
     border: 1px solid #D3D3D3;
     border-radius: 20px;
-    margin-left: 35px;
-    margin-right: 35px;
+    margin-left: 40px;
+    margin-right: 20px;
     transition: .5s ease;
     box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.25);
+    margin-bottom: 30px;
 }
-.rentalsearch-box1:hover{
+.rentalafter-box1:hover{
         transform: scale(1.05);
         z-index: 1;
         cursor: pointer;
 }
-.rentalsearch-image{
+.rentalafter-image{
     width: 100%;
     height: 62%;
     border-top-left-radius: 6%;
     border-top-right-radius: 6%;
 }
-.rentalsearch-list-info {
+.rentalafter-list-info {
     margin: 20px;
     margin-top: 30px;
     list-style: disc outside;
 }
-.rentalsearch-box-container{
+.rentalafter-box-container{
     display: inline-flex;
 }

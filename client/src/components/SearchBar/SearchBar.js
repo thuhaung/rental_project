@@ -28,10 +28,11 @@ function SearchBar(props) {
       //get search result
       const req = await axios.get('http://localhost:5000/rental/search',
         { params: { city: data.city, district: data.district, price: data.price, street: data.street } });
-      console.log('This is search output:', req.data)
+      // console.log('This is search output:', req.data)
 
       //Pass search result to rent page after filter
-      navigate('/rental-search',{state: req.data})
+      navigate('/rental-after',{state: {data: req.data}})
+      window.location.reload()
     }
     catch (err) {
       console.log(err)

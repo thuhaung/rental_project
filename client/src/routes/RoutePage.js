@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Advertisements from '../pages/Advertisements/Advertisements'
 import HomePage from '../pages/Homepage/Homepage'
 import Rentals from '../pages/Rentals/Rentals'
-import RentalSearch from '../pages/RentalSearch/RentalSearch'
+import RentalAfter from '../pages/RentalAfter/RentalAfter'
 
 function RoutePage() {
   return (
@@ -14,7 +14,7 @@ function RoutePage() {
                 <Route path="/homepage" element={<HomePage/>} />
                 <Route path="/advertisements" element={<Advertisements/>} />
                 <Route path="/rentals" element={<Rentals/>} />
-                <Route path="/rental-search" element={<RentalSearch/>}/>
+                <Route path="/rental-after" element={<RentalAfter/>}/>
             </Routes>
         </Router>
     </div>
