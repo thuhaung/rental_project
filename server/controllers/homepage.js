@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import {} from "dotenv/config";
 import RefreshToken from "../models/refreshtoken.js";
+import Cookies from "universal-cookie";
 
 
 export const userLogin = async (req, res) => {
@@ -14,7 +15,7 @@ export const userLogin = async (req, res) => {
         if (await bcrypt.compare(req.body.password, user.password)) { // if user exists and password is correct
 
             // generate access token for authorization
-            const token = jwt.sign({_id: user._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1d"}); 
+            const token = jwt.sign({_id: user._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "30s"}); 
             /*
             // find any refresh tokens from user that hasn't expired
             const existingRefreshToken = await RefreshToken.findOne({user_id: user._id, expiresIn: {$gte: new Date(Date.now())}}); 
@@ -30,8 +31,7 @@ export const userLogin = async (req, res) => {
             });
             newRefreshToken.save(); // save new refresh token to db
 
-
-            res.cookie("accessToken", token, { httpOnly: true });
+            res.cookie("accessToken", token, { origin: "http://localhost:3000" });
             res.cookie("refreshToken", refreshToken, { httpOnly: true });
             res.cookie("userId", user._id);
             
@@ -52,6 +52,7 @@ export const userLogin = async (req, res) => {
 
 
 export const generateNewAccessToken = async (req, res) => {
+    const cookies = new Cookies();
     const refreshToken = req.body.refreshToken;
     if (refreshToken == null) {
         res.status(401).send("Access denied."); // if refresh token isn't provided
@@ -62,8 +63,10 @@ export const generateNewAccessToken = async (req, res) => {
     }
     try {
         // generate new access token
-        const newAccessToken = jwt.sign({_id: req.body.user_id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1d"});
-        return res.status(200).send({accessToken: newAccessToken, refreshToken: refreshToken});
+        const newAccessToken = jwt.sign({_id: req.body.user_id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "30s"});
+        cookies.set("accessToken", newAccessToken);
+        console.log("New accessToken: " + cookies.get("accessToken"));
+        return res.status(200).send({accessToken: newAccessToken});
     } catch (error) {
         res.status(400).send(error.message);   
     }
@@ -88,12 +91,17 @@ export const registerUser = async (req, res) => {
 
 
 export const userLogout = async (req, res) => {
-    const token = await RefreshToken.findOne({refreshToken: req.body.refreshToken});
+    const cookies = new Cookies(req.headers.cookie);
+    const refreshToken = cookies.get("refreshToken");
+    const token = await RefreshToken.findOne({refreshToken: refreshToken});
     if (!token) {
         res.status(400).send("Token doesn't exist.");
     }
     try {
         await RefreshToken.deleteMany({user_id: token.user_id});
+        cookies.remove("userId");
+        cookies.remove("accessToken");
+        cookies.remove("refreshToken");
         res.status(204).send("Logged out.");
     } catch (error) {
         res.status(500).send(error.message);

@@ -4,6 +4,7 @@ import Cookies from "universal-cookie";
 import useAuth from "../../hooks/useAuth";
 
 const PrivateRoute = ({ children }) => {
+    const { isAuthenticated } = useAuth();
     const cookies = new Cookies();
     const location = useLocation();
     

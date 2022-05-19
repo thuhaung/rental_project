@@ -7,7 +7,7 @@ const homepageRouter = express.Router();
 // test code
 homepageRouter.post("/register", homepage.registerUser);
 homepageRouter.post("/login", homepage.userLogin);
-homepageRouter.post("/token", homepage.generateNewAccessToken);
+homepageRouter.post("/refresh", homepage.generateNewAccessToken);
 homepageRouter.delete("/logout", authenticateToken, homepage.userLogout);
 homepageRouter.get('/rental')
 export default homepageRouter;

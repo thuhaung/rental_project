@@ -26,8 +26,8 @@ function LoginPopup({ open, onClose }) {
         setErrorMessage("");
 
         axios.post("http://localhost:5000/login", form, { withCredentials: true }).then((response) => {
-            console.log(response.data);
-            
+            //console.log(response.data);
+            localStorage.setItem("refreshToken", response.data.refreshToken);
         }).then(() => {
             //console.log(cookies.get("userId"));
             navigate(from, { replace: true });
