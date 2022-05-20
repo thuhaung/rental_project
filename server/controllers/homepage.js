@@ -15,7 +15,7 @@ export const userLogin = async (req, res) => {
         if (await bcrypt.compare(req.body.password, user.password)) { // if user exists and password is correct
 
             // generate access token for authorization
-            const token = jwt.sign({_id: user._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "30s"}); 
+            const token = jwt.sign({_id: user._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "2d"}); 
             /*
             // find any refresh tokens from user that hasn't expired
             const existingRefreshToken = await RefreshToken.findOne({user_id: user._id, expiresIn: {$gte: new Date(Date.now())}}); 
@@ -63,7 +63,7 @@ export const generateNewAccessToken = async (req, res) => {
     }
     try {
         // generate new access token
-        const newAccessToken = jwt.sign({_id: req.body.user_id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "30s"});
+        const newAccessToken = jwt.sign({_id: req.body.user_id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "2d"});
         cookies.set("accessToken", newAccessToken);
         console.log("New accessToken: " + cookies.get("accessToken"));
         return res.status(200).send({accessToken: newAccessToken});

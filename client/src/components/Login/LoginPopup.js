@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import useAuth from "../../hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import Cookies from "universal-cookie";
 import "./LoginPopup.css";
 import axios from "axios";
 
 function LoginPopup({ open, onClose }) {
-    const { setIsAuthenticated } = useAuth();
-    const { auth } = useAuth();
-    const cookies = new Cookies();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState();
@@ -23,6 +19,7 @@ function LoginPopup({ open, onClose }) {
             email: email,
             password: password
         }
+
         setErrorMessage("");
 
         axios.post("http://localhost:5000/login", form, { withCredentials: true }).then((response) => {
@@ -30,7 +27,12 @@ function LoginPopup({ open, onClose }) {
             localStorage.setItem("refreshToken", response.data.refreshToken);
         }).then(() => {
             //console.log(cookies.get("userId"));
-            navigate(from, { replace: true });
+            if (!from) {
+                onClose();
+            }
+            else {
+                navigate(from, { replace: true });
+            }
         }).catch((error) => {
             if (!error.response) {
                 setErrorMessage("No Server Response.");

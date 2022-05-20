@@ -1,9 +1,11 @@
 import { createContext, useState } from "react";
+import Cookies from "universal-cookie";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const cookies = new Cookies();
+    const [isAuthenticated, setIsAuthenticated] = useState(() => cookies.get("userId") ? true : false);
 
     return (
         <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>

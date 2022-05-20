@@ -8,7 +8,7 @@ const PrivateRoute = ({ children }) => {
     const cookies = new Cookies();
     const location = useLocation();
     
-    return cookies.get("userId") ? children : <Navigate to="/homepage" state={{ from: location }} replace/>
+    return cookies.get("userId") ? children : <Navigate to="/homepage" state={{ from: location, isPoppedUp: true }} replace/>
 
 }
 

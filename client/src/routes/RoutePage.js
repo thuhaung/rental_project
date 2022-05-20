@@ -5,8 +5,7 @@ import HomePage from '../pages/Homepage/Homepage'
 import Rentals from '../pages/Rentals/Rentals'
 import RentalAfter from '../pages/RentalAfter/RentalAfter'
 import UserInfo from '../pages/UserInfo/UserInfo'
-import RequireAuth from "../components/RequireAuth/RequireAuth";
-import PrivateRoute from '../components/RequireAuth/PrivateRoute'
+import PrivateRoute from '../components/PrivateRoute/PrivateRoute'
 
 function RoutePage() {
   return (
