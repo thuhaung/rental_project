@@ -40,7 +40,7 @@ function Rentals() {
           <ScrollContainer className='rental-scroll-container'>
             {item ? (item.map(prod => (
               <div className='rental-box1'>
-                <img className='rental-image' src={prod.images[0]} />
+                <img className='rental-image' alt="rental-pic" src={prod.images[0]} />
                 <table className='rental-list-info'>
                   <tr>
                     <td><img src={Rent} /></td>
@@ -59,7 +59,7 @@ function Rentals() {
             ))) : null}
           </ScrollContainer>
         </div>
-        <img className='rental-arrow' src={Arrow} />
+        <img className='rental-arrow' alt="arrow" src={Arrow} />
       </div>
     </div>
   )

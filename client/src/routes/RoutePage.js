@@ -6,6 +6,7 @@ import Rentals from '../pages/Rentals/Rentals'
 import RentalAfter from '../pages/RentalAfter/RentalAfter'
 import UserInfo from '../pages/UserInfo/UserInfo'
 import PrivateRoute from '../components/PrivateRoute/PrivateRoute'
+import Nav from '../components/Nav/Nav'
 
 function RoutePage() {
   return (
