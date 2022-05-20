@@ -6,6 +6,7 @@ import axios from 'axios'
 import Arrow from '../../assets/Keyboard arrow right.svg'
 import Location from '../../assets/Location.svg'
 import Rent from '../../assets/Rent.svg'
+import Nav from '../../components/Nav/Nav'
 
 
 function Rentals() {
@@ -24,10 +25,13 @@ function Rentals() {
   }, [])
   return (
     <div>
+      <Nav/>
       <div className='rental-main-container'>
         <div className='rental-text-container'>
           <p>Find your best home</p>
-          <SearchBar />
+          <div className='rental-searchbar-container'>
+            <SearchBar />
+          </div>
         </div>
       </div>
       <div className='rental-sub-arrow'>

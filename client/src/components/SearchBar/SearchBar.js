@@ -32,7 +32,6 @@ function SearchBar(props) {
 
       //Pass search result to rent page after filter
       navigate('/rental-after',{state: {data: req.data}})
-      window.location.reload()
     }
     catch (err) {
       console.log(err)

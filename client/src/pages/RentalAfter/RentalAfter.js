@@ -8,6 +8,9 @@ import Rent from '../../assets/Rent.svg'
 function RentalAfter(props) {
     const location = useLocation();
     const [result, setResult] = useState(location.state.data)
+    useEffect(()=>{
+        setResult(location.state.data)
+    })
     console.log('This is result',result)
     return (
         <>

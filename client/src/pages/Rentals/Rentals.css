@@ -4,7 +4,7 @@
     background-size: 100% 100%;
     height: 550px;
     width: 100%;
-    margin-top: -20px;
+    margin-top: 100px;
 }
 
 .rental-text-container {
@@ -12,11 +12,12 @@
     font-weight: 700;
     color: white;
     padding-top: 20px;
-    width: 935px;
-    margin-left: 260px;
     text-align: center;
 }
-
+.rental-searchbar-container{
+    display: flex;
+    justify-content: center;
+}
 .rental-sub-container {
     font-family: 'Inter';
     width: 90%;
@@ -26,11 +27,12 @@
 }
 
 .rental-scroll-container {
-    width: 100%;
+    width: 90%;
     height: 500px;
     display: flex;
     padding-top: 20px;
     /* background-color:aqua; */
+    margin-left: 90px;
 }
 
 .rental-box1 {
@@ -39,8 +41,8 @@
     height: 425px;
     border: 1px solid #D3D3D3;
     border-radius: 20px;
-    margin-left: 35px;
-    margin-right: 35px;
+    margin-left: 16px;
+    margin-right: 16px;
     transition: .5s ease;
 
 }
@@ -70,7 +72,7 @@
 }
 
 .rental-arrow {
-    margin-left: -10px;
+    margin-left: -30px;
     margin-top: 70px;
 }
 
