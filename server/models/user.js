@@ -39,7 +39,6 @@ const userSchema = mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true,
         trim: true,
         minLength: 10,
         maxLength: 10
@@ -73,33 +72,6 @@ const userSchema = mongoose.Schema({
     chatrooms: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Chatroom"
-    },
-    location: {
-        num: {
-            type: String,
-            required: true
-        },
-        street: {
-            type: String,
-            required: true
-        },
-        ward: String,
-        district: {
-            type: String,
-            required: true
-        },
-        city: {
-            type: String,
-            enum: ["Ho Chi Minh City", "Hanoi"],
-            required: true
-        },
-        loc: {
-            type: {
-                type: String,
-                enum: ["Point"]
-            },
-            coordinates: [Number],
-        }
     },
     created_at: {
         type: Date,

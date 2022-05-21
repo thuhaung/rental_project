@@ -21,7 +21,7 @@ const rentalSchema = mongoose.Schema({
     num_of_bathrooms: {
         type: Number,
         required: true,
-        default: 0
+        default: 1
     },
     amenities: [{
         type: String,
@@ -35,11 +35,26 @@ const rentalSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    rent: Number,
-    deposit: Number,
-    electricity: Number,
-    water: Number,
-    is_available: Boolean,
+    rent: {
+        type: Number,
+        required: true
+    },
+    deposit: {
+        type: Number,
+        required: true
+    },
+    electricity: {
+        type: Number,
+        required: true
+    },
+    water: {
+        type: Number,
+        required: true
+    },
+    is_available: {
+        type: Boolean,
+        default: true
+    },
     review: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Review"
@@ -60,7 +75,8 @@ const rentalSchema = mongoose.Schema({
         },   
         city: {
             type: String,
-            required: true
+            required: true,
+            enum: ["Ho Chi Minh City", "Hanoi"]
         },
         location: {
             type: {

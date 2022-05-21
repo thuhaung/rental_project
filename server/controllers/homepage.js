@@ -93,16 +93,18 @@ export const registerUser = async (req, res) => {
 export const userLogout = async (req, res) => {
     const cookies = new Cookies(req.headers.cookie);
     const refreshToken = cookies.get("refreshToken");
+    console.log("ayo");
     const token = await RefreshToken.findOne({refreshToken: refreshToken});
     if (!token) {
         res.status(400).send("Token doesn't exist.");
     }
     try {
         await RefreshToken.deleteMany({user_id: token.user_id});
-        cookies.remove("userId");
-        cookies.remove("accessToken");
-        cookies.remove("refreshToken");
-        res.status(204).send("Logged out.");
+        res.clearCookie("userId");
+        res.clearCookie("accessToken");
+        res.clearCookie("refreshToken");
+        //res.status(204).send("Logged out.");
+        res.end();
     } catch (error) {
         res.status(500).send(error.message);
     }

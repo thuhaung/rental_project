@@ -39,14 +39,14 @@
 .searchbar-price-value,
 .searchbar-city-value,
 .searchbar-district-value {
-    font-weight: 600;
+    font-weight: 400;
     font-size: 15px;
     line-height: 18px;
     display: flex;
     align-items: center;
     color: #A2A2A2;
     border-color: white;
-    margin-top: -5px;
+    margin-top: -8px;
 }
 
 .searchbar-price-value:hover,
@@ -84,7 +84,7 @@
 }
 
 .searchbar-btn {
-    width: 89px;
+    width:95px;
     height: 44px;
     background: #7D89DD;
     border-radius: 30px;

@@ -78,11 +78,11 @@
     height: 500px;
     position: relative;
     border-radius: 15px;
+    z-index: -2;
 }
 
 .homepage-advertise-textbox {
     position: absolute;
-    z-index: 1;
     background-color: white;
     border-radius: 20px;
     width: 430px;

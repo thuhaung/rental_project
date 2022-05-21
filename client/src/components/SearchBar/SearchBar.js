@@ -51,7 +51,7 @@ function SearchBar(props) {
         <div className='searchbar-straight-line1'></div>
 
         <div className='searchbar-district'>
-          <p className='searchbar-district-text'>Disctrict</p>
+          <p className='searchbar-district-text'>District</p>
           <select onChange={(e) => handleChange(e)} value={data.district} id="district" className='searchbar-district-value'>
             {data.city == 'Ho Chi Minh'?(districtValue1.map(prod => (
               <option value={prod.value}>{prod.label}</option>))):((districtValue2.map(prod => (

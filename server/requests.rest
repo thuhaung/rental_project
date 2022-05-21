@@ -50,4 +50,24 @@ Content-Type: application/json
 }
 
 ###
-GET https://www.google.com/search?q=mango&source=lnms&tbm=isch&sa=X&rnd=1
+POST http://localhost:5000/advertisement/post
+Content-Type: application/json
+
+{
+    "user": "62720abc42fd932ccd1fed96",
+    "property_type": "Apartment",
+    "num_of_bedrooms": 1,
+    "num_of_bathrooms": 1,
+    "amenities": ["TV", "Kitchen", "Parking"],
+    "rent": 4000000,
+    "deposit": 2000000,
+    "electricity": 20000,
+    "water": 20000,
+    "address": {
+        "num": "611/40",
+        "street": "Dien Bien Phu",
+        "ward": "1",
+        "district": "3",
+        "city": "Ho Chi Minh City"
+    }
+}

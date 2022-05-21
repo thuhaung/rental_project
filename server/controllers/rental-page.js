@@ -1,4 +1,3 @@
-
 import Rental from '../models/rental.js';
 
 export const search = async(req, res) => {
