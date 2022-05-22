@@ -13,9 +13,8 @@ export const userLogin = async (req, res) => {
     }
     try {
         if (await bcrypt.compare(req.body.password, user.password)) { // if user exists and password is correct
-            const token = jwt.sign({_id: user._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "2d"});
             // generate access token for authorization
-            //const token = jwt.sign({_id: user._id, is_verified: user.is_verified}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "2d"});
+            const token = jwt.sign({_id: user._id, is_verified: user.is_verified}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "2d"});
             /*
             // find any refresh tokens from user that hasn't expired
             const existingRefreshToken = await RefreshToken.findOne({user_id: user._id, expiresIn: {$gte: new Date(Date.now())}}); 
@@ -61,11 +60,10 @@ export const generateNewAccessToken = async (req, res) => {
     if (!token) { // can't find
         return res.status(401).send("Access denied. Token doesn't exist.");
     }
-    //const user = await User.findOne({_id: token.user_id});
+    const user = await User.findOne({_id: token.user_id});
     try {
         // generate new access token
-        const newAccessToken = jwt.sign({_id: token.user_id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "2d"});
-        //const newAccessToken = jwt.sign({_id: user._id, is_verified: user.is_verified}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "2d"});
+        const newAccessToken = jwt.sign({_id: user._id, is_verified: user.is_verified}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "2d"});
         cookies.set("accessToken", newAccessToken);
         console.log("New accessToken: " + cookies.get("accessToken"));
         return res.status(200).send({accessToken: newAccessToken});
