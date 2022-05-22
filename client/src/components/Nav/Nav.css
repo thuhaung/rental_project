@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+    color: black;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    padding-bottom: 5px;
+    border-bottom: 3px solid #7d89dd;
+}
+
+li {
+    list-style-type: none;
+    font-size: 20px;
+}
+
+nav {
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    height: 65px;
+    left: 0;
+    top: 0;
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-div {
+    left: 40px;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-div > img {
+    width: 52px;
+    height: 52px;
+}
+
+.logo-div > p {
+    font-weight: 900;
+    font-size: 20px;
+}
+
+.main-sections {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 585px;
+    gap: 55px;
+}
+
+.main-sections > li {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.user-section {
+    margin-right: 40px;
+    width: 70px;
+    height: 35px;
+    border: 0.5px solid #B9B9B9;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.icon > img {
+    width: 26px;
+    height: 26px;
+}
+
+.icon {
+    width: 26px;
+    height: 26px;
+    border: 0.5px solid white;
+    border-radius: 100%;
+    background-color: #F3F4F6;
+}
+
+.stripes {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 2px;
+}
+
+.stripe {
+    border: 1px solid #404144;
+    background-color: #404144;
+    width: 13px;
+}
+

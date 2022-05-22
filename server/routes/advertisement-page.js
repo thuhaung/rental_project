@@ -1,8 +1,9 @@
 import express from "express";
+import * as advertisement from "../controllers/advertisement-page.js";
 
 
-const router = express.Router();
+const advertisementPageRouter = express.Router();
 
-router.get("/", () => {});
+advertisementPageRouter.post("/post", advertisement.newRental);
 
-export default router;
+export default advertisementPageRouter;
