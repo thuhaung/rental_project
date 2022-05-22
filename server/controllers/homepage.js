@@ -15,7 +15,7 @@ export const userLogin = async (req, res) => {
         if (await bcrypt.compare(req.body.password, user.password)) { // if user exists and password is correct
 
             // generate access token for authorization
-            const token = jwt.sign({_id: user._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "2d"}); 
+            const token = jwt.sign({_id: user._id, is_verified: user.is_verified}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "2d"});
             /*
             // find any refresh tokens from user that hasn't expired
             const existingRefreshToken = await RefreshToken.findOne({user_id: user._id, expiresIn: {$gte: new Date(Date.now())}}); 
@@ -24,7 +24,7 @@ export const userLogin = async (req, res) => {
             if (!existingRefreshToken) {
             */
                 // create a new one for user
-            const refreshToken = jwt.sign({_id: user._id}, process.env.REFRESH_TOKEN_SECRET);
+            const refreshToken = jwt.sign({_id: user._id, is_verified: user.is_verified}, process.env.REFRESH_TOKEN_SECRET);
             const newRefreshToken = new RefreshToken({
                 user_id: user._id,
                 refreshToken: refreshToken
@@ -109,3 +109,5 @@ export const userLogout = async (req, res) => {
         res.status(500).send(error.message);
     }
 }
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyMDhmMTEwMGFmY2ZhNTA5ZGM2MDAiLCJpc192ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNjUzMjA5NDc4fQ.JnP6XpUT3u-VUOPz92v4Te2h8ZXSrSDd2gQbZI8h5cE
+//

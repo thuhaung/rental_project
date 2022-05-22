@@ -11,7 +11,6 @@ export const search = async(req, res) => {
         rentals = await Rental.find({"address.city" : "Ho Chi Minh"});
     }
 
-    console.log(rentals.length)
 
     if(district) {
         rentals = rentals.filter((rental) => {
