@@ -66,11 +66,11 @@ function LoginPopup({ open, onClose }) {
                     <form className="login-form" onSubmit={handleSubmit}>
                         <div className="login-form-div">
                             <label htmlFor="email" className="form-label">Email</label>
-                            <input type="text" id="email" placeholder="Enter email" autoComplete="off" required onChange={(e) => setEmail(e.target.value)}></input>
+                            <input type="text" className="form-input" id="email" placeholder="Enter email" autoComplete="off" required onChange={(e) => setEmail(e.target.value)}></input>
                         </div>
                         <div className="login-form-div">
                             <label htmlFor="password" className="form-label">Password</label>
-                            <input type="password" id="password" placeholder="Enter password" required onChange={(e) => setPassword(e.target.value)}></input>
+                            <input type="password" className="form-input" id="password" placeholder="Enter password" required onChange={(e) => setPassword(e.target.value)}></input>
                         </div>
                         <h4 className="forgot-password" onClick={() => setIsForgot(true)}>Forgot your password?</h4>
                         <div className="login-form-submit-div">
@@ -84,21 +84,21 @@ function LoginPopup({ open, onClose }) {
                     <form className="register-form">
                         <div className="register-form-div">
                             <label htmlFor="email" className="form-label">Email</label>
-                            <input type="text" id="email" placeholder="Enter email" autoComplete="off" required></input>
+                            <input type="text" className="form-input" id="email" placeholder="Enter email" autoComplete="off" required></input>
                         </div>
                         <div className="register-form-div">
                             <label htmlFor="password" className="form-label">Password</label>
-                            <input type="password" id="password" placeholder="Enter password" required></input>
+                            <input type="password" className="form-input" id="password" placeholder="Enter password" required></input>
                         </div>
                         <div className="register-form-div">
                             <div className="register-form-name-div">
                                 <div className="register-name-div">
                                     <label htmlFor="first-name" className="form-label">First name</label>
-                                    <input type="text" id="first-name" placeholder="Enter first name" required></input>
+                                    <input type="text" id="first-name" className="form-input" placeholder="Enter first name" required></input>
                                 </div>
                                 <div className="register-name-div">
                                     <label htmlFor="last-name" className="form-label">Last name</label>
-                                    <input type="text" id="last-name" placeholder="Enter last name" required></input>
+                                    <input type="text" id="last-name" className="form-input" placeholder="Enter last name" required></input>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +143,7 @@ function LoginPopup({ open, onClose }) {
                         <hr className="popup-line"></hr>
                         <form className="forgot-password-form">
                             <label htmlFor="email" className="form-label">Email</label>
-                            <input type="text" placeholder="Enter your email" required />
+                            <input type="text" className="form-input" placeholder="Enter your email" required />
                             <input type="submit" value="Submit" className="login-submit-button" />
                         </form>
                         <div className="know-password">

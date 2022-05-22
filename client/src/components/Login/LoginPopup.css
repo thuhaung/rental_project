@@ -67,7 +67,7 @@
     margin-left: 25px;
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"].form-input, input[type="password"].form-input {
     display: block;
     padding: 12px;
     font-size: 16px;
