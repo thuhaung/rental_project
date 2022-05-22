@@ -1,6 +1,7 @@
 import express from "express";
-import authenticateToken from "./authorization.js";
+import {authenticateToken} from "../middleware/authorization.js";
 import * as homepage from "../controllers/homepage.js";
+
 
 const homepageRouter = express.Router();
 

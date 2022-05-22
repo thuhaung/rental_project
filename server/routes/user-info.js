@@ -1,5 +1,5 @@
 import express from "express";
-import authenticateToken from "./authorization.js";
+import {authenticateToken} from "../middleware/authorization.js";
 import * as userInfo from "../controllers/user-info.js";
 
 const userInfoRouter = express.Router();
