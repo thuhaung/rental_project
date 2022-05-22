@@ -114,6 +114,7 @@ input.login-submit-button {
     width: 370px;
     border-radius: 7px;
     border: none;
+    cursor: pointer;
 }
 
 .no-account-register-here {
