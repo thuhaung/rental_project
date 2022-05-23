@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+    color: black;
+}
+
+.rooms-wrapper {
+    margin-bottom: 75px;
+    margin-left: 20px;
+    display: flex; 
+    flex-direction: column;
+}
+
+.rooms-form {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+}
+
+.rooms-form > h2 {
+    font-weight: 500;
+    padding-top: 7px;
+    font-size: 26px;
+}
+
+.rooms-count {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 18px;
+    width: 120px;
+}
+
+.rooms-count > h3 {
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.rooms-count > p {
+    font-weight: 800;
+    padding-top: 4px;
+    border-radius: 100%;
+    text-align: center;
+    width: 30px;
+    height: 24px;
+    border: 1px solid #b3b3b3;
+    cursor: pointer;
+}
+
+.rooms-count > p:active {
+    cursor: pointer;
+    font-weight: 800;
+    padding-top: 4px;
+    border-radius: 100%;
+    text-align: center;
+    width: 30px;
+    height: 24px;
+    border: 1px solid black;
+}

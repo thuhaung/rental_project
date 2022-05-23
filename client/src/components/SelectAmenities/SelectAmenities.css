@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+    color: black;
+}
+
+.select-amenities-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 580px;
+    margin-bottom: -80px;
+    margin-left: 50px;
+}
+
+.select-amenities-box {
+    cursor: pointer;
+    border: 1px solid #b3b3b3;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    width: 160px;
+    height: 120px;
+    line-height: 120px;
+    border-radius: 7px;
+}
+
+.select-amenities-icon {
+    vertical-align: middle;
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.select-amenities-box-active {
+    border: 2.3px solid black;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    width: 160px;
+    height: 120px;
+    line-height: 120px;
+    border-radius: 7px;
+}

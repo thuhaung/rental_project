@@ -4,6 +4,7 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import './RentalAfter.css'
 import Location from '../../assets/Location.svg'
 import Rent from '../../assets/Rent.svg'
+import Nav from '../../components/Nav/Nav';
 
 function RentalAfter(props) {
     const location = useLocation();
@@ -14,6 +15,7 @@ function RentalAfter(props) {
     console.log('This is result',result)
     return (
         <>
+            <Nav />
             <div className='rentalafter-searchbar'>
                 <SearchBar />
             </div>

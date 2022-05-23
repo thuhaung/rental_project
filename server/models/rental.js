@@ -25,7 +25,7 @@ const rentalSchema = mongoose.Schema({
     },
     amenities: [{
         type: String,
-        enum: ["TV", "Kitchen", "Parking", "Washer", "AC", "Fridge", "Wifi", "Air conditioning"]
+        enum: ["TV", "Kitchen", "Parking", "Washer", "AC", "Fridge", "Wifi"]
     }],
     created_at: {
         type: Date,

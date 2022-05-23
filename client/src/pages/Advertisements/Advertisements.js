@@ -1,9 +1,11 @@
 import React from 'react'
+import { Link } from "react-router-dom";
+import "./Advertisements.css";
 
 function Advertisements() {
   return (
     <div>
-        <h1>Advertisements</h1>
+      <button><Link to="/advertise-place">Advertise a place</Link></button>
     </div>
   )
 }
