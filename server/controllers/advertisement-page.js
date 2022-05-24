@@ -1,3 +1,4 @@
+import Cookies from "universal-cookie";
 import Rental from "../models/rental.js";
 
 export const newRental = async (req, res) => {
@@ -11,5 +12,11 @@ export const newRental = async (req, res) => {
     } catch (error) {
         res.status(400).send({message: error.message});
     }
+}
+
+export const uploadRentalImage = async (req, res) => {
+    const cookie = new Cookies(req.header.cookies);
+    console.log(cookie.get("userId"));
+    res.status(200).send("Uploaded successfully.");
 }
 

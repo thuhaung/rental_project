@@ -5,6 +5,7 @@ import PropertyType from '../../components/PropertyType/PropertyType';
 import SelectAmenities from "../../components/SelectAmenities/SelectAmenities";
 import Rooms from '../../components/Rooms/Rooms';
 import SelectPrice from '../../components/SelectPrice/SelectPrice';
+import ImageUpload from '../../components/ImageUpload/ImageUpload';
 
 function Advertisements() {
   const [question, setQuestion] = useState("");
@@ -67,7 +68,8 @@ function Advertisements() {
             {/*<PropertyType onClick={handleProperty}/>
             <Rooms onClickBedroom = {handleBedroom} onClickBathroom={handleBathroom} />
             <SelectAmenities onClick={handleAmenities} />
-            <SelectPrice onClickRent={handleRent} onClickDeposit={handleDeposit} onClickElectricity={handleElectricity} onClickWater={handleWater}/>*/}
+            <SelectPrice onClickRent={handleRent} onClickDeposit={handleDeposit} onClickElectricity={handleElectricity} onClickWater={handleWater}/>
+            <ImageUpload />*/}
             
           </div>
           <div className="advertise-place-nav">

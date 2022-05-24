@@ -34,6 +34,18 @@ export const authenticateRentalToken = (req, res, next) => {
     if (token == null) {
         return res.status(401).send("Access denied");
     }
+    try {
+        const verification = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        if (verification.is_verified === false) {
+            res.status(400).send("User must be verify their government ID to advertise.");
+        }
+        req.user = verification; 
+        next();
+    } catch (error) {
+        console.log("Token expired");
+        res.status(403).send("Access denied");   
+    }
+    /*
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decodedToken) => {
         if(err) {
             console.log("Token expired");
@@ -43,7 +55,7 @@ export const authenticateRentalToken = (req, res, next) => {
             res.status(400).send('User must verify to advertise');
         }
         next();
-    });
+    });*/
 }
 
 
