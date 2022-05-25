@@ -14,7 +14,7 @@ function Rentals() {
 
   //Get recent list from server
   useEffect(() => {
-    axios.get('http://localhost:5000/rental/search/recent-list')
+    axios.get('http://localhost:5000/rental/recent-list')
       .then(res => {
         console.log("Get recent list from server", res)
         setItem(res.data)
