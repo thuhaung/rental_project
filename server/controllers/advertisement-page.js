@@ -8,7 +8,7 @@ export const newRental = async (req, res) => {
             rental[key] = req.body[key];
         }
         const newRental = await rental.save();
-        res.status(201).send(newRental);
+        res.status(201).send(newRental._id);
     } catch (error) {
         res.status(400).send({message: error.message});
     }

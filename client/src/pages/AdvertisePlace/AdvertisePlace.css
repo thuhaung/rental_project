@@ -5,6 +5,43 @@
     color: black;
 }
 
+.advertise-place-confirmed {
+    height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(#6a7af3, #eb7070);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.advertise-place-confirmed > h2 {
+    color: white;
+    font-size: 45px;
+}
+
+.advertise-place-confirmed > button {
+    border: 2px solid linear-gradient(#6a7af3, #eb7070);
+    border-radius: 7px;
+    padding: 10px 20px 10px 20px;
+    background-color: transparent;
+    font-size: 30px;
+    color: black;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.advertise-place-confirmed > button:hover {
+    border: 2px solid linear-gradient(#6a7af3, #eb7070);
+    border-radius: 7px;
+    padding: 10px 20px 10px 20px;
+    background-color: transparent;
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    cursor: pointer;
+}
+
 .advertise-place-wrapper {
     z-index: 0;
     display: flex;

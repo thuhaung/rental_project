@@ -6,6 +6,7 @@ const rentalStorage = multer.diskStorage({
     destination: (req, file, cb) => {
         const cookies = new Cookies(req.headers.cookie);
         const userId = cookies.get("userId");
+        console.log(req.body.rentalId);
         const path = `../server/images/rentals/${userId}`;
         fs.mkdirSync(path, { recursive: true });
         cb(null, path);
@@ -13,7 +14,8 @@ const rentalStorage = multer.diskStorage({
     filename: (req, file, cb) => {
         const cookies = new Cookies(req.headers.cookie);
         const userId = cookies.get("userId");
-        cb(null, userId + "-" + file.originalname);
+        console.log(req.body.rentalId);
+        cb(null, req.body.rentalId + "-" + file.originalname);
     }
 });
 

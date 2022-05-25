@@ -32,6 +32,8 @@ function Advertisements() {
   const questions = ["Which of these best describes your place?", "Where is your place located?", "What kinds of room does your place have?", "What does your place offer?", "How much does renting your place cost?", "Add some photos of your place"];
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const [formConfirmed, setFormConfirmed] = useState(false);
+  const [rentalId, setRentalId] = useState("");
 
   const cookie = new Cookies();
   const userId = cookie.get("userId");
@@ -98,9 +100,11 @@ function Advertisements() {
   }
 
   const submitImages = () => {
+    console.log(rentalId);
+
     const form = new FormData();
+    form.append("rentalId", rentalId);
     for (let i in images) {
-      console.log(images[i]);
       form.append("images", images[i]);
     }
     
@@ -147,7 +151,6 @@ function Advertisements() {
       setErrorMessage("Please fill in all address information.");
     }
     
-    submitImages();
     const form = {
       "user": userId,
       "property_type": propertyType,
@@ -161,31 +164,42 @@ function Advertisements() {
       "address": address
     }
     axios.post("http://localhost:5000/advertisement/post", form, { withCredentials: true }).then((response) => {
-      if (response.ok) {
-        navigate("/");
+      if (response.data) {
+        setRentalId(response.data);
+        setFormConfirmed(true);
+        //navigate("/");
       }
     }).catch((error) => console.log(error.message));
+
+    submitImages();
   }
 
   return (
     <div>
       <Nav />
-      <div className="advertise-place-wrapper">
-        <div className="advertise-place-card">
-          <div className="advertise-place-card-text">
-              <h1>{questions[formSection - 1]}</h1>
+      {
+        formConfirmed ? 
+        <div className="advertise-place-confirmed">
+          <h2>Your rental has been posted!</h2>
+          <button onClick={() => navigate("/")}>Check it out</button>
+        </div> :
+        <div className="advertise-place-wrapper">
+          <div className="advertise-place-card">
+            <div className="advertise-place-card-text">
+                <h1>{questions[formSection - 1]}</h1>
+            </div>
           </div>
-        </div>
-        <div className="advertise-place-main">
-          <div className = "advertise-place-form">
-            {getComponent()}
+          <div className="advertise-place-main">
+            <div className = "advertise-place-form">
+              {getComponent()}
+            </div>
+            <div className="advertise-place-nav">
+              <button className="advertise-place-nav-back" onClick={(e) => decrementFormSection(e)}>Back</button>
+              <button className="advertise-place-nav-next" onClick={(e) => incrementFormSection(e)}>Next</button>
+            </div>
           </div>
-          <div className="advertise-place-nav">
-            <button className="advertise-place-nav-back" onClick={(e) => decrementFormSection(e)}>Back</button>
-            <button className="advertise-place-nav-next" onClick={(e) => incrementFormSection(e)}>Next</button>
-          </div>
-        </div>
-      </div>  
+        </div>  
+      }
     </div>
   )
 }
