@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import "./SelectPrice.css";
 
-function SelectPrice({ onClickRent, onClickDeposit, onClickElectricity, onClickWater }) {
-    const [deposit, setDeposit] = useState(500000);
-    const [rent, setRent] = useState(1000000);
-    const [electricity, setElectricity] = useState(10000);
-    const [water, setWater] = useState(10000);
+function SelectPrice({ onClickRent, onClickDeposit, onClickElectricity, onClickWater, rentVar, depositVar, electricityVar, waterVar }) {
+    const [deposit, setDeposit] = useState(depositVar);
+    const [rent, setRent] = useState(rentVar);
+    const [electricity, setElectricity] = useState(electricityVar);
+    const [water, setWater] = useState(waterVar);
 
     const incrementRent = () => {
         if (rent < 50000000) {

@@ -5,39 +5,119 @@
     color: black;
 }
 
-.rental-image-upload {
+.rental-image-upload-wrapper {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    gap: 65px;
-    justify-content: flex-end;
-    border: 1.5px dotted black;
-    margin-bottom: -60px;
-    border-radius: 7px;
-    width: 400px;
-    height: 400px;
+}
+
+.rental-image-upload {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    gap: 360px;
+    top: 80px;
+    z-index: 1;
+}
+
+.rental-image-upload > h2 {
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .rental-image-upload-label > input[type="file"] {
     display: none;
 }
 
-.rental-image-upload-illustration > h2 {
+.rental-image-upload-label {
+    font-size: 18px;
+    border: 2px solid black;
+    padding: 10px 15px 10px 15px;
+    background-color: white;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.rental-image-list {
+    z-index: 0;
+    margin-left: 70px;
+    position: fixed;
+    display: flex;
+    top: 150px;
+    width: 700px;
+    height: auto;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 10px;
+}
+
+.rental-image-specific {
+    position: relative;
+    height: 200px;
+    width: 200px;
+}
+
+.rental-image-specific > img {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.rental-image-specific > button {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
+    border: none;
+    background-color: white;
+    padding: 5px;
+}
+
+
+.rental-image-first-upload-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rental-image-upload-first-time {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    justify-content: center;
+    border: 1.5px dotted black;
+    border-radius: 7px;
+    width: 350px;
+    height: 350px;
+}
+
+.rental-image-first-time-upload-label > input[type="file"] {
+    display: none;
+}
+
+.rental-image-upload-first-time-illustration > h2 {
     font-size: 21px;
     font-weight: 500;
 }
 
-.rental-image-upload-illustration {
+.rental-image-upload-first-time-illustration {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.rental-image-upload-label {
+.rental-image-first-time-upload-label {
     text-align: center;
     cursor: pointer;
     display: inline-block;
     font-size: 16px;
     font-weight: 400;
-    margin-bottom: 70px;
+    margin-bottom: 10px;
 }

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import "./Rooms.css";
 
-function Rooms({ onClickBedroom, onClickBathroom }) {
-    const [bedrooms, setBedrooms] = useState(0);
-    const [bathrooms, setBathrooms] = useState(1);
+function Rooms({ onClickBedroom, onClickBathroom, numBed, numBath }) {
+    const [bedrooms, setBedrooms] = useState(numBed);
+    const [bathrooms, setBathrooms] = useState(numBath);
 
     const incrementBed = () => {
         if (bedrooms < 5) {
