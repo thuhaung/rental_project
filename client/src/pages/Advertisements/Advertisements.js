@@ -16,7 +16,7 @@ function Advertisements() {
         </div>
         <div className='advertisement-wrapper-text'>
           <p className='advertisement-text1'>Have a place for renting?</p>
-          <p className='advertisement-text2'>Let us help you every step of the way to<br></br> achieve a successful deal</p>
+          <p className='advertisement-text2'>Let us help you every step of the way to<br></br> achieve a successful deal.</p>
           <button className='advertisement-btn'><Link style={{ color: 'white', fontSize: '20px', fontWeight: '600' }} to="/advertise-place">Try advertising</Link></button>
         </div>
       </div>
@@ -28,21 +28,21 @@ function Advertisements() {
             <div className='advertisement-box-info'>
               <div className='advertisement-sub-circle'>1</div>
               <p className='advertisement-box-text'>Learn about our policies & requirements</p>
-              <p>Make sure your identification and property are verified.</p>
+              <p className='advertisement-box-sub-text'>Make sure your identification and property are verified.</p>
             </div>
           </div>
           <div className='advertisement-sub-box'>
             <div className='advertisement-box-info'>
               <div className='advertisement-sub-circle'>2</div>
               <p className='advertisement-box-text'>Provide information about your place</p>
-              <p>This includes general information, amenities and additional descriptions.</p>
+              <p className='advertisement-box-sub-text'>This includes general information, amenities and additional descriptions.</p>
             </div>
           </div>
           <div className='advertisement-sub-box'>
             <div className='advertisement-box-info'>
               <div className='advertisement-sub-circle'>3</div>
               <p className='advertisement-box-text'>Start advertising</p>
-              <p>Answer questions from rentees through our messaging system.</p>
+              <p className='advertisement-box-sub-text'>Answer questions from rentees through our messaging system.</p>
             </div>
           </div>
         </div>

@@ -97,7 +97,6 @@ function ImageUpload({ onClickImage, onSubmit }) {
                     </div>
                 </div>
             }
-            <button type="submit" onClick={handleSubmit}>Submit</button>
         </div>
     )
 }

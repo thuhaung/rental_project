@@ -100,8 +100,6 @@ function Advertisements() {
   }
 
   const submitImages = () => {
-    const cookie = new Cookies();
-    console.log(cookie.get("userId"));
     axios.post("http://localhost:5000/advertisement/upload-image", {images: images, rentalId: rentalId}, { withCredentials: true }).then((response) => {
       if (response.data) {
           console.log("ok");
@@ -160,8 +158,7 @@ function Advertisements() {
     axios.post("http://localhost:5000/advertisement/post", form, { withCredentials: true }).then((response) => {
       if (response.data) {
         setRentalId(response.data);
-        //setFormConfirmed(true);
-        //navigate("/");
+        setFormConfirmed(true);
       }
     }).catch((error) => console.log(error.message));
 
