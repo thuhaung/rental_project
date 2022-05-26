@@ -33,7 +33,7 @@ function RentalAfter(props) {
                                 <table className='rentalafter-list-info'>
                                     <tr>
                                         <td><img src={Rent} /></td>
-                                        <td>${prod.rent}</td>
+                                        <td>{prod.rent}{' '}VND/Month</td>
                                     </tr>
                                     <tr>
                                         <td><img src={Location} /></td>

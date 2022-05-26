@@ -1,4 +1,5 @@
 export const districtValue1 = [
+    {label:'All',value:''},
     {label:'District 1',value:'1'},
     {label:'District 2',value:'2'},
     {label:'District 3',value:'3'},
@@ -26,6 +27,7 @@ export const districtValue1 = [
   ]
 
 export const districtValue2 = [
+  {label:'All',value:''},
   {label:'Ba Dinh',value:'Ba Dinh'},
   {label:'Dong Da',value:'Dong Da'},
   {label:'Ha Ba Trung',value:'Hai Ba Trung'},

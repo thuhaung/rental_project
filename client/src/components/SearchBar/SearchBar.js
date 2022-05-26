@@ -9,8 +9,8 @@ function SearchBar(props) {
 
   const [data, setData] = useState({
     city: "Ho Chi Minh",
-    district: "1",
-    price: "500",
+    district: "",
+    price: "",
     street: ""
   })
 
@@ -64,9 +64,10 @@ function SearchBar(props) {
         <div className='searchbar-price'>
           <p className='searchbar-price-text'>Price Range</p>
           <select onChange={(e) => handleChange(e)} value={data.price} id="price" className='searchbar-price-value'>
-            <option value='500'>Under $500</option>
-            <option value='1000'>Under $1000</option>
-            <option value='2000'>Under $2000</option>
+            <option value=''>All</option>
+            <option value='5000000'>Under 5000000</option>
+            <option value='10000000'>Under 10000000</option>
+            <option value='20000000'>Under 20000000</option>
           </select>
         </div>
 
