@@ -1,6 +1,7 @@
 import Cookies from "universal-cookie";
 import Rental from "../models/rental.js";
-import fs from "fs";
+import cookieParser from "cookie-parser";
+import { cloudinary } from "../utils/cloudinary.js";
 
 
 export const newRental = async (req, res) => {
@@ -17,13 +18,33 @@ export const newRental = async (req, res) => {
 }
 
 export const uploadRentalImage = async (req, res) => {
-    res.status(200).send("Uploaded successfully.");
+   // const cookie = new Cookies();
+    const userId = req.cookies["userId"];
+    console.log(userId);
+    const rentalId = req.body.rentalId;
+    console.log(rentalId);
+    try {
+        const files = req.body.images;
+        let uploadedResponse;
+        for (let i in files) {
+            uploadedResponse = await cloudinary.v2.uploader.upload(files[i], {
+                public_id: `${rentalId}-image-${i}`,
+                folder: `rentals/${userId}/${rentalId}`,
+                resource_type: 'image'
+            });
+            console.log(uploadedResponse);
+        }
+        res.status(200).send("ok");
+    } catch (error) {
+        console.log(error.message);
+    }
 }
 
 export const getRentalImages = async (req, res) => {
     //const cookie = new Cookies(req.header.cookies);
     //const userId = cookie.get("userId");
-    const userId = "627208f1100afcfa509dc600";
-    const files = fs.readdirSync(appRoot + `/images/rentals/${userId}`);
-    res.status(200).send(files);
+    const { resources } = await cloudinary.v2.search.expression("folder: rentals").sort_by("public_id", "desc").execute();
+    const publicIds = resources.map(file => file.public_id);
+    console.log(publicIds);
+    
 }

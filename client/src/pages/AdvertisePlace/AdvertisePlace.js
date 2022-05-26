@@ -100,20 +100,14 @@ function Advertisements() {
   }
 
   const submitImages = () => {
-    console.log(rentalId);
-
-    const form = new FormData();
-    form.append("rentalId", rentalId);
-    for (let i in images) {
-      form.append("images", images[i]);
-    }
-    
-    axios.post("http://localhost:5000/advertisement/upload-image", form, { withCredentials: true, headers: { "Content-Type": "multipart/form-data" } }).then((response) => {
-      if (response.ok) {
-        console.log("ok");
+    const cookie = new Cookies();
+    console.log(cookie.get("userId"));
+    axios.post("http://localhost:5000/advertisement/upload-image", {images: images, rentalId: rentalId}, { withCredentials: true }).then((response) => {
+      if (response.data) {
+          console.log("ok");
       }
     }).catch((error) => {
-      console.log(error.message);
+        console.log(error.message);
     })
   }
 
@@ -166,7 +160,7 @@ function Advertisements() {
     axios.post("http://localhost:5000/advertisement/post", form, { withCredentials: true }).then((response) => {
       if (response.data) {
         setRentalId(response.data);
-        setFormConfirmed(true);
+        //setFormConfirmed(true);
         //navigate("/");
       }
     }).catch((error) => console.log(error.message));

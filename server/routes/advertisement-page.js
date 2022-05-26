@@ -7,7 +7,8 @@ import { uploadRentalImage } from "../middleware/upload.js";
 const advertisementPageRouter = express.Router();
 
 advertisementPageRouter.post("/post", authenticateRentalToken, advertisement.newRental);
-advertisementPageRouter.post("/upload-image", uploadRentalImage.array("images", 5), advertisement.uploadRentalImage);
+//advertisementPageRouter.post("/upload-image", uploadRentalImage.array("images", 5), advertisement.uploadRentalImage);
 advertisementPageRouter.get("/images", advertisement.getRentalImages);
+advertisementPageRouter.post("/upload-image", advertisement.uploadRentalImage);
 
 export default advertisementPageRouter;

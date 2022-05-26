@@ -8,12 +8,11 @@ import appRoot from "app-root-path";
 
 
 const app = express();
-// app.use(express.json());
-// app.use(express.urlencoded({extended: false}))
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+//app.use(express.json());
+//app.use(express.urlencoded({limit: "100mb", extended: true}));
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true}));
 app.use(cookieParser());
-// app.use(cors());
 app.use(cors({origin: "http://localhost:3000", credentials: true}));
 app.use("/rental-images", express.static(appRoot + "/images"));
 

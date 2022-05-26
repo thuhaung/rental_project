@@ -8,6 +8,7 @@ function ImageUpload({ onClickImage, onSubmit }) {
     const [selectedImages, setSelectedImages] = useState([]);
 
     const handler = async (e) => {
+        /*
         setFiles([]);
         for (let i in e.target.files) {
             setFiles(prev => [...prev, e.target.files[i]]);
@@ -19,30 +20,42 @@ function ImageUpload({ onClickImage, onSubmit }) {
         const imageArray = selectedFilesArray.map(file => {
             return URL.createObjectURL(file);
         })
-        setSelectedImages(imageArray);
+        setSelectedImages(imageArray);*/
+        const files = e.target.files;
+        previewFile(files);
+    }
+
+    const previewFile = (files) => {
+        for (let i in files) {
+            const reader = new FileReader();
+            reader.readAsDataURL(files[i]);
+            reader.onloadend = () => {
+                console.log(reader.result);
+                setSelectedImages(prev => [...prev, reader.result]);
+            }
+        }  
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        axios.post("http://localhost:5000/advertisement/upload-image",
+                    selectedImages, 
+                    { withCredentials: true })
+                    .then((response) => {
+                        if (response.data) {
+                            console.log("ok");
+                        }
+                    }).catch((error) => {
+                        console.log(error.message);
+                    })
+        
     }
 
     useEffect(() => {
-        onClickImage(files)
-    }, [files]);
+        onClickImage(selectedImages)
+    }, [selectedImages]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const form = new FormData();
-        for (let i in files) {
-            form.append("images",files[i]);
-        }
-        console.log(files);
-        
-        axios.post("http://localhost:5000/advertisement/upload-image", form, { withCredentials: true, headers: { "Content-Type": "multipart/form-data" } }).then((response) => {
-            if (response.ok) {
-                console.log("ok");
-            }
-        }).catch((error) => {
-            console.log(error.message);
-        })
-    }
-
+    
     return (
         <div className="rental-image-wrapper">
             {
@@ -58,6 +71,7 @@ function ImageUpload({ onClickImage, onSubmit }) {
                     <div className="rental-image-list">
                         {
                             selectedImages && 
+                            
                             selectedImages.map((image, index) => {
                                 return (
                                     <div key={index} className="rental-image-specific">
@@ -83,6 +97,7 @@ function ImageUpload({ onClickImage, onSubmit }) {
                     </div>
                 </div>
             }
+            <button type="submit" onClick={handleSubmit}>Submit</button>
         </div>
     )
 }

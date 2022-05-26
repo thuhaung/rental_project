@@ -5,7 +5,6 @@ import Cookies from "universal-cookie";
 
 export const authenticateToken = (req, res, next) => {
     const cookies = new Cookies(req.headers.cookie);
-    console.log(req.headers.cookie);
     const token = cookies.get("accessToken");
     //console.log(token);
     //const authHeader = req.headers["authorization"];
@@ -26,7 +25,6 @@ export const authenticateToken = (req, res, next) => {
 
 export const authenticateRentalToken = (req, res, next) => {
     const cookies = new Cookies(req.headers.cookie);
-    console.log(req.headers.cookie);
     const token = cookies.get("accessToken");
     //console.log(token);
     //const authHeader = req.headers["authorization"];
