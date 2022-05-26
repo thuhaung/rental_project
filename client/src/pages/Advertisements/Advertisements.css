@@ -1,0 +1,140 @@
+.advertisement-main-container {
+    margin-top: 65px;
+    width: 100%;
+    height: 595px;
+    /* background-color: antiquewhite; */
+    display: flex;
+}
+
+.advertisement-background-container {
+    width: 800px;
+    height: 595px;
+}
+
+.advertisement-background-grid {
+    width: 500px;
+    height: 500px;
+    background: #AEB6EA;
+    position: absolute;
+    z-index: -1;
+}
+
+.advertisement-background-image {
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+.advertisement-wrapper-text {
+    /* background-color: antiquewhite; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.advertisement-text1,
+.advertisement-text2 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 62px;
+    line-height: 168.52%;
+    /* or 104px */
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.advertisement-text2 {
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.advertisement-btn {
+    margin-top: 20px;
+    width: 242px;
+    height: 56px;
+    background: #7D89DD;
+    border-radius: 12px;
+    border: white
+}
+
+.advertisement-sub-container {
+    width: 80%;
+    height: 560px;
+    /* background-color: antiquewhite; */
+    margin-left: 150px;
+}
+
+.advertisement-sub-text1 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 42px;
+    display: flex;
+    align-items: center;
+
+    color: #000000;
+    margin-bottom: 0;
+}
+
+.advertisement-sub-text2 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 34px;
+    display: flex;
+    align-items: center;
+
+    color: #313131;
+}
+
+.advertisement-box-container {
+    display: flex;
+    justify-content: center;
+}
+
+.advertisement-sub-box {
+    background: #F0F0F0;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+    width: 353px;
+    height: 349px;
+    margin-left: 8px;
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.advertisement-box-info {
+    width: 293px;
+    height: 215px;
+    /* background-color: red; */
+    display: flex;
+    flex-direction: column;
+}
+
+.advertisement-sub-circle {
+    height: 47px;
+    width: 47px;
+    border-radius: 50%;
+    border: 2px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.advertisement-box-text {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 150%;
+    color: #000000;
+    margin-bottom: 0px;
+}
+
+.advertisement-sub-wrapper-btn {
+    display: flex;
+    justify-content: center;
+}
