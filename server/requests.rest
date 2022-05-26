@@ -71,3 +71,7 @@ Content-Type: application/json
         "city": "Ho Chi Minh City"
     }
 }
+
+
+###
+GET http://localhost:5000/advertisement/images

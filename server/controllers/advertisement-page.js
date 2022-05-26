@@ -1,5 +1,7 @@
 import Cookies from "universal-cookie";
 import Rental from "../models/rental.js";
+import fs from "fs";
+
 
 export const newRental = async (req, res) => {
     try {
@@ -15,8 +17,13 @@ export const newRental = async (req, res) => {
 }
 
 export const uploadRentalImage = async (req, res) => {
-    const cookie = new Cookies(req.header.cookies);
-    console.log(cookie.get("userId"));
     res.status(200).send("Uploaded successfully.");
 }
 
+export const getRentalImages = async (req, res) => {
+    //const cookie = new Cookies(req.header.cookies);
+    //const userId = cookie.get("userId");
+    const userId = "627208f1100afcfa509dc600";
+    const files = fs.readdirSync(appRoot + `/images/rentals/${userId}`);
+    res.status(200).send(files);
+}

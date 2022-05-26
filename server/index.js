@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import Router from "./routes/routes.js";
+import appRoot from "app-root-path";
 
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 // app.use(cors());
 app.use(cors({origin: "http://localhost:3000", credentials: true}));
+app.use("/rental-images", express.static(appRoot + "/images"));
 
 
 Router(app);
