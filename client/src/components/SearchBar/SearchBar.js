@@ -8,7 +8,7 @@ function SearchBar(props) {
   const navigate = useNavigate();
 
   const [data, setData] = useState({
-    city: "",
+    city: "Ho Chi Minh",
     district: "",
     price: "",
     street: ""
@@ -43,7 +43,6 @@ function SearchBar(props) {
         <div className='searchbar-city'>
           <p className='searchbar-city-text'>City</p>
           <select onChange={(e) => handleChange(e)} value={data.city} id="city" className='searchbar-city-value'>
-            <option value=''>All</option>
             <option value='Ho Chi Minh'>Ho Chi Minh city</option>
             <option value='Ha Noi'>Ha Noi city</option>
           </select>
