@@ -14,16 +14,18 @@ function RentalBox({ name, rentAmount, fullAddress, rentalId, userId }) {
     const [image, setImage] = useState("");
 
     const getImage = async () => {
-        axios.post("http://localhost:5000/advertisement/images", { rentalId: rentalId, userId: userId }, { withCredentials: true }).then((response) => {
+        axios.post("http://localhost:5000/advertisement/images", { rentalId: rentalId, userId: userId }).then((response) => {
             setImage(response.data[0]);
         }).catch((error) => console.log(error.message));
     }
 
     useEffect(() => {
-        setNum(fullAddress.num);
-        setStreet(fullAddress.street);
-        setWard(fullAddress.ward);
-        setDistrict(fullAddress.district);
+        if (fullAddress) {
+            setNum(fullAddress.num);
+            setStreet(fullAddress.street);
+            setWard(fullAddress.ward);
+            setDistrict(fullAddress.district);
+        }
         getImage();
     }, [fullAddress, image]);
 

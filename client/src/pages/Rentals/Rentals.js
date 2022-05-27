@@ -8,6 +8,8 @@ import Location from '../../assets/Location.svg'
 import Rent from '../../assets/Rent.svg'
 import Nav from '../../components/Nav/Nav'
 import RentalBox from '../../components/RentalBox/RentalBox'
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 
 function Rentals() {
@@ -42,12 +44,30 @@ function Rentals() {
     setUserId(prev => [...prev, (rental.user)]);
   }
 
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1
+    }
+  }
+
   return (
     <div>
       <Nav/>
       <div className='rental-main-container'>
         <div className='rental-text-container'>
-        <button onClick={() => {console.log(rentalName)}}>Click</button>
           <p>Find your best home</p>
           <div className='rental-searchbar-container'>
             <SearchBar />
@@ -57,7 +77,7 @@ function Rentals() {
       <div className='rental-sub-arrow'>
         <div className='rental-sub-container'>
           <h2>Most recent listings</h2>
-          <div className='rental-scroll-container'>
+          <Carousel className='rental-scroll-container' responsive={responsive}>
             {
               items && items.map((item, index) => {
                 return <RentalBox key={index} name={rentalName[index]} rentAmount={rent[index]} fullAddress={address[index]} rentalId={rentalId[index]} userId={userId[index]} />
@@ -82,10 +102,10 @@ function Rentals() {
                   </tr>
                 </table>
               </div>
-            ))) : null*/}
-          </div>
+            ))) : null
+            <img className='rental-arrow' alt="arrow" src={Arrow} />*/}
+          </Carousel >
         </div>
-        <img className='rental-arrow' alt="arrow" src={Arrow} />
       </div>
     </div>
   )
