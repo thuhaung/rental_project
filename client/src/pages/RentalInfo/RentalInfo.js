@@ -7,9 +7,11 @@ import { Image } from "cloudinary-react";
 import loading from "../../assets/loading-img.png";
 import avatar from "../../assets/profile-pic.jpg";
 import AmenitiesIcon from '../../assets/AmenitiesIcon.js';
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
 function RentalInfo() {
     const icons = AmenitiesIcon;
+    const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M" });
     const [rental, setRental] = useState("");
     const [rentalName, setRentalName] = useState("");
     const [address, setAddress] = useState("");
@@ -147,6 +149,15 @@ function RentalInfo() {
                     </div>
                 </div>
                 <hr className="rental-info-hr"></hr>
+                <div className="rental-info-map">
+                    <h3>Location</h3>
+                    {
+                        isLoaded && 
+                        <GoogleMap zoom={10} center={{lat: 44, lng: -80}} mapContainerClassName="rental-info-map-container">
+
+                        </GoogleMap>
+                    }
+                </div>
                 <button className="rental-info-contact">Contact Renter</button>
             </div>
         </div>
