@@ -41,13 +41,14 @@ export const uploadRentalImage = async (req, res) => {
 }
 
 export const getRentalImages = async (req, res) => {
-    //const cookie = new Cookies(req.header.cookies);
+    const cookie = new Cookies(req.header.cookies);
     const rentalId = req.body.rentalId;
-    const userId = req.cookies["userId"];
-    const { resources } = await cloudinary.v2.search.expression(`folder: rentals/${userId}/${rentalId}`).sort_by("public_id", "desc").execute();
-    if (resources) {
-        const publicIds = resources.map(file => file.public_id);
-        console.log(publicIds);
-        res.status(200).send("Images sent.");
-    }
+    const userId = req.body.userId;
+    const { resources } = await cloudinary.v2.search.
+                                                    expression("folder: rentals/" + userId + "/" + rentalId + "/*").
+                                                    sort_by("public_id", "desc").
+                                                    execute();
+                                                     
+    const publicIds = resources.map(file => file.public_id);
+    res.status(200).send(publicIds);
 }

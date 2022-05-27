@@ -6,13 +6,13 @@ POST http://localhost:5000/register
 Content-Type: application/json
 
 {
-    "first_name": "Ha",
-    "middle_name": "Thu",
-    "last_name": "Ung",
-    "birthdate": "2001-08-02",
-    "email": "ha.ung@email.com",
+    "first_name": "Phong",
+    "middle_name": "Thanh",
+    "last_name": "Nguyen",
+    "birthdate": "2001-03-11",
+    "email": "phong.nguyen@email.com",
     "password": "123456789",
-    "phone": "0898407862"
+    "phone": "0123456789"
 }
 
 ###

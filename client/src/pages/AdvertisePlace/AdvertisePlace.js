@@ -99,7 +99,9 @@ function Advertisements() {
     }
   }
 
-  const submitImages = () => {
+  const submitImages = (data) => {
+    const rentalId = data;
+    console.log("rental id in submit images " + rentalId);
     axios.post("http://localhost:5000/advertisement/upload-image", {images: images, rentalId: rentalId}, { withCredentials: true }).then((response) => {
       if (response.data) {
           console.log("ok");
@@ -157,12 +159,12 @@ function Advertisements() {
     }
     axios.post("http://localhost:5000/advertisement/post", form, { withCredentials: true }).then((response) => {
       if (response.data) {
-        setRentalId(response.data);
+        console.log("rental id from axios: " + response.data);
+        //setRentalId(response.data);
+        submitImages(response.data);
         setFormConfirmed(true);
       }
     }).catch((error) => console.log(error.message));
-
-    submitImages();
   }
 
   return (

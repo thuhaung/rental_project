@@ -23,9 +23,9 @@
 .rental-sub-container {
     font-family: 'Inter';
     width: 100%;
-    height: 450px;
+    height: 580px;
     margin-left: 145px;
-    /* margin-top: 30px; */
+    margin-top: 30px;
     /* background-color: antiquewhite; */
     display:inline-block;
     justify-content: center;
@@ -36,11 +36,9 @@
 }
 
 .rental-scroll-container {
-    width: 1060px;
-    height: 450px;
     display: flex;
     gap: 20px;
-    padding-top: 20px;
+    padding: 10px;
     /* background-color:aqua; */
 }
 
@@ -81,8 +79,9 @@
 }
 
 .rental-arrow {
-    margin-right: 140px;
-    margin-top: 105px;
+    position: relative;
+    margin-right: 100px;
+    cursor: pointer;
 }
 
 .rental-sub-arrow {
