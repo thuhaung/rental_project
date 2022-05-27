@@ -5,6 +5,7 @@ import { Image } from "cloudinary-react";
 import rent from "../../assets/Rent.svg";
 import location from "../../assets/Location.svg";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 function RentalBox({ name, rentAmount, fullAddress, rentalId, userId }) {
     const [num, setNum] = useState("");
@@ -12,6 +13,7 @@ function RentalBox({ name, rentAmount, fullAddress, rentalId, userId }) {
     const [ward, setWard] = useState("");
     const [district, setDistrict] = useState("");
     const [image, setImage] = useState("");
+    const navigate = useNavigate();
 
     const getImage = async () => {
         axios.post("http://localhost:5000/advertisement/images", { rentalId: rentalId, userId: userId }).then((response) => {
@@ -31,7 +33,7 @@ function RentalBox({ name, rentAmount, fullAddress, rentalId, userId }) {
 
 
     return (
-        <div className="rental-box">
+        <div className="rental-box" onClick={() => navigate(`${rentalId}`)}>
             <div className="rental-box-img">
                 {
                     !image ? 

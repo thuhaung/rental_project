@@ -4,8 +4,8 @@ import * as rental from "../controllers/rental-page.js"
 
 const rentalPageRouter = express.Router();
 
-rentalPageRouter.get('/search?:param', rental.search)
-rentalPageRouter.get('/recent-list', rental.recentList)
-rentalPageRouter.get("/", (req, res) => {res.send('Lmao')});
+rentalPageRouter.get('/search?:param', rental.search);
+rentalPageRouter.get('/recent-list', rental.recentList);
+rentalPageRouter.get("/:id", rental.getRentalInfo);
 
 export default rentalPageRouter;

@@ -10,6 +10,7 @@ import Nav from '../../components/Nav/Nav'
 import RentalBox from '../../components/RentalBox/RentalBox'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { useNavigate } from "react-router-dom";
 
 
 function Rentals() {
@@ -19,6 +20,7 @@ function Rentals() {
   const [address, setAddress] = useState([]);
   const [rentalId, setRentalId] = useState([]);
   const [userId, setUserId] = useState([]);
+
 
   //Get recent list from server
   useEffect(() => {
@@ -80,7 +82,7 @@ function Rentals() {
           <Carousel className='rental-scroll-container' responsive={responsive}>
             {
               items && items.map((item, index) => {
-                return <RentalBox key={index} name={rentalName[index]} rentAmount={rent[index]} fullAddress={address[index]} rentalId={rentalId[index]} userId={userId[index]} />
+                return <RentalBox  key={index} name={rentalName[index]} rentAmount={rent[index]} fullAddress={address[index]} rentalId={rentalId[index]} userId={userId[index]} />
               })
             }
             

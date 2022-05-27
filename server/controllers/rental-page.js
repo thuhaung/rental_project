@@ -50,3 +50,15 @@ export const recentList = async (req, res) => {
     }
     res.json(recentList);
 }
+
+export const getRentalInfo = async (req, res) => {
+    const rentalId = req.params.id;
+    try {
+        const rental = await Rental.findById({_id: rentalId});
+        if (rental) {
+            res.status(200).send(rental);
+        }
+    } catch (error) {
+        res.send(error.message);
+    }
+}
