@@ -8,11 +8,35 @@ import Nav from '../../components/Nav/Nav';
 
 function RentalAfter(props) {
     const location = useLocation();
-    const [result, setResult] = useState(location.state.data)
-    useEffect(()=>{
-        setResult(location.state.data)
-    })
-    console.log('This is result',result)
+    const [result, setResult] = useState([])
+    const LIST_HOUSE = location.state.data.sort((a, b) => (a.rent < b.rent) ? 1 : -1)
+    useEffect(() => {
+        setResult(LIST_HOUSE)
+        console.log('Set succesfully')
+    },[])
+    //Filter output
+    function handleFilter(e) {
+        const copyListHouse = [...result]
+        switch (e.target.value) {
+            case 'descending':
+                copyListHouse.sort((a, b) => (a.rent < b.rent) ? 1 : -1)
+                setResult(copyListHouse)
+                console.log('Descending', copyListHouse)
+                break;
+            case 'ascending':
+                copyListHouse.sort((a, b) => (a.rent > b.rent) ? 1 : -1)
+                setResult(copyListHouse)
+                console.log('Ascending', copyListHouse)
+                break;
+            case 'most':
+                copyListHouse.sort((a, b) => (a.amenities.length < b.amenities.length ? 1 : -1))
+                setResult(copyListHouse)
+                console.log('Amenities', copyListHouse)
+                break;
+            default:
+                break;
+        }
+    }
     return (
         <>
             <Nav />
@@ -23,8 +47,10 @@ function RentalAfter(props) {
                 <div className='rentalafter-result-container'>
                     <p className='rentalafter-result-text1'>Results</p>
                     <p className='rentalafter-result-text2'>{result.length} rentals Sort by{' '}
-                        <select className='rentalafter-filter'>
-                            <option>Most Relevant</option>
+                        <select className='rentalafter-filter' onChange={handleFilter}>
+                            <option value='descending'>Highest to Lowest Price</option>
+                            <option value='ascending'>Lowest to Highest Price</option>
+                            <option value='most'>Most Amenities</option>
                         </select></p>
                     {result?.map(prod => (
                         <div className='rentalafter-box-container'>
