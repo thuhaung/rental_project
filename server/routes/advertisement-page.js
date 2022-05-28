@@ -1,7 +1,7 @@
 import express from "express";
 import * as advertisement from "../controllers/advertisement-page.js";
 import { authenticateRentalToken } from '../middleware/authorization.js'
-import { uploadRentalImage } from "../middleware/upload.js";
+// import { uploadRentalImage } from "../middleware/upload.js";
 
 
 const advertisementPageRouter = express.Router();
