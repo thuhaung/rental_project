@@ -1,4 +1,4 @@
-export const districtValue1 = [
+export const districtsHCMC = [
     {label:'All',value:''},
     {label:'District 1',value:'1'},
     {label:'District 2',value:'2'},
@@ -26,7 +26,7 @@ export const districtValue1 = [
     {label:'Can Gio',value:'Can Gio'}
   ]
 
-export const districtValue2 = [
+export const districtsHanoi = [
   {label:'All',value:''},
   {label:'Ba Dinh',value:'Ba Dinh'},
   {label:'Dong Da',value:'Dong Da'},

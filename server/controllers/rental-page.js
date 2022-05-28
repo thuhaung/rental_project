@@ -4,27 +4,26 @@ export const search = async(req, res) => {
     const {city, district, price, street} = req.query;
     let rentals;
 
-    if(city) {
+    if (city) {
         rentals = await Rental.find({"address.city" : city});
     }
     else {
-        rentals = await Rental.find({"address.city" : "Ho Chi Minh"});
+        rentals = await Rental.find({"address.city" : "Ho Chi Minh City"});
     }
 
-
-    if(district) {
+    if (district) {
         rentals = rentals.filter((rental) => {
-            return rental.address.district == district;
+            return rental.address.district === district;
         })
     }
 
-    if(price) {
+    if (price > 0) {
         rentals = rentals.filter((rental) => {
             return rental.rent <= price
         })
     }
 
-    if(street) {
+    if (street) {
         //clarify the input of users
         let clearInputStreet = street.trim().toLowerCase();
         let words = clearInputStreet.split(" ");
@@ -58,6 +57,16 @@ export const getRentalInfo = async (req, res) => {
         if (rental) {
             res.status(200).send(rental);
         }
+    } catch (error) {
+        res.send(error.message);
+    }
+}
+
+export const getUserRentals = async (req, res) => {
+    const userId = req.params.id;
+    try {
+        const rentals = await Rental.find({user: userId});
+        res.status(200).send(rentals);
     } catch (error) {
         res.send(error.message);
     }
