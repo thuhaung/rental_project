@@ -8,10 +8,14 @@ import loading from "../../assets/loading-img.png";
 import avatar from "../../assets/profile-pic.jpg";
 import AmenitiesIcon from '../../assets/AmenitiesIcon.js';
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import PlacesAutocomplete, {
+    geocodeByAddress,
+    getLatLng,
+  } from "react-places-autocomplete";
 
 function RentalInfo() {
     const icons = AmenitiesIcon;
-    const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M" });
+    //const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M" });
     const [rental, setRental] = useState("");
     const [rentalName, setRentalName] = useState("");
     const [address, setAddress] = useState("");
@@ -72,6 +76,29 @@ function RentalInfo() {
             setAddress(rental.address);
         }
     }, []);*/
+
+    const handleChange = (address) => {
+        setAddress(address);
+    }
+
+    const handleSelect = (address) => {
+        geocodeByAddress(address)
+                                .then(results => getLatLng(results[0]))
+                                .then(latLng => console.log('Success', latLng))
+                                .catch(error => console.error('Error', error));
+    };
+
+
+    useEffect(() => {
+        const script = document.createElement('script');
+      
+        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyC5qHhy7lazQbxUKO0WtOizl0ISGIsu18U&libraries=places";
+        script.async = true;
+        document.body.appendChild(script);
+        return () => {
+          document.body.removeChild(script);
+        }
+      }, []);
 
     return (
         <div className="rental-info-wrapper">
@@ -152,10 +179,44 @@ function RentalInfo() {
                 <div className="rental-info-map">
                     <h3>Location</h3>
                     {
-                        isLoaded && 
-                        <GoogleMap zoom={10} center={{lat: 44, lng: -80}} mapContainerClassName="rental-info-map-container">
+                        rental && 
+                        /*<GoogleMap zoom={10} center={{lat: 44, lng: -80}} mapContainerClassName="rental-info-map-container">
 
-                        </GoogleMap>
+                        </GoogleMap>*/
+                        <PlacesAutocomplete value={address} onChange={handleChange} onSelect={handleSelect}>
+                            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                <div>
+                                    <input
+                                    {...getInputProps({
+                                        placeholder: 'Search Places ...',
+                                        className: 'location-search-input',
+                                    })}
+                                    />
+                                    <div className="autocomplete-dropdown-container">
+                                    {loading && <div>Loading...</div>}
+                                    {suggestions.map(suggestion => {
+                                        const className = suggestion.active
+                                        ? 'suggestion-item--active'
+                                        : 'suggestion-item';
+                                        // inline style for demonstration purpose
+                                        const style = suggestion.active
+                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                        return (
+                                        <div
+                                            {...getSuggestionItemProps(suggestion, {
+                                            className,
+                                            style,
+                                            })}
+                                        >
+                                            <span>{suggestion.description}</span>
+                                        </div>
+                                        );
+                                    })}
+                                    </div>
+                                </div>
+                                )}
+                        </PlacesAutocomplete>
                     }
                 </div>
                 <button className="rental-info-contact">Contact Renter</button>

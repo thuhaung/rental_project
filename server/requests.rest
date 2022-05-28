@@ -68,3 +68,6 @@ Content-Type: application/json
 
 ###
 GET http://localhost:5000/user/628fd3c41ce3583fa511e0c2
+
+###
+GET http://localhost:5000/rental/6290b946011eca47800788f1/all

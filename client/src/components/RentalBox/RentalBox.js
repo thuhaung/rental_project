@@ -33,7 +33,7 @@ function RentalBox({ name, rentAmount, fullAddress, rentalId, userId }) {
 
 
     return (
-        <div className="rental-box" onClick={() => navigate(`${rentalId}`)}>
+        <div className="rental-box" onClick={() => navigate(`../rentals/${rentalId}`)}>
             <div className="rental-box-img">
                 {
                     !image ? 

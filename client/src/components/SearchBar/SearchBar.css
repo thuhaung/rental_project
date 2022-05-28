@@ -12,14 +12,50 @@
 .searchbar-city,
 .searchbar-district,
 .searchbar-price {
-    width: 121px;
     height: 67px;
     /* background-color: antiquewhite; */
     margin-right: -5px;
     margin-left: -20px;
 }
 
+.searchbar-district {
+    width: 92px;
+}
+
+.searchbar-price {
+    width: 195px;
+}
+
+.searchbar-price-info {
+    display: flex;
+    justify-content: flex-start;
+    gap: 7px;
+    margin-left: 5px;
+    align-items: center;
+}
+
+.searchbar-price-range {
+    font-size: 14px;
+    font-weight: 500;
+    color: #bebebe;
+    margin-top: 16px;
+}
+
+.searchbar-display-price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 1px solid #bebebe;
+    width: 85px;
+    border-radius: 10px;
+    margin-top: -3px;
+    height: 30px;
+    font-size: 15px;
+}
+
 .searchbar-city {
+    width: 140px;
     margin-left: 20px;
     margin-right: -10px;
 }
@@ -40,13 +76,37 @@
 .searchbar-city-value,
 .searchbar-district-value {
     font-weight: 400;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 18px;
     display: flex;
     align-items: center;
     color: #A2A2A2;
     border-color: white;
+    border-radius: 10px;
     margin-top: -8px;
+}
+
+.searchbar-price-value {
+    margin-top: -3px;
+    margin-left: 5px;
+}
+
+input[type=range] {
+    -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+    width: 100%;
+    border: 1px solid #bebebe;
+    overflow: hidden;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 1px solid #7d89dd;
+    height: 15px;
+    width: 15px;
+    border-radius: 100%;
+    background-color: #7d89dd;
+    box-shadow: -135px 0 0 128px #7d89dd;
+    cursor: pointer;
 }
 
 .searchbar-price-value:hover,
@@ -69,7 +129,7 @@
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 17px;
+    font-size: 18px;
     line-height: 21px;
     display: flex;
     align-items: center;
@@ -84,11 +144,12 @@
 }
 
 .searchbar-btn {
-    width:95px;
+    width: 95px;
     height: 44px;
     background: #7D89DD;
     border-radius: 30px;
     border-style: none;
+    margin-right: 20px;
     margin-top: 16px;
 }
 
