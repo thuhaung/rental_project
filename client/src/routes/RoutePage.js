@@ -10,6 +10,7 @@ import AdvertisePlace from "../pages/AdvertisePlace/AdvertisePlace";
 import Nav from '../components/Nav/Nav'
 import RentalInfo from '../pages/RentalInfo/RentalInfo.js'
 import YourAdvertisements from '../pages/YourAdvertisements/YourAdvertisements.js'
+import Chatroom from '../pages/Chatroom/Chatroom.js'
 
 function RoutePage() {
   return (
@@ -24,7 +25,7 @@ function RoutePage() {
                 <Route path="/rental-after" element={<RentalAfter />} />
                 <Route path="/rentals/:id" element={<RentalInfo />} />
                 <Route path="/user/:id/rentals" element={<YourAdvertisements />} />
-                
+                <Route path="/user/chatroom" element={<Chatroom />} />
                 {/* protected routes <Route element={<RequireAuth />}>*/}
                 
                   <Route path="/user/info" element={<PrivateRoute> <UserInfo /> </PrivateRoute>} />

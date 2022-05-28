@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+    color: black;
+}
+
+
+.chatroom-hr {
+    position: absolute;
+    top: 65px;
+    height: 0.05px;
+    background-color: #dcdcdc;
+    border: 0.1px solid #dcdcdc;
+    width: 100%;
+}
+
+.chatroom-wrapper {
+    display: flex;
+    position: absolute;
+    justify-content: flex-start;
+    top: 65px;
+    width: 100%;
+    height: 625px;
+}
+
+.chatroom-nav {
+    position: relative;
+    top: 8px;
+    width: 440px;
+    height: 100%;
+    border-right: 0.1px solid #dcdcdc;
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+}
+
+.chatroom-listing {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.chatroom-listing-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+
+.chatroom-listing-item > img {
+    border-radius: 100%;
+    height: 65px;
+    width: 65px;
+}
+
+.chatroom-listing-item-preview {
+    margin-top: -5px;
+}
+
+.chatroom-listing-item-preview > h3 {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.chatroom-listing-item-preview > p {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.chatroom-box {
+    width: 715px;
+    position: relative;
+    top: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chatroom-box-user-info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0 5px 20px;
+    border-bottom: 0.1px solid #dcdcdc;
+}
+
+.chatroom-box-user-info > h3 {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+input[type="text"].chatroom-box-input {
+    border: none;
+    border-top: 0.1px solid #dcdcdc;
+    padding: 15px;
+    width: 655px;
+}
+
+.chatroom-box-user-info > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+.chatroom-rental {
+    position: relative;
+    top: 8px;
+    width: 600px;
+    border-left: 0.1px solid #dcdcdc;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+}
+
+.chatroom-rental > img {
+    height: 250px;
+    width: 250px;
+    border-radius: 7px;
+    margin-top: 40px;
+}
+
+.chatroom-rental-info {
+    display: flex;
+    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
+    line-height: 0.5;
+}
+
+.chatroom-rental-btn {
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    width: 160px;
+    padding: 15px 0 15px 0;
+    border-radius: 10px;
+    border: none;
+    background-color: #7d89dd;
+    margin-top: 30px;
+}
+
+.chatroom-rental-amenities {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.chatroom-rental-amenities > img {
+    height: 30px;
+    width: 30px;
+}
+
+
+
