@@ -25,18 +25,18 @@ function Chatroom() {
                 <div className="chatroom-nav">
                     <h2>Chat</h2>
                     <div className="chatroom-listing">
-                        <div className="chatroom-listing-item">
+                    <div className="chatroom-listing-item">
                             <img src={avatar} alt="avatar" />
                             <div className="chatroom-listing-item-preview">
-                                <h3>Ken Pham</h3>
-                                <p>Hello</p>
+                                <h3>Ken • Your District Binh Thanh Apartment</h3>
+                                <p>Ken: Hello, I have a question about...</p>
                             </div>
                         </div>
                         <div className="chatroom-listing-item">
                             <img src={avatar} alt="avatar" />
                             <div className="chatroom-listing-item-preview">
-                                <h3>Ken Pham</h3>
-                                <p>Hello</p>
+                                <h3>Ken • Their District 4 Room </h3>
+                                <p>You: Ok, I accept the deposit requir...</p>
                             </div>
                         </div>
                     </div>
@@ -44,25 +44,26 @@ function Chatroom() {
                 <div className="chatroom-box">
                     <div className="chatroom-box-user-info">
                         <img src= {avatar} alt="avatar" />
-                        <h3>Ken Pham</h3>
+                        <h3>Ken Pham • Their District 4 Room</h3>
                     </div>
                     <input type="text" placeholder="Send a message..." className="chatroom-box-input"/>
                 </div>
                 <div className="chatroom-rental">
                     <img src={pic} alt="rental" />
                     <div className="chatroom-rental-info">
-                        <h3>Apartment for Rent at District Tan Binh</h3>
-                            <p>70/15A Nguyen Sy Sach Ward 12, District Tan Binh</p>
-                            <p>1 bedrooms • 1 bathrooms</p>
-                            <p>7 mil/month</p>
-                            <div className="chatroom-rental-amenities">
-                                {icons.map(icon => (
-                                    <img src={icon} alt="amenity" />
-                                ))}
-                            </div>
+                        <h3>Apartment for Rent at District Binh Thanh</h3>
+                        <p>70/15A Nguyen Sy Sach Ward 12, District Binh Thanh</p>
+                        <p>1 bedrooms • 1 bathrooms</p>
+                        <p>7 mil/month</p>
+                        <div className="chatroom-rental-amenities">
+                            {icons.map(icon => (
+                                <img src={icon} alt="amenity" />
+                            ))}
+                        </div>
                     </div>
                     <button className="chatroom-rental-btn">Close deal</button>
                 </div>
+                        
             </div>
         </div>
     )

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import Cookies from 'universal-cookie';
 import useAuth from '../../hooks/useAuth';
 import LoginPopup from '../Login/LoginPopup'
@@ -32,15 +32,15 @@ function Nav() {
         <nav>
             <div className="logo-div">
                 <img src={logo} alt="logo" />
-                <p><Link to="/">Casa</Link></p>
+                <p><NavLink to="/">Casa</NavLink></p>
             </div>
             <ul>
                 <div className="main-sections">
                     <li>
-                        <Link to="/rentals">Rent</Link>
+                        <NavLink to="/rentals">Rent</NavLink>
                     </li>
                     <li>
-                        <Link to="/advertisements">Advertise</Link>
+                        <NavLink to="/advertisements">Advertise</NavLink>
                     </li>
                     <li>
                         Help
@@ -54,7 +54,7 @@ function Nav() {
                             <div className="stripe" />
                         </div>
                         
-                        {/*isAuth ? <button><Link to="/user-info">User info</Link></button> :
+                        {/*isAuth ? <button><NavLink to="/user-info">User info</NavLink></button> :
                             <div>
                                 <button onClick={() => setIsOpen(!isOpen)}>Sign in</button>
                                 <LoginPopup open={isOpen} onClose={() => setIsOpen(false)}/>

@@ -76,7 +76,7 @@ const rentalSchema = mongoose.Schema({
         city: {
             type: String,
             required: true,
-            enum: ["Ho Chi Minh", "Hanoi"]
+            enum: ["Ho Chi Minh City", "Hanoi"]
         },
         location: {
             type: {
