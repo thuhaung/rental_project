@@ -1,5 +1,5 @@
 import express from 'express';
-import * as chatroomController from '../controllers/chatroomController.js'
+import * as chatroomController from '../controllers/chatroom-page.js'
 import { authenticateToken } from '../middleware/authorization.js';
 
 const chatroomRouter = express.Router();

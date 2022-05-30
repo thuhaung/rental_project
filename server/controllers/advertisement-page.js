@@ -41,7 +41,6 @@ export const uploadRentalImage = async (req, res) => {
 }
 
 export const getRentalImages = async (req, res) => {
-    const cookie = new Cookies(req.header.cookies);
     const rentalId = req.body.rentalId;
     const userId = req.body.userId;
     const { resources } = await cloudinary.v2.search.

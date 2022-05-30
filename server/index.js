@@ -18,6 +18,7 @@ app.use(cors({origin: "http://localhost:3000", credentials: true}));
 
 Router(app);
 
+/*
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
@@ -32,7 +33,13 @@ io.on("Connection", socket => {
     socket.on("Disconnect", () => {
         console.log("User " + socket.id + " disconnected.");
     })
-})
+
+    socket.on("Join room", (roomId) => {
+        socket.join(roomId);
+        console.log(`User ${socket.id} joined room ${roomId}`);
+        socket.emit("test", `User ${socket.id} joined room ${roomId}`);
+    })
+})*/
 
 const CONNECTION_URL = "mongodb+srv://mongo:mongo@cluster0.llxlu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 // eslint-disable-next-line no-undef
@@ -43,6 +50,19 @@ db.on('error', function() {
 });
 
 mongoose.connect(CONNECTION_URL)
-                .then(() => server.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
+                /*.then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))*/
                 .catch((error) => console.log(error.message));
 
+const httpServer = http.createServer(app);
+
+const io = new Server(httpServer, {
+    pingTimeout: 60000,
+    cors: {
+        origin: "http://localhost:3000"
+    }
+});
+io.on("Connection", () => {
+    console.log("Connected to socket.io");
+})
+
+httpServer.listen(PORT, () => console.log(`Server running on port: ${PORT}`));

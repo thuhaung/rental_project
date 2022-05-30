@@ -1,21 +1,103 @@
 import React, { useState, useEffect } from 'react'
 import "./Chatroom.css";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 import Nav from "../../components/Nav/Nav.js";
 import avatar from "../../assets/profile-pic.jpg";
 import pic from "../../assets/homepage-rent-image.jpg";
 import AmenitiesIcon from '../../assets/AmenitiesIcon';
+import axios from 'axios';
+import Cookies from "universal-cookie";
+import { Image } from "cloudinary-react";
+import photo from "../../assets/images-icon.png";
 
-const socket = io.connect("http://localhost:5000");
+//const socket = io.connect("http://localhost:5000");
 
 function Chatroom() {
     const icons = AmenitiesIcon;
+    const iconNames = ["Kitchen", "AC", "Parking", "Washer", "TV", "Wifi", "Fridge"];
+    const cookie = new Cookies();
+    const userId = cookie.get("userId");
     const [user, setUser] = useState();
-    const [room, setRoom] = useState();
+    const [conversations, setConversations] = useState([]);
+    const [receivers, setReceivers] = useState([]);
+    const [rentals, setRentals] = useState([]);
+    const [currentConversation, setCurrentConversation] = useState();
+    const [currentReceiver, setCurrentReceiver] = useState();
+    const [currentRental, setCurrentRental] = useState();
+    const [rentalImage, setRentalImage] = useState();
+    const [text, setText] = useState("");
+    const [messages, setMessages] = useState([]);
 
-    const joinRoom = () => {
+    const getAllConversations = async () => {
+        axios.get(`http://localhost:5000/chatroom/conversation/${userId}`).then((response) => {
+            if (response.data) {
+                setConversations(response.data);
+                setCurrentConversation(response.data[0]);
+                for (let i in response.data) {
+                    const members = response.data[i].members;
+                    const receiverId = members.filter(member => member !== userId);
+                    const rentalId = response.data[i].rental;
+                    getAllReceiverNames(receiverId);
+                    getAllRentalInfo(rentalId);
+                }
+            }
+        }).catch((error) => console.log(error.message));
+    }
 
-    };
+    const getAllReceiverNames = async (receiverId) => {
+        axios.get(`http://localhost:5000/user/${receiverId}`).then((response) => {
+            if (response.data) {
+                setReceivers(prev => [...prev, response.data]);
+            }
+        }).catch((error) => console.log(error.message));
+    }
+
+    const getAllRentalInfo = async (rentalId) => {
+        axios.get(`http://localhost:5000/rental/${rentalId}`).then((response) => {
+            if (response.data) {
+                setRentals(prev => [...prev, response.data]);
+            }
+        }).catch((error) => console.log(error.message));
+    }
+
+    const getRentalImage = async (rentalId, userId) => {
+        axios.post("http://localhost:5000/advertisement/images", {rentalId: rentalId, userId: userId}).then((response) => {
+            if (response.data) {
+                setRentalImage(response.data[0]);
+            }
+        }).catch((error) => console.log(error.message));
+        console.log(rentalId);
+        console.log(userId);
+    }
+
+    const sendMessage = async (e) => {
+        e.preventDefault();
+        const form = {
+            conversation: currentConversation._id,
+            sender: userId,
+            text: text,
+        }
+        console.log(form);
+        axios.post("http://localhost:5000/chatroom/message", form).then((response) => {
+            if (response.data) {
+                console.log("ok");
+            }
+        }).catch((error) => console.log(error.message));
+    }
+
+    const getMessages = async (conversationId) => {
+        axios.get(`http://localhost:5000/chatroom/message/${conversationId}`).then((response) => {
+            if (response.data) {
+                setMessages(prev => [...prev, response.data]);
+            }
+        }).catch((error) => console.log(error.message));
+    }
+
+    useEffect(() => {
+        getAllConversations();
+        //setCurrentReceiver(receivers[0]);
+        //setCurrentRental(rentals[0]);
+    }, []);
 
     return (
         <div className="chatroom">
@@ -25,45 +107,63 @@ function Chatroom() {
                 <div className="chatroom-nav">
                     <h2>Chat</h2>
                     <div className="chatroom-listing">
-                    <div className="chatroom-listing-item">
-                            <img src={avatar} alt="avatar" />
-                            <div className="chatroom-listing-item-preview">
-                                <h3>Ken • Your District Binh Thanh Apartment</h3>
-                                <p>Ken: Hello, I have a question about...</p>
-                            </div>
-                        </div>
-                        <div className="chatroom-listing-item">
-                            <img src={avatar} alt="avatar" />
-                            <div className="chatroom-listing-item-preview">
-                                <h3>Ken • Their District 4 Room </h3>
-                                <p>You: Ok, I accept the deposit requir...</p>
-                            </div>
-                        </div>
+                        {
+                            receivers && conversations.map((convo, index) => (
+                                <div key={index} className={"chatroom-listing-item" + (currentRental ? (currentRental._id === rentals[index]._id ? "-active" : "") : "")} onClick={() => {setCurrentConversation(conversations[index]); setCurrentReceiver(receivers[index]); setCurrentRental(rentals[index]); getRentalImage(rentals[index]._id, rentals[index].user); getMessages(conversations[index]._id)}}>
+                                    <img src={avatar} alt="avatar" />
+                                    <div className="chatroom-listing-item-preview">
+                                        <h3>{receivers && receivers[index]?.first_name} • {rentals && (rentals[index]?.user === userId ? "Your District " : "Their District ") + rentals[index]?.address?.district + " " + rentals[index]?.property_type}</h3>
+                                        <p>{receivers && receivers[index]?.first_name}: {messages && messages[0]?.text}</p>
+                                    </div>
+                                </div> 
+                            ))
+                        }
                     </div>
                 </div>
                 <div className="chatroom-box">
                     <div className="chatroom-box-user-info">
                         <img src= {avatar} alt="avatar" />
-                        <h3>Ken Pham • Their District 4 Room</h3>
+                        <h3>{currentReceiver ? currentReceiver?.first_name + " • " : ""}  {currentRental ? (currentRental.user === userId ? "Your District " : "Their District " + currentRental?.address?.district + " " + currentRental?.property_type) : ""}</h3>
                     </div>
-                    <input type="text" placeholder="Send a message..." className="chatroom-box-input"/>
+                    <div className="chatroom-box-messages">
+                        {
+                            messages && messages.map((message, index) => (
+                                console.log(message.text)
+                            ))
+                        }
+                    </div>
+                    <form className="chatroom-box-form" onSubmit={(e) => {sendMessage(e); setText("")}}>
+                        <input type="text" placeholder="Send a message..." className="chatroom-box-input" onChange={(e) => setText(e.target.value)}/>
+                        
+                        <label className="rental-image-first-time-upload-label">
+                            <input type="file" multiple style={{display: "hidden"}} accept="image/png, image/jpeg, image/jpg, image/webp" />
+                            <img src={photo} className="chatroom-box-add-img" alt="" />
+                        </label>
+                        <button className="chatroom-box-send-btn" type="submit">Send</button>
+                    </form>
                 </div>
                 <div className="chatroom-rental">
-                    <img src={pic} alt="rental" />
-                    <div className="chatroom-rental-info">
-                        <h3>Apartment for Rent at District Binh Thanh</h3>
-                        <p>70/15A Nguyen Sy Sach Ward 12, District Binh Thanh</p>
-                        <p>1 bedrooms • 1 bathrooms</p>
-                        <p>7 mil/month</p>
-                        <div className="chatroom-rental-amenities">
-                            {icons.map(icon => (
-                                <img src={icon} alt="amenity" />
-                            ))}
-                        </div>
-                    </div>
-                    <button className="chatroom-rental-btn">Close deal</button>
-                </div>
-                        
+                    {
+                        rentals && currentRental && rentalImage &&
+                        <>
+                            <Image cloud_name="heroinism" public_id={rentalImage} />
+                            <div className="chatroom-rental-info">
+                                <h3>{currentRental.property_type} for Rent at District {currentRental.address.district}</h3>
+                                <p>{currentRental.address.num + " " + currentRental.address.street + " Ward " + currentRental.address.ward + ", District " + currentRental.address.district}</p>
+                                <p>{currentRental.num_of_bedrooms} bedrooms • {currentRental.num_of_bathrooms} bathrooms</p>
+                                <p>{currentRental.rent/1000000} mil/month</p>
+                                <div className="chatroom-rental-amenities">
+                                    {
+                                        currentRental.amenities.map(amenity => (
+                                            <img src={icons[iconNames.indexOf(amenity)]} />
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                            <button className="chatroom-rental-btn">Close deal</button>
+                        </>
+                    }
+                </div>    
             </div>
         </div>
     )

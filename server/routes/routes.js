@@ -2,7 +2,7 @@ import homepageRouter from './homepage.js';
 import rentalPageRouter from './rental-page.js';
 import userInfoRouter from "./user-info.js";
 import advertisementPageRouter from './advertisement-page.js';
-import chatroomRouter from './chatroom.js';
+import chatroomRouter from './chatroom-page.js';
 
 
 function Router(app) {

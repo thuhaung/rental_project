@@ -1,9 +1,10 @@
-import Conversation from "../models/Conversation.js";
-import Message from "../models/Message.js";
+import Conversation from "../models/conversation.js";
+import Message from "../models/message.js";
 
 export const newConversation = async (req, res) => {
     const newConversation = new Conversation({
-        members: [req.body.senderId, req.body.receiverId]
+        members: [req.body.senderId, req.body.receiverId],
+        rental: req.body.rentalId
     })
     try {
         const conversation = await Conversation.find({ "members": newConversation.members });
@@ -12,7 +13,7 @@ export const newConversation = async (req, res) => {
                 const savedConversation = await newConversation.save();
                 res.status(200).json(savedConversation)
             } catch (error) {
-                res.status(500).json('Cannot saved');
+                res.status(500).json("Cannot save.");
             }
         }
         else {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Nav from "../../components/Nav/Nav.js";
 import "./RentalInfo.css";
 import { Image } from "cloudinary-react";
@@ -8,6 +8,7 @@ import loading from "../../assets/loading-img.png";
 import avatar from "../../assets/profile-pic.jpg";
 import AmenitiesIcon from '../../assets/AmenitiesIcon.js';
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import Cookies from "universal-cookie";
 import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
@@ -28,7 +29,10 @@ function RentalInfo() {
     const [renter, setRenter] = useState({});
     const [images, setImages] = useState([]);
     const { id } = useParams();
+    const cookies = new Cookies();
+    const userId = cookies.get("userId");
     const iconNames = ["Kitchen", "AC", "Parking", "Washer", "TV", "Wifi", "Fridge"];
+    const navigate = useNavigate();
 
     const getRental = async () => {
         axios.get(`http://localhost:5000/rental/${id}`).then((response) => {
@@ -87,6 +91,19 @@ function RentalInfo() {
                                 .then(latLng => console.log('Success', latLng))
                                 .catch(error => console.error('Error', error));
     };
+
+    const contactRenter = () => {
+        const form = {
+            senderId: userId,
+            receiverId: rental.user,
+            rentalId: rental._id
+        }
+        axios.post("http://localhost:5000/chatroom/conversation", form).then((response) => {
+            if (response.data) {
+                navigate(`../user/${userId}/chatroom`);
+            }
+        }).catch((error) => console.log(error.message));
+    }
 
 
     useEffect(() => {
@@ -180,7 +197,13 @@ function RentalInfo() {
                     <h3>Location</h3>
                     
                 </div>
-                <button className="rental-info-contact">Contact Renter</button>
+                {
+                    rental && rental.user !== userId ? 
+                    <button className="rental-info-contact" onClick={() => contactRenter()}>Contact Renter</button> 
+                    :
+                    ""
+                }
+                
             </div>
         </div>
     )
