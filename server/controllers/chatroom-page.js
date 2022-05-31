@@ -91,16 +91,14 @@ export const newAttachment = async (req, res) => {
     const conversationId = req.body.conversationId;
     const messageId = req.body.messageId;
     try {
-        const files = req.body.images;
+        const file = req.body.image;
         let uploadedResponse;
-        for (let i in files) {
-            uploadedResponse = await cloudinary.v2.uploader.upload(files[i], {
-                public_id: `${messageId}`,
-                folder: `chat/${conversationId}/${userId}`,
-                resource_type: 'image'
-            });
-            console.log(uploadedResponse);
-        }
+        uploadedResponse = await cloudinary.v2.uploader.upload(file, {
+            public_id: `${messageId}`,
+            folder: `chat/${conversationId}/${userId}`,
+            resource_type: 'image'
+        });
+        console.log(uploadedResponse);
         res.status(200).send("ok");
     } catch (error) {
         console.log(error.message);

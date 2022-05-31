@@ -26,6 +26,7 @@ function Chatroom() {
     const [rentalImage, setRentalImage] = useState();
     const [text, setText] = useState("");
     const [messages, setMessages] = useState([]);
+    const [selectedImage, setSelectedImage] = useState();
     const navigate = useNavigate();
     //const [message, setMessage] = useState();
     //const socket = io("http://localhost:5000/");
@@ -77,14 +78,17 @@ function Chatroom() {
         //})
         //setCurrentReceiver(receivers[0]);
         //setCurrentRental(rentals[0]);
-    }, [currentConversation, messages, text]);
+    }, [currentConversation, messages]);
 
-    /*useEffect(() => {
-        socket.on("Message received", message => {
-            setMessages(prev => [...prev, message]);
+    const submitImage = (messageId) => {
+        axios.post("http://localhost:5000/advertisement/upload-image", {image: selectedImage, conversationId: currentConversation._id, messageId: messageId}, { withCredentials: true }).then((response) => {
+          if (response.data) {
+              console.log("ok");
+          }
+        }).catch((error) => {
+            console.log(error.message);
         })
-    })*/
-
+    }
 
     const sendMessage = async (e) => {
         e.preventDefault();
@@ -101,6 +105,7 @@ function Chatroom() {
             }
         }).catch((error) => console.log(error.message));
         setText("");
+        setSelectedImage();
     }
 
     const getMessages = async (conversationId) => {
@@ -126,7 +131,14 @@ function Chatroom() {
         }).catch((error) => console.log(error.message));
     }
 
-    
+    const previewImage = (e) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onloadend = () => {
+            setSelectedImage(reader.result);
+        }
+    }
+
     return (
         <div className="chatroom">
             <Nav />
@@ -154,6 +166,15 @@ function Chatroom() {
                         <h3>{currentReceiver ? currentReceiver?.first_name + " • " : ""}  {currentRental ? (currentRental.user === userId ? "Your District " : "Their District ") + currentRental?.address?.district + " " + currentRental?.property_type : ""}</h3>
                     </div>
                     <div className="chatroom-box-messages">
+                        <div className="their-chatroom-box-message">
+                            <p>Test message</p>
+                            
+                        </div>
+                        <div className="their-chatroom-box-message">
+                            <p>Test message</p>
+                            
+                        </div>
+                        
                         {
                             messages && messages.map((message, index) => (
                                 <div key={index} className={(message.sender === userId? "your-" : "their-") + "chatroom-box-message"}>
@@ -162,15 +183,25 @@ function Chatroom() {
                                 </div>
                             ))
                         }
+
                     </div>
                 
                 <div className="chatroom-box-form">
-                        <label className="rental-image-first-time-upload-label">
-                            <input type="file" style={{display: "hidden"}} accept="image/png, image/jpeg, image/jpg, image/webp" />
-                            <img src={photo} className="chatroom-box-add-img" alt="" />
+                        <label className="chatroom-box-upload-img">
+                            <input type="file" style={{display: "hidden"}} onChange={(e) => previewImage(e)} accept="image/png, image/jpeg, image/jpg, image/webp" />
+                            <img src={photo} className="chatroom-box-add-img" alt=""/>
                         </label>
-                        <input type="text" placeholder="Send a message..." className="chatroom-box-input" onChange={(e) => setText(e.target.value)}/>
-                        <button className="chatroom-box-send-btn" onClick={(e) => {sendMessage(e)}}>Send</button>
+                        {
+                            selectedImage ? 
+                            <div className="chatroom-box-image-wrapper">
+                                <img className="chatroom-box-image" src={selectedImage} alt="img-attachment"/>
+                            </div>
+                            :
+                            <input type="text" placeholder="Send a message..." value={text} className="chatroom-box-input" onChange={(e) => setText(e.target.value)}/>
+                        }
+                        
+                        
+                        <button className="chatroom-box-send-btn" onClick={(e) => {sendMessage(e); getMessages(currentConversation._id)}}>Send</button>
                     </div>
                 </div>
                 <div className="chatroom-rental">

@@ -7,7 +7,7 @@
 
 .chatroom-hr {
     position: absolute;
-    top: 65px;
+    top: 56px;
     height: 0.05px;
     background-color: #dcdcdc;
     border: 0.1px solid #dcdcdc;
@@ -26,7 +26,6 @@
 
 .chatroom-nav {
     position: relative;
-    top: 8px;
     width: 420px;
     height: 100%;
     border-right: 0.1px solid #dcdcdc;
@@ -34,7 +33,6 @@
     flex-direction: column;
     margin-left: 30px;
     flex-shrink: 0;
-    padding-top: 10px;
     overflow-y: scroll;
 }
 
@@ -139,12 +137,9 @@
     flex-grow: 0;
     width: 650px;
     position: relative;
-    top: 8px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow-y: scroll;
-    overflow-x: hidden;
 }
 
 .chatroom-box-user-info {
@@ -155,6 +150,8 @@
     gap: 15px;
     padding: 10px 0 5px 20px;
     border-bottom: 0.1px solid #dcdcdc;
+    background-color: white;
+    z-index: 1;
 }
 
 .chatroom-box-user-info > h3 {
@@ -170,7 +167,10 @@
     justify-content: flex-end;
     gap: 20px;
     width: inherit;
-    margin-bottom: 15px;
+    padding-bottom: 15px;
+    z-index: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .your-chatroom-box-message {
@@ -225,10 +225,32 @@
 
 .chatroom-box-form {
     display: flex;
+    height: 45px;
+    align-items: center;
+}
+
+.chatroom-box-upload-img {
+    width: 45px;
+    height: 47px;
+}
+
+.chatroom-box-image {
+    height: 46px;
+    width: 40px;
+}
+
+.chatroom-box-image-wrapper {
+    margin-top: 3px;
+    border-top: 0.1px solid #dcdcdc;
+}
+
+.chatroom-box-upload-img > input[type="file"] {
+    display: none;
 }
 
 .chatroom-box-send-btn {
     width: 80px;
+    height: 46px;
     background-color: #7d89dd;
     border: none;
     font-weight: 600;

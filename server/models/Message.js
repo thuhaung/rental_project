@@ -13,7 +13,10 @@ const messageSchema = new mongoose.Schema({
         type: String,
         maxLength: 200
     },
-    image: String,
+    contains_image: {
+        type: Boolean,
+        default: false
+    },
     created_At: {
         type: Date,
         default: Date.now
