@@ -8,8 +8,11 @@ const conversationSchema = new mongoose.Schema({
         }],
     },
     latest_message: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Message"
+        text: String,
+        sender: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }
     },
     created_At: {
         type: Date,

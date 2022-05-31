@@ -16,7 +16,7 @@ import PlacesAutocomplete, {
 
 function RentalInfo() {
     const icons = AmenitiesIcon;
-    //const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M" });
+    const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M" })
     const [rental, setRental] = useState("");
     const [rentalName, setRentalName] = useState("");
     const [address, setAddress] = useState("");
@@ -107,14 +107,14 @@ function RentalInfo() {
 
 
     useEffect(() => {
-        const script = document.createElement('script');
+        /*const script = document.createElement('script');
       
         script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyC5qHhy7lazQbxUKO0WtOizl0ISGIsu18U&libraries=places";
         script.async = true;
         document.body.appendChild(script);
         return () => {
           document.body.removeChild(script);
-        }
+        }*/
       }, []);
 
     return (
@@ -195,6 +195,9 @@ function RentalInfo() {
                 <hr className="rental-info-hr"></hr>
                 <div className="rental-info-map">
                     <h3>Location</h3>
+                    {
+                        
+                    }
                     
                 </div>
                 {
