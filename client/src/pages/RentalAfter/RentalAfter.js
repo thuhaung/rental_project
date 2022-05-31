@@ -15,7 +15,7 @@ function RentalAfter(props) {
     useEffect(() => {
         setResult(rentals);
         console.log('Set succesfully');
-    }, []);
+    });
 
     //Filter output
     function handleFilter(e) {
