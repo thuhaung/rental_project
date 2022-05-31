@@ -215,6 +215,14 @@
     color: black
 }
 
+.their-chatroom-box-message > .chatroom-box-message-seen {
+    font-size: 12px;
+}
+
+.your-chatroom-box-message > .chatroom-box-message-seen {
+    font-size: 12px;
+}
+
 .chatroom-box-form {
     display: flex;
 }

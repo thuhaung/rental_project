@@ -11,8 +11,6 @@ import Cookies from "universal-cookie";
 import { Image } from "cloudinary-react";
 import photo from "../../assets/images-icon.png";
 
-//const socket = io.connect("http://localhost:5000");
-
 function Chatroom() {
     const icons = AmenitiesIcon;
     const iconNames = ["Kitchen", "AC", "Parking", "Washer", "TV", "Wifi", "Fridge"];
@@ -29,6 +27,8 @@ function Chatroom() {
     const [text, setText] = useState("");
     const [messages, setMessages] = useState([]);
     const navigate = useNavigate();
+    //const [message, setMessage] = useState();
+    //const socket = io("http://localhost:5000/");
 
     const getAllConversations = async () => {
         axios.get(`http://localhost:5000/chatroom/conversation/${userId}`).then((response) => {
@@ -69,6 +69,23 @@ function Chatroom() {
         }).catch((error) => console.log(error.message));
     }
 
+    useEffect(() => {
+        getAllConversations();
+        //socket.emit("setup", userId);
+        //socket.on("Connection", () => {
+        //    setSocketConnection(true);
+        //})
+        //setCurrentReceiver(receivers[0]);
+        //setCurrentRental(rentals[0]);
+    }, [currentConversation, messages, text]);
+
+    /*useEffect(() => {
+        socket.on("Message received", message => {
+            setMessages(prev => [...prev, message]);
+        })
+    })*/
+
+
     const sendMessage = async (e) => {
         e.preventDefault();
         const form = {
@@ -79,6 +96,8 @@ function Chatroom() {
         axios.post("http://localhost:5000/chatroom/message", form).then((response) => {
             if (response.data) {
                 console.log("ok");
+                //setMessage(response.data);
+                //socket.emit("New message", response.data);
             }
         }).catch((error) => console.log(error.message));
         setText("");
@@ -88,16 +107,26 @@ function Chatroom() {
         axios.get(`http://localhost:5000/chatroom/message/${conversationId}`).then((response) => {
             if (response.data) {
                 setMessages(response.data);
+                for (let i in response.data) {
+                    if (response.data[i].sender !== userId) {
+                        if (!response.data[i].seen) {
+                            getMessageStatus(response.data[i]._id);
+                        }
+                    }
+                }
             }
         }).catch((error) => console.log(error.message));
     }
 
-    useEffect(() => {
-        getAllConversations();
-        //setCurrentReceiver(receivers[0]);
-        //setCurrentRental(rentals[0]);
-    }, [currentConversation, messages, text]);
+    const getMessageStatus = async (messageId) => {
+        axios.get(`http://localhost:5000/chatroom/message/${messageId}/set-status`).then((response) => {
+            if (response.data) {
+                console.log(response.data);
+            }
+        }).catch((error) => console.log(error.message));
+    }
 
+    
     return (
         <div className="chatroom">
             <Nav />
@@ -129,6 +158,7 @@ function Chatroom() {
                             messages && messages.map((message, index) => (
                                 <div key={index} className={(message.sender === userId? "your-" : "their-") + "chatroom-box-message"}>
                                     <p>{message.text}</p>
+                                    <p className="chatroom-box-message-seen">{index === messages.length - 1 ? (messages[index].sender === userId ? (messages[index].seen ? "Seen" : "Delivered") : "") : ""}</p>
                                 </div>
                             ))
                         }

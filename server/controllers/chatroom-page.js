@@ -1,5 +1,7 @@
 import Conversation from "../models/conversation.js";
 import Message from "../models/message.js";
+import cookieParser from "cookie-parser";
+import { cloudinary } from "../utils/cloudinary.js";
 
 export const newConversation = async (req, res) => {
     const newConversation = new Conversation({
@@ -69,5 +71,38 @@ export const getLatestMessage = async (req, res) => {
         } catch (error) {
             res.status(500).json(error);
         }
+    }
+}
+
+export const updateMessageStatus = async (req, res) => {
+    const messageId = req.params.id;
+    if (messageId) {
+        try {
+            await Message.findByIdAndUpdate(messageId, {seen: true});
+            res.status(200).send("Message is seen.");
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    }
+}
+
+export const newAttachment = async (req, res) => {
+    const userId = req.cookies["userId"];
+    const conversationId = req.body.conversationId;
+    const messageId = req.body.messageId;
+    try {
+        const files = req.body.images;
+        let uploadedResponse;
+        for (let i in files) {
+            uploadedResponse = await cloudinary.v2.uploader.upload(files[i], {
+                public_id: `${messageId}`,
+                folder: `chat/${conversationId}/${userId}`,
+                resource_type: 'image'
+            });
+            console.log(uploadedResponse);
+        }
+        res.status(200).send("ok");
+    } catch (error) {
+        console.log(error.message);
     }
 }

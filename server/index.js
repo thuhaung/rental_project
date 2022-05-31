@@ -18,29 +18,6 @@ app.use(cors({origin: "http://localhost:3000", credentials: true}));
 
 Router(app);
 
-/*
-const server = http.createServer(app);
-const io = new Server(server, {
-    cors: {
-        origin: "http://localhost:3000",
-        credentials: true,
-        methods: ["GET", "POST", "DELETE"]
-    }
-});
-
-io.on("Connection", socket => {
-    console.log("User " + socket.id + " connected.");
-    socket.on("Disconnect", () => {
-        console.log("User " + socket.id + " disconnected.");
-    })
-
-    socket.on("Join room", (roomId) => {
-        socket.join(roomId);
-        console.log(`User ${socket.id} joined room ${roomId}`);
-        socket.emit("test", `User ${socket.id} joined room ${roomId}`);
-    })
-})*/
-
 const CONNECTION_URL = "mongodb+srv://mongo:mongo@cluster0.llxlu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 // eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 5000;
@@ -53,16 +30,40 @@ mongoose.connect(CONNECTION_URL)
                 /*.then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))*/
                 .catch((error) => console.log(error.message));
 
-const httpServer = http.createServer(app);
+//const httpServer = http.createServer(app);
+//httpServer.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
 
-const io = new Server(httpServer, {
+const server = app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+
+/*const io = new Server(server, {
     pingTimeout: 60000,
     cors: {
         origin: "http://localhost:3000"
     }
 });
-io.on("Connection", () => {
-    console.log("Connected to socket.io");
-})
 
-httpServer.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+io.on("Connection", (socket) => {
+    console.log("Connected to socket.io");
+
+    socket.on("setup", (userId) => {
+        socket.join(userId);
+        console.log(userId);
+        socket.emit("Connected");
+    });
+
+    socket.on("Join chat", (conversationId) => {
+        socket.join(conversationId);
+        console.log("User joined conversation.");
+        socket.emit("Connected");
+    });
+
+    socket.on("New message", (messageId) => {
+        const conversationId = messageId.conversation;
+        conversationId.members.forEach(member => {
+            if (member._id === messageId.sender) return;
+            socket.in(member._id).emit("Message received", messageId);
+        });
+    });
+ 
+})
+*/
