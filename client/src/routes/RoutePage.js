@@ -25,14 +25,12 @@ function RoutePage() {
                 <Route path="/rental-after" element={<RentalAfter />} />
                 <Route path="/rentals/:id" element={<RentalInfo />} />
                 <Route path="/user/:id/rentals" element={<YourAdvertisements />} />
-                <Route path="/user/chatroom" element={<Chatroom />} />
-                {/* protected routes <Route element={<RequireAuth />}>*/}
                 
+                {/* protected routes <Route element={<RequireAuth />}>*/}
                   <Route path="/user/info" element={<PrivateRoute> <UserInfo /> </PrivateRoute>} />
                   <Route path="/advertise-place" element={<PrivateRoute> <AdvertisePlace /> </PrivateRoute>} />
-                  {/* advertise rental, rent a place, chatrooms are protected routes </Route>*/}
-                
-            </Routes>
+                  <Route path="/user/:id/chatroom" element={<Chatroom />} />
+              </Routes>
         </Router>
     </div>
   )

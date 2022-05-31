@@ -11,7 +11,12 @@ a {
 }
 
 a:hover {
-    padding-bottom: 5px;
+    padding-bottom: 6px;
+    border-bottom: 3px solid #7d89dd;
+}
+
+a.active {
+    padding-bottom: 6px;
     border-bottom: 3px solid #7d89dd;
 }
 

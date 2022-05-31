@@ -53,8 +53,8 @@ function LoginPopup({ open, onClose }) {
                 <div className="inner-popup">
                     <h2>Welcome to Casa</h2>
                     <div className="sections">
-                        <h3 onClick={() => setIsRegister(false)}>Login</h3>
-                        <h3 onClick={() => setIsRegister(true)}>Sign up</h3>
+                        <h3 className={(!isRegister && "login-") + "section"} onClick={() => setIsRegister(false)}>Login</h3>
+                        <h3 className={(isRegister && "register-") + "section"}onClick={() => setIsRegister(true)}>Sign up</h3>
                     </div>
                     <hr className="popup-line"></hr>
                     { errorMessage === null ? "" : 

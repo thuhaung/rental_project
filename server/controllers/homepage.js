@@ -93,7 +93,7 @@ export const registerUser = async (req, res) => {
 export const userLogout = async (req, res) => {
     const cookies = new Cookies(req.headers.cookie);
     const refreshToken = cookies.get("refreshToken");
-    console.log("ayo");
+    console.log("Logged out.");
     const token = await RefreshToken.findOne({refreshToken: refreshToken});
     if (!token) {
         res.status(400).send("Token doesn't exist.");

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Nav from "../../components/Nav/Nav.js";
 import "./RentalInfo.css";
 import { Image } from "cloudinary-react";
@@ -8,6 +8,7 @@ import loading from "../../assets/loading-img.png";
 import avatar from "../../assets/profile-pic.jpg";
 import AmenitiesIcon from '../../assets/AmenitiesIcon.js';
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import Cookies from "universal-cookie";
 import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
@@ -15,7 +16,7 @@ import PlacesAutocomplete, {
 
 function RentalInfo() {
     const icons = AmenitiesIcon;
-    //const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M" });
+    const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M" })
     const [rental, setRental] = useState("");
     const [rentalName, setRentalName] = useState("");
     const [address, setAddress] = useState("");
@@ -28,7 +29,10 @@ function RentalInfo() {
     const [renter, setRenter] = useState({});
     const [images, setImages] = useState([]);
     const { id } = useParams();
+    const cookies = new Cookies();
+    const userId = cookies.get("userId");
     const iconNames = ["Kitchen", "AC", "Parking", "Washer", "TV", "Wifi", "Fridge"];
+    const navigate = useNavigate();
 
     const getRental = async () => {
         axios.get(`http://localhost:5000/rental/${id}`).then((response) => {
@@ -88,16 +92,29 @@ function RentalInfo() {
                                 .catch(error => console.error('Error', error));
     };
 
+    const contactRenter = () => {
+        const form = {
+            senderId: userId,
+            receiverId: rental.user,
+            rentalId: rental._id
+        }
+        axios.post("http://localhost:5000/chatroom/conversation", form).then((response) => {
+            if (response.data) {
+                navigate(`../user/${userId}/chatroom`);
+            }
+        }).catch((error) => console.log(error.message));
+    }
+
 
     useEffect(() => {
-        const script = document.createElement('script');
+        /*const script = document.createElement('script');
       
         script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyC5qHhy7lazQbxUKO0WtOizl0ISGIsu18U&libraries=places";
         script.async = true;
         document.body.appendChild(script);
         return () => {
           document.body.removeChild(script);
-        }
+        }*/
       }, []);
 
     return (
@@ -179,47 +196,17 @@ function RentalInfo() {
                 <div className="rental-info-map">
                     <h3>Location</h3>
                     {
-                        rental && 
-                        /*<GoogleMap zoom={10} center={{lat: 44, lng: -80}} mapContainerClassName="rental-info-map-container">
-
-                        </GoogleMap>*/
-                        <PlacesAutocomplete value={address} onChange={handleChange} onSelect={handleSelect}>
-                            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                                <div>
-                                    <input
-                                    {...getInputProps({
-                                        placeholder: 'Search Places ...',
-                                        className: 'location-search-input',
-                                    })}
-                                    />
-                                    <div className="autocomplete-dropdown-container">
-                                    {loading && <div>Loading...</div>}
-                                    {suggestions.map(suggestion => {
-                                        const className = suggestion.active
-                                        ? 'suggestion-item--active'
-                                        : 'suggestion-item';
-                                        // inline style for demonstration purpose
-                                        const style = suggestion.active
-                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                                        return (
-                                        <div
-                                            {...getSuggestionItemProps(suggestion, {
-                                            className,
-                                            style,
-                                            })}
-                                        >
-                                            <span>{suggestion.description}</span>
-                                        </div>
-                                        );
-                                    })}
-                                    </div>
-                                </div>
-                                )}
-                        </PlacesAutocomplete>
+                        
                     }
+                    
                 </div>
-                <button className="rental-info-contact">Contact Renter</button>
+                {
+                    rental && rental.user !== userId ? 
+                    <button className="rental-info-contact" onClick={() => contactRenter()}>Contact Renter</button> 
+                    :
+                    ""
+                }
+                
             </div>
         </div>
     )
