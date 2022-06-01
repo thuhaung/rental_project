@@ -22,21 +22,20 @@ function YourAdvertisements() {
     }, []);
 
     return (
-        <div classname="your-ad-wrapper">
+        <div className="your-ad">
             <Nav />
-            {
-                result ? 
-                <div classname="your-ad-results">
-                    <div classname="your-ad-filter-box">
-                        <p className='rental-after-result-text1'>Results</p>
-                        <p className='rental-after-result-text2'> rentals Sort by{' '}
-                            <select className='rental-after-filter' >
-                                <option value='descending'>Highest to Lowest Price</option>
-                                <option value='ascending'>Lowest to Highest Price</option>
-                                <option value='most'>Most Amenities</option>
-                            </select>
-                        </p>
-                    </div>
+            <div className="your-ad-container">
+                <div className="your-ad-result-filter-box">
+                    <p className="your-ad-title">Your advertisements</p>
+                    <p className="your-ad-sort">{result.length} rentals Sort by{' '}
+                    <select className="your-ad-select-filter" >
+                        <option value='descending'>Highest to Lowest Price</option>
+                        <option value='ascending'>Lowest to Highest Price</option>
+                        <option value='most'>Most Amenities</option>
+                    </select></p>
+                </div>
+                {
+                    result ? 
                     <div className="your-ad-listing">
                         {
                             result && result.map(rental => (
@@ -50,13 +49,11 @@ function YourAdvertisements() {
                             ))
                         }
                     </div>
-                </div>
-                :
-                <h2 className="your-ad-no-results">No results</h2>
-            }
-            
-            
-        </div>
+                    :
+                    <h2 className="your-ad-no-results">No results</h2>
+                }
+            </div>
+        </div> 
     )
 }
 

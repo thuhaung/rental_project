@@ -206,10 +206,20 @@ function RentalInfo() {
                     
                 </div>
                 {
-                    rental && rental.user !== userId ? 
-                    <button className="rental-info-contact" onClick={() => contactRenter()}>Contact Renter</button> 
-                    :
-                    ""
+                    rental ?
+                        (rental.is_available ?
+                            (rental.user !== userId ? 
+                            <button className="rental-info-contact" onClick={() => contactRenter()}>Contact Renter</button> 
+                            :
+                            ""
+                            )
+                            :
+                            <div className="rental-info-unavailable">
+                                <p>This rental is no longer available.</p>
+                            </div>
+                        )
+                        :
+                        ""
                 }
                 
             </div>

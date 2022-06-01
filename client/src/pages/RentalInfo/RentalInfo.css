@@ -221,3 +221,15 @@
 .rental-info-edit-btn:hover {
     background-color: #aeb6ea;
 }
+
+.rental-info-unavailable {
+    border: 2px solid black;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 350px;
+}
+
+.rental-info-unavailable > p {
+    text-align: center;
+}

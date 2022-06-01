@@ -37,17 +37,34 @@ export const search = async(req, res) => {
         })
     }
 
-    res.json(rentals);
+    rentals = rentals.filter((rental) => {
+        return rental.is_available;
+    })
+
+    res.status(200).json(rentals);
 }
 
 export const recentList = async (req, res) => {
-    const rentals = await Rental.find({});
+    let rentals = await Rental.find({});
+
+    rentals = rentals.filter((rental) => {
+        return rental.is_available;
+    });
 
     let recentList = [];
-    for(let i = (rentals.length - 1); i >= (rentals.length - 6); i--) {
-        recentList = recentList.concat([rentals[i]]);
+
+    if (rentals.length >= 6) {
+        for (let i = (rentals.length - 1); i >= (rentals.length - 6); i--) {
+            recentList = recentList.concat([rentals[i]]);
+        }
     }
-    res.json(recentList);
+    else {
+        for (let i = (rentals.length - 1); i >= 0; i--) {
+            recentList = recentList.concat([rentals[i]]);
+        }
+    }
+    
+    res.status(200).json(recentList);
 }
 
 export const getRentalInfo = async (req, res) => {
@@ -58,7 +75,7 @@ export const getRentalInfo = async (req, res) => {
             res.status(200).send(rental);
         }
     } catch (error) {
-        res.send(error.message);
+        res.status(500).send(error.message);
     }
 }
 
@@ -68,7 +85,7 @@ export const getUserRentals = async (req, res) => {
         const rentals = await Rental.find({user: userId});
         res.status(200).send(rentals);
     } catch (error) {
-        res.send(error.message);
+        res.status(500).send(error.message);
     }
 }
 
