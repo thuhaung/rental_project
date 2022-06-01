@@ -71,3 +71,16 @@ export const getUserRentals = async (req, res) => {
         res.send(error.message);
     }
 }
+
+
+export const updateStatus = async (req, res) => {
+    const rentalId = req.body.rentalId;
+    if (rentalId) {
+        try {
+            await Rental.findByIdAndUpdate(rentalId, {is_available: false});
+            res.status(200).send("Updated.");
+        } catch (error) {
+            res.status(500).send(error.message);
+        }
+    }
+}

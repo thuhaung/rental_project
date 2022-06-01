@@ -395,5 +395,27 @@ input[type="text"].chatroom-box-input {
     width: 30px;
 }
 
+.chatroom-rental-success {
+    width: 160px;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: #7d89dd;
+    margin-top: 30px;
+    border-radius: 10px;
+}
+
+.chatroom-rental-success > p {
+    color: white;
+    text-align: center;
+}
+
+.chatroom-rental-not-available {
+    border: 2px solid black;
+    padding: 0 20px 0 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
 
 

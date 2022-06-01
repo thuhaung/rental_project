@@ -121,7 +121,12 @@ function RentalInfo() {
         <div className="rental-info-wrapper">
             <Nav />
             <div className="rental-info-general-card">
-                <h2>{rental && rental.property_type + " for Rent at District " + rental.address.district}</h2>
+                <div className="rental-info-title">
+                    <h2>{rental && rental.property_type + " for Rent at District " + rental.address.district}</h2>
+                    {
+                        rental && rental.user === userId && <button className="rental-info-edit-btn">Edit</button>
+                    }
+                </div>
                 <div className="rental-info-images">
                     <div className="rental-info-first-image">
                         { images[0] ? <Image key={0} cloud_name="heroinism" public_id={images[0]}/> : <img src={loading} alt="loading-img" />}

@@ -29,6 +29,7 @@ function Chatroom() {
     const [selectedImage, setSelectedImage] = useState();
     const navigate = useNavigate();
     const [images, setImages] = useState([]);
+    const [state, setState] = useState(0);
     //const [message, setMessage] = useState();
     //const socket = io("http://localhost:5000/");
 
@@ -73,13 +74,7 @@ function Chatroom() {
 
     useEffect(() => {
         getAllConversations();
-        //socket.emit("setup", userId);
-        //socket.on("Connection", () => {
-        //    setSocketConnection(true);
-        //})
-        //setCurrentReceiver(receivers[0]);
-        //setCurrentRental(rentals[0]);
-    }, [currentConversation, messages]);
+    }, [currentConversation, messages, state]);
 
     const submitImage = (messageId) => {
         axios.post("http://localhost:5000/advertisement/upload-image", {image: selectedImage, conversationId: currentConversation._id, messageId: messageId}, { withCredentials: true }).then((response) => {
@@ -180,6 +175,14 @@ function Chatroom() {
         }
     }
 
+    const closeDeal = async (rentalId) => {
+        axios.post("http://localhost:5000/rental/update-status", { rentalId: rentalId }, { withCredentials: true }).then((response) => {
+            if (response.data) {
+                console.log(response.data);
+            } 
+        }).catch((error) => console.log(error.message));
+    }
+
     return (
         <div className="chatroom">
             <Nav />
@@ -235,7 +238,7 @@ function Chatroom() {
                 <div className="chatroom-box-form">
                         <label className="chatroom-box-upload-img">
                             <input type="file" style={{display: "hidden"}} onChange={(e) => previewImage(e)} accept="image/png, image/jpeg, image/jpg, image/webp" />
-                            <img src={photo} className="chatroom-box-add-img" alt=""/>
+                            <img src={photo} className="chatroom-box-add-img" alt="" />
                         </label>
                         {
                             selectedImage ? 
@@ -245,7 +248,11 @@ function Chatroom() {
                                 <p>Attached image</p>
                             </div>
                             :
-                            <input type="text" placeholder="Send a message..." value={text} className="chatroom-box-input" onChange={(e) => setText(e.target.value)}/>
+                            (
+                                currentRental && currentRental.is_available ? 
+                                <input type="text" placeholder="Send a message..." value={text} className="chatroom-box-input" onChange={(e) => setText(e.target.value)}/>
+                                : <input type="text" disabled={true} placeholder="Send a message..." value={text} className="chatroom-box-input" onChange={(e) => setText(e.target.value)}/>
+                            )
                         }
                         <button className="chatroom-box-send-btn" onClick={(e) => {sendMessage(e); getMessages(currentConversation._id)}}>Send</button>
                     </div>
@@ -269,8 +276,28 @@ function Chatroom() {
                                     }
                                 </div>
                             </div>
-                            <button className="chatroom-rental-btn">Close deal</button>
-                        
+                            {
+                                currentRental ?
+                                    (currentRental.user === userId ?
+                                        (
+                                            currentRental.is_available ? 
+                                            <button className="chatroom-rental-btn" onClick={() => {closeDeal(currentRental._id); setState(prev => prev + 1)}}>Close deal</button>
+                                            : 
+                                            <div className="chatroom-rental-success">
+                                                <p>Deal complete</p>
+                                            </div>
+                                        ) :
+                                        (
+                                            !currentRental.is_available ?
+                                            <div className="chatroom-rental-not-available">
+                                                <p>Rental is no longer available</p>
+                                            </div> 
+                                            :
+                                            ""
+                                        )
+                                    )
+                                : ""
+                            }   
                         </>
                     }
                 </div>    
