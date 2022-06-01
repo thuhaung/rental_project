@@ -87,7 +87,7 @@ export const updateMessageStatus = async (req, res) => {
 }
 
 export const newAttachment = async (req, res) => {
-    const userId = req.cookies["userId"];
+    //const userId = req.cookies["userId"];
     const conversationId = req.body.conversationId;
     const messageId = req.body.messageId;
     try {
@@ -95,7 +95,7 @@ export const newAttachment = async (req, res) => {
         let uploadedResponse;
         uploadedResponse = await cloudinary.v2.uploader.upload(file, {
             public_id: `${messageId}`,
-            folder: `chat/${conversationId}/${userId}`,
+            folder: `chat/${conversationId}`,
             resource_type: 'image'
         });
         console.log(uploadedResponse);
@@ -103,4 +103,15 @@ export const newAttachment = async (req, res) => {
     } catch (error) {
         console.log(error.message);
     }
+}
+
+export const getAttachment = async (req, res) => {
+    const conversationId = req.params.conversationId;
+    const messageId = req.params.messageId;
+    const { resources } = await cloudinary.v2.search.
+                                                    expression(`public_id: chat/${conversationId}/${messageId}`).
+                                                    sort_by("public_id", "desc").
+                                                    execute();
+    const publicIds = resources.map(file => file.public_id);
+    res.status(200).send(publicIds);
 }

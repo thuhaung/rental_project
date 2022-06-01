@@ -28,6 +28,7 @@ function Chatroom() {
     const [messages, setMessages] = useState([]);
     const [selectedImage, setSelectedImage] = useState();
     const navigate = useNavigate();
+    const [images, setImages] = useState([]);
     //const [message, setMessage] = useState();
     //const socket = io("http://localhost:5000/");
 
@@ -90,20 +91,40 @@ function Chatroom() {
         })
     }
 
-    const sendMessage = async (e) => {
-        e.preventDefault();
-        const form = {
-            conversation: currentConversation._id,
-            sender: userId,
-            text: text,
-        }
-        axios.post("http://localhost:5000/chatroom/message", form).then((response) => {
+    const saveImage = async (messageId, conversationId) => {
+        axios.post("http://localhost:5000/chatroom/message/upload-image", {image: selectedImage, messageId: messageId, conversationId: conversationId}, {withCredentials: true}).then((response) => {
             if (response.data) {
-                console.log("ok");
-                //setMessage(response.data);
-                //socket.emit("New message", response.data);
+                console.log("Image uploaded.");
             }
         }).catch((error) => console.log(error.message));
+    }
+
+    const sendMessage = async (e) => {
+        e.preventDefault();
+        if (!selectedImage) {
+            const form = {
+                conversation: currentConversation._id,
+                sender: userId,
+                text: text,
+            }
+            axios.post("http://localhost:5000/chatroom/message", form).then((response) => {
+                if (response.data) {
+                    console.log("ok");
+                }
+            }).catch((error) => console.log(error.message));
+        }
+        else {
+            const form = {
+                conversation: currentConversation._id,
+                sender: userId,
+                contains_image: true
+            }
+            axios.post("http://localhost:5000/chatroom/message", form).then((response) => {
+                if (response.data) {
+                    saveImage(response.data._id, response.data.conversation);
+                }
+            }).catch((error) => console.log(error.message));
+        }
         setText("");
         setSelectedImage();
     }
@@ -118,6 +139,9 @@ function Chatroom() {
                             getMessageStatus(response.data[i]._id);
                         }
                     }
+                    if (!response.data[i].text) {
+                        getImage(conversationId, response.data[i]._id);
+                    }
                 }
             }
         }).catch((error) => console.log(error.message));
@@ -131,11 +155,28 @@ function Chatroom() {
         }).catch((error) => console.log(error.message));
     }
 
+    const getImage = async (conversationId, messageId) => {
+        axios.get(`http://localhost:5000/chatroom/message/${conversationId}/${messageId}/image`).then((response) => {
+            if (response.data) {
+                setImages(prev => [...prev, {messageId: messageId, image: response.data}]);
+            }
+        }).catch((error) => console.log(error.message));
+    }
+
     const previewImage = (e) => {
         const reader = new FileReader();
         reader.readAsDataURL(e.target.files[0]);
         reader.onloadend = () => {
             setSelectedImage(reader.result);
+        }
+    }
+
+    const displayImage = (messageId) => {
+        for (let i in images) {
+            if (images[i].messageId === messageId) {
+                return <Image className="chatroom-box-message-attachment" cloud_name="heroinism" publicId={images[i].image.toString()} />
+                //console.log(images[i].image);
+            }
         }
     }
 
@@ -149,11 +190,11 @@ function Chatroom() {
                     <div className="chatroom-listing">
                         {
                             receivers && conversations.map((convo, index) => (
-                                <div key={index} className={"chatroom-listing-item" + (currentRental ? (currentRental._id === rentals[index]._id ? "-active" : "") : "")} onClick={() => {setCurrentConversation(convo); setCurrentReceiver(receivers[index]); setCurrentRental(rentals[index]); getRentalImage(rentals[index]._id, rentals[index].user); getMessages(convo._id)}}>
+                                <div key={index} className={"chatroom-listing-item" + (currentRental ? (currentRental._id === rentals[index]._id ? "-active" : "") : "")} onClick={() => {setCurrentConversation(convo); setCurrentReceiver(receivers[index]); setCurrentRental(rentals[index]); getRentalImage(rentals[index]._id, rentals[index].user); getMessages(convo._id); setText("")}}>
                                     <img src={avatar} alt="avatar" />
                                     <div className="chatroom-listing-item-preview">
                                         <h3>{receivers && receivers[index]?.first_name} • {rentals && (rentals[index]?.user === userId ? "Your District " : "Their District ") + rentals[index]?.address?.district + " " + rentals[index]?.property_type}</h3>
-                                        <p>{convo.latest_message ? (convo.latest_message.sender === userId ? "You: " : (receivers && receivers[index]?.first_name + ": ")) : ""}{convo.latest_message && convo.latest_message.text.slice(0, 26) + "..."}</p>
+                                        <p>{convo.latest_message ? (convo.latest_message.sender === userId ? "You: " : (receivers && receivers[index]?.first_name + ": ")) : ""}{convo.latest_message ? (convo.latest_message.text ? convo.latest_message.text.slice(0, 26) + "..." : "Attachment") : ""}</p>
                                     </div>
                                 </div> 
                             ))
@@ -178,7 +219,12 @@ function Chatroom() {
                         {
                             messages && messages.map((message, index) => (
                                 <div key={index} className={(message.sender === userId? "your-" : "their-") + "chatroom-box-message"}>
-                                    <p>{message.text}</p>
+                                    {
+                                        message.text ? 
+                                        <p>{message.text}</p> : 
+                                        displayImage(message._id)
+                                        /*<Image cloud_name="heroinism" public_id={getImage(currentConversation._id, message._id)} />*/
+                                    }
                                     <p className="chatroom-box-message-seen">{index === messages.length - 1 ? (messages[index].sender === userId ? (messages[index].seen ? "Seen" : "Delivered") : "") : ""}</p>
                                 </div>
                             ))
@@ -195,12 +241,12 @@ function Chatroom() {
                             selectedImage ? 
                             <div className="chatroom-box-image-wrapper">
                                 <img className="chatroom-box-image" src={selectedImage} alt="img-attachment"/>
+                                <button className="chatroom-box-image-remove-btn" onClick={() => setSelectedImage()}>x</button>
+                                <p>Attached image</p>
                             </div>
                             :
                             <input type="text" placeholder="Send a message..." value={text} className="chatroom-box-input" onChange={(e) => setText(e.target.value)}/>
                         }
-                        
-                        
                         <button className="chatroom-box-send-btn" onClick={(e) => {sendMessage(e); getMessages(currentConversation._id)}}>Send</button>
                     </div>
                 </div>
