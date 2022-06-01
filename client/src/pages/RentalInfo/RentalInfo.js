@@ -7,16 +7,15 @@ import { Image } from "cloudinary-react";
 import loading from "../../assets/loading-img.png";
 import avatar from "../../assets/profile-pic.jpg";
 import AmenitiesIcon from '../../assets/AmenitiesIcon.js';
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+//import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import Cookies from "universal-cookie";
-import PlacesAutocomplete, {
-    geocodeByAddress,
-    getLatLng,
-  } from "react-places-autocomplete";
+import { Map, Marker } from "pigeon-maps";
+import { maptiler } from 'pigeon-maps/providers';
+
 
 function RentalInfo() {
     const icons = AmenitiesIcon;
-    const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M" })
+    //const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyC5qHhy7lazQbxUKO0WtOizl0ISGIsu18U" })
     const [rental, setRental] = useState("");
     const [rentalName, setRentalName] = useState("");
     const [address, setAddress] = useState("");
@@ -32,7 +31,11 @@ function RentalInfo() {
     const cookies = new Cookies();
     const userId = cookies.get("userId");
     const iconNames = ["Kitchen", "AC", "Parking", "Washer", "TV", "Wifi", "Fridge"];
+    const [lat, setLat] = useState();
+    const [lng, setLng] = useState();
     const navigate = useNavigate();
+    const maptilerProvider = maptiler('CnzknMBRrl0lmKvk9umd', 'streets');
+
 
     const getRental = async () => {
         axios.get(`http://localhost:5000/rental/${id}`).then((response) => {
@@ -64,33 +67,17 @@ function RentalInfo() {
 
     useEffect(() => {
         getRental();
-    }, []);
 
-    /*
-    useEffect(() => {
-        if (rental) {
-            getRenter(rental.user);
-            setRentalName(rental.property_type + " for Rent at District " + rental.address.district);
-            setAmenities(rental.amenities);
-            setRent(rental.rent);
-            setDeposit(rental.deposit);
-            setElectricity(rental.electricity);
-            setWater(rental.water);
-            getImages(id, rental.user);
-            setAddress(rental.address);
-        }
-    }, []);*/
+        const location = "22 Main St Boston MA";
+        axios.get("https://maps.googleapis.com/maps/api/geocode/json", {params: {address: location, key: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M"}})
+        .then((response) => console.log(response.data))
+        .catch((error) => console.log(error.message));
+    }, []);
 
     const handleChange = (address) => {
         setAddress(address);
     }
 
-    const handleSelect = (address) => {
-        geocodeByAddress(address)
-                                .then(results => getLatLng(results[0]))
-                                .then(latLng => console.log('Success', latLng))
-                                .catch(error => console.error('Error', error));
-    };
 
     const contactRenter = () => {
         const form = {
@@ -201,8 +188,16 @@ function RentalInfo() {
                 <div className="rental-info-map">
                     <h3>Location</h3>
                     {
-                        
-                    }
+                    <Map height={300} defaultCenter={[50.879, 4.6997]} defaultZoom={11}  provider={maptilerProvider}>
+                        <Marker width={50} anchor={[50.879, 4.6997]} />
+                    </Map>
+                    
+                    
+                    /*
+                        <GoogleMap zoom={10} center={{lat: 44, lng: -80}} mapContainerClassName="map-container">
+
+                        </GoogleMap>
+                    */}
                     
                 </div>
                 {
