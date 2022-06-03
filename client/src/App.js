@@ -1,11 +1,10 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import RoutePage from "./routes/RoutePage";
+import "./App.css"
 
 const App = () => {
     return (
-        <div>
-            <h1>App</h1>
-        </div>
+        <RoutePage />
     );
 }
 

@@ -1,0 +1,289 @@
+.searchbar-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.searchbar-vertical-line {
+    border-left: 2px solid #8691e8;
+    height: 30px;
+}
+
+.searchbar-choices {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-left: 30px;
+}
+
+.searchbar-choice {
+    cursor: pointer;
+}
+
+.searchbar-choice:hover {
+    transform: scale(1.05);
+}
+
+.searchbar-choice > p {
+    font-size: 15px;
+    font-weight: 600;
+    color: rgb(50, 50, 50);
+}
+
+.searchbar-search-box {
+    display: flex;
+    box-sizing: border-box;
+    width: 935px;
+    height: 80px;
+    background: #FFFFFF;
+    border: 1px solid #D3D3D3;
+    border-radius: 50px;
+    font-family: 'Inter';
+}
+
+.searchbar-city,
+.searchbar-district,
+.searchbar-distance
+.searchbar-price {
+    height: 67px;
+    /* background-color: antiquewhite; */
+    margin-right: -5px;
+    margin-left: -20px;
+}
+
+.searchbar-district {
+    width: 92px;
+}
+
+.searchbar-price {
+    width: 195px;
+}
+
+.searchbar-price-info {
+    display: flex;
+    justify-content: flex-start;
+    gap: 7px;
+    margin-left: 5px;
+    align-items: center;
+}
+
+.searchbar-price-range {
+    font-size: 14px;
+    font-weight: 500;
+    color: #bebebe;
+    margin-top: 16px;
+}
+
+.searchbar-distance-range {
+    font-size: 14px;
+    font-weight: 500;
+    color: #bebebe;
+    margin-top: 16px;
+}
+
+.searchbar-display-price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 1px solid #bebebe;
+    width: 85px;
+    border-radius: 10px;
+    margin-top: -3px;
+    height: 30px;
+    font-size: 15px;
+}
+
+.searchbar-city {
+    width: 140px;
+    margin-left: 20px;
+    margin-right: -10px;
+}
+
+.searchbar-distance {
+    width: 130px;
+    margin-left: 20px;
+    margin-right: -10px;
+}
+
+.searchbar-distance-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+.searchbar-price-text,
+.searchbar-district-text,
+.searchbar-distance-text,
+.searchbar-city-text {
+    font-weight: 800;
+    font-size: 17px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    color: #4F4F4F;
+    margin-left: 5px;
+}
+
+.searchbar-price-value,
+.searchbar-city-value,
+.searchbar-distance-value,
+.searchbar-district-value {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    color: #A2A2A2;
+    border-color: white;
+    border-radius: 10px;
+    margin-top: -8px;
+}
+
+.searchbar-price-value {
+    margin-top: -3px;
+    margin-left: 5px;
+}
+
+input[type=range] {
+    -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+    width: 100%;
+    border: 1px solid #bebebe;
+    overflow: hidden;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 1px solid #7d89dd;
+    height: 15px;
+    width: 15px;
+    border-radius: 100%;
+    background-color: #7d89dd;
+    box-shadow: -135px 0 0 128px #7d89dd;
+    cursor: pointer;
+}
+
+.searchbar-price-value:hover,
+.searchbar-city-value:hover,
+.searchbar-district-value:hover{
+    cursor: pointer;
+}
+
+.searchbar-straight-line1 {
+    width: 55px;
+    height: 0px;
+    border: 0.5px solid #C0C0C0;
+    transform: rotate(90deg);
+    margin-top: 39px;
+}
+
+.searchbar-input {
+    width: 250px;
+    height: 36px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    color: #A1A1A1;
+    border-style: hidden;
+    margin-top: 20px;
+    margin-left: -10px;
+}
+
+.searchbar-by-place-input {
+    width: 550px;
+    height: 36px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    color: #A1A1A1;
+    border-style: hidden;
+    margin-top: 20px;
+    margin-left: -10px;
+}
+
+.searchbar-by-place-input:focus {
+    outline: none;
+}
+
+.searchbar-input:focus {
+    outline: none;
+}
+
+.searchbar-btn {
+    width: 95px;
+    height: 44px;
+    background: #7D89DD;
+    border-radius: 30px;
+    border-style: none;
+    margin-right: 22px;
+    margin-top: 16px;
+    text-align: center;
+}
+
+.searchbar-btn-text {
+    width: 66px;
+    height: 42px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 19px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    margin-top: 0px;
+    margin-left: 9px;
+}
+
+.searchbar-btn:hover {
+    cursor: pointer;
+    background-color: #aeb6ea;
+}
+
+.searchbar-by-place-btn {
+    width: 95px;
+    height: 44px;
+    background: #7D89DD;
+    border-radius: 30px;
+    border-style: none;
+    margin-left: 75px;
+    margin-top: 16px;
+    text-align: center;
+}
+
+.searchbar-by-place-btn:hover {
+    cursor: pointer;
+    background-color: #aeb6ea;
+}
+
+.searchbar-by-place-autocomplete {
+    display: block;
+}
+
+.searchbar-autocomplete-dropdown-container {
+    position: absolute;
+    padding: 20px;
+    z-index: 1;
+}
+
+.suggestion-item {
+    padding: 10px;
+    margin-right: 60px;
+    z-index: 1;
+}
+
+.suggestion-item-active {
+    background-color: #d3d3d3;
+    padding: 10px;
+    margin-right: 60px;
+    z-index: 1;
+}

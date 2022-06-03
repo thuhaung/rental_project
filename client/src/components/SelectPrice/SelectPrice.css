@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+    color: black;
+}
+
+.select-price-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.select-price-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: -10px;
+    width: 450px;
+}
+
+.select-price-form > h2 {
+    font-weight: 500;
+    font-size: 23px;
+}
+
+.select-price-count {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 18px;
+    width: 220px;
+}
+
+.select-price-box {
+    width: 150px;
+}
+
+.select-price-box > h3 {
+    font-weight: 400;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.select-price-count > p {
+    font-weight: 800;
+    padding-top: 4px;
+    border-radius: 100%;
+    text-align: center;
+    width: 30px;
+    height: 24px;
+    border: 1px solid #b3b3b3;
+    cursor: pointer;
+}
+
+.select-price-count > p:active {
+    cursor: pointer;
+    font-weight: 800;
+    padding-top: 4px;
+    border-radius: 100%;
+    text-align: center;
+    width: 30px;
+    height: 24px;
+    border: 1px solid black;
+}

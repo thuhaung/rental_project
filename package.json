@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "eslint-plugin-react": "^7.29.4"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "react-indiana-drag-scroll": "^2.1.0"
+  }
+}

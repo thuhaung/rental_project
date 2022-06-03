@@ -1,0 +1,421 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+    color: black;
+}
+
+.chatroom-hr {
+    position: absolute;
+    top: 56px;
+    height: 0.05px;
+    background-color: #dcdcdc;
+    border: 0.1px solid #dcdcdc;
+    width: 100%;
+}
+
+.chatroom-wrapper {
+    display: flex;
+    position: absolute;
+    justify-content: flex-start;
+    top: 65px;
+    width: 100%;
+    height: 625px;
+    overflow: hidden;
+}
+
+.chatroom-nav {
+    position: relative;
+    width: 420px;
+    height: 100%;
+    border-right: 0.1px solid #dcdcdc;
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    flex-shrink: 0;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #aeb6ea; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #7d89dd; 
+  }
+
+.chatroom-listing {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.chatroom-listing-item {
+    cursor: pointer;
+    max-width: inherit;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    background-color: white;
+    width: 385px;
+    border-radius: 12px;
+    padding-left: 15px;
+}
+
+.chatroom-listing-item:hover {
+    cursor: pointer;
+    max-width: inherit;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    background-color: #f1f1f1;
+    width: 385px;
+    border-radius: 10px;
+    padding-left: 15px;
+    height: 65px;
+}
+
+.chatroom-listing-item-active {
+    cursor: pointer;
+    max-width: inherit;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    background-color: #f1f1f1;
+    width: 385px;
+    border-radius: 12px;
+    padding-left: 15px;
+    height: 65px;
+}
+
+.chatroom-listing-item-active > img {
+    border-radius: 100%;
+    height: 46px;
+    width: 46px;
+}
+
+.chatroom-listing-item > img {
+    border-radius: 100%;
+    height: 46px;
+    width: 46px;
+}
+
+.chatroom-listing-item-preview {
+    margin-top: -5px;
+}
+
+.chatroom-listing-item-preview > h3 {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.chatroom-listing-item-preview > p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 0.3;
+    width: fit-content;
+}
+
+.chatroom-box {
+    flex-grow: 0;
+    width: 650px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-x: hidden;
+}
+
+.chatroom-box-user-info {
+    max-width: inherit;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0 5px 20px;
+    border-bottom: 0.1px solid #dcdcdc;
+    background-color: white;
+    z-index: 1;
+}
+
+.chatroom-box-user-info > h3 {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 0.5;
+}
+
+.chatroom-box-messages {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 20px;
+    width: inherit;
+    padding-bottom: 15px;
+    z-index: 0;
+    overflow-y: scroll;
+}
+
+.your-chatroom-box-message {
+    display: inline-block;
+    max-width: 400px;
+    max-height: 500px;
+    padding: 5px 15px 5px 15px;
+    border-top-left-radius: 14px;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+    background-color: #7d89dd;
+    margin-left: auto;
+    margin-right: 17px;
+    position: relative;
+}
+
+.your-chatroom-box-message > p {
+    font-size: 15px;
+    text-align: left;
+    line-height: 1.8;
+    color: white
+}
+
+.their-chatroom-box-message {
+    display: inline-block;
+    max-width: 400px;
+    max-height: 500px;
+    padding: 5px 15px 5px 15px;
+    border-top-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+    background-color: #f1f1f1;
+    margin-right: auto;
+    margin-left: 10px;
+    position: relative;
+}
+
+.their-chatroom-box-message > p {
+    font-size: 15px;
+    text-align: left;
+    line-height: 1.8;
+    color: black
+}
+
+.their-chatroom-box-message > .chatroom-box-message-seen {
+    font-size: 12px;
+}
+
+.your-chatroom-box-message > .chatroom-box-message-seen {
+    font-size: 12px;
+}
+
+.chatroom-box-form {
+    display: flex;
+    height: 45px;
+    align-items: center;
+}
+
+.chatroom-box-upload-img {
+    width: 45px;
+    height: 47px;
+}
+
+.chatroom-box-image {
+    position: relative;
+    height: 46px;
+    padding-left: 10px;
+    width: 46px;
+}
+
+.chatroom-box-image-remove-btn {
+    position: absolute;
+    font-size: 10px;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    border: none;
+}
+
+.chatroom-box-image-wrapper {
+    position: relative;
+    align-items: center;
+    gap: 10px;
+    display: flex;
+    margin-top: 3px;
+    width: 550px;
+    height: 48px;
+    border-top: 0.1px solid #dcdcdc;
+}
+
+.chatroom-box-image-wrapper > p {
+    font-size: 14px;
+}
+
+.chatroom-box-upload-img > input[type="file"] {
+    display: none;
+}
+
+.chatroom-box-send-btn {
+    width: 80px;
+    height: 46px;
+    background-color: #7d89dd;
+    border: none;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+}
+
+.chatroom-box-send-btn:hover {
+    width: 80px;
+    background-color: #aeb6ea;
+    border: none;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+}
+
+.chatroom-box-add-img {
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    margin-top: 1px;
+    padding: 10px 10px 0 10px;
+    border-top: 0.1px solid #dcdcdc;
+}
+
+.chatroom-box-message-attachment {
+    height: 200px;
+    width: 200px;
+    padding-top: 10px;
+    border-radius: 10px;
+}
+
+input[type="text"].chatroom-box-input {
+    max-width: inherit;
+    border: none;
+    border-top: 0.1px solid #dcdcdc;
+    padding: 14px;
+    width: 620px;
+}
+
+.chatroom-box-user-info > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+.chatroom-rental {
+    max-width: inherit;
+    flex-grow: 0;
+    position: relative;
+    top: 8px;
+    border-left: 0.1px solid #dcdcdc;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    padding-left: 16px;
+}
+
+.chatroom-rental > img {
+    height: 230px;
+    width: 230px;
+    border-radius: 100%;
+    margin-top: 30px;
+}
+
+.chatroom-rental-info {
+    display: flex;
+    margin-top: 5px;
+    flex-direction: column;
+    align-items: center;
+    line-height: 0.5;
+}
+
+.chatroom-rental-info  > h3 {
+    margin-bottom: 25px;
+}
+
+.chatroom-rental-info > p {
+    line-height: 1.5;
+    text-align: center;
+    margin-top: 0px;
+}
+
+.chatroom-rental-btn {
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    width: 160px;
+    padding: 15px 0 15px 0;
+    border-radius: 10px;
+    border: none;
+    background-color: #7d89dd;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.chatroom-rental-btn:hover {
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    width: 160px;
+    padding: 15px 0 15px 0;
+    border-radius: 10px;
+    border: none;
+    background-color: #aeb6ea;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.chatroom-rental-amenities {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.chatroom-rental-amenities > img {
+    height: 30px;
+    width: 30px;
+}
+
+.chatroom-rental-success {
+    width: 160px;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: #7d89dd;
+    margin-top: 30px;
+    border-radius: 10px;
+}
+
+.chatroom-rental-success > p {
+    color: white;
+    text-align: center;
+}
+
+.chatroom-rental-not-available {
+    border: 2px solid black;
+    padding: 0 20px 0 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+
+

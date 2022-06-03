@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+    color: black;
+}
+
+.advertise-place-confirmed {
+    height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(#6a7af3, #eb7070);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.advertise-place-confirmed > h2 {
+    color: white;
+    font-size: 45px;
+}
+
+.advertise-place-confirmed > button {
+    border: 2px solid linear-gradient(#6a7af3, #eb7070);
+    border-radius: 7px;
+    padding: 10px 20px 10px 20px;
+    background-color: transparent;
+    font-size: 30px;
+    color: black;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.advertise-place-confirmed > button:hover {
+    border: 2px solid linear-gradient(#6a7af3, #eb7070);
+    border-radius: 7px;
+    padding: 10px 20px 10px 20px;
+    background-color: transparent;
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.advertise-place-wrapper {
+    z-index: 0;
+    display: flex;
+    align-items: center;
+}
+
+.advertise-place-main {
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 20vh;
+    align-items: center;
+}
+
+.advertise-place-card {
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-image: linear-gradient(#6a7af3, #eb7070);
+}
+
+.advertise-place-card-text > h1 {
+    margin-top: 75px;
+    margin-right: 10px;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: white;
+}
+
+.advertise-place-nav {
+    width: 100%;
+    border-top: 2px solid black;
+    display: flex;
+    justify-content: space-between;
+}
+
+.advertise-place-nav-back, .advertise-place-nav-next {
+    margin: 20px 30px 20px 30px;
+    padding: 10px 20px 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 7px;
+    font-weight: 500;
+    border: none;
+}
+
+.advertise-place-nav-back {
+    background-color: white;
+}
+
+.advertise-place-nav-back:hover {
+    background-color: #ebebeb;
+}
+
+.advertise-place-nav-next {
+    color: white;
+    background-color: #7d89dd;
+}
+
+.advertise-place-nav-next:hover {
+    background-color: #959ff1;
+}

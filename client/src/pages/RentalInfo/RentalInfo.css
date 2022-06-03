@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+    color: black;
+}
+
+.rental-info-wrapper {
+    width: 100%;
+    height: 1800px;
+}
+
+.rental-info-general-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 30px;
+    position: absolute;
+    top: 65px;
+    height: 1000px;
+    margin: 0 0 0 170px;
+    width: 1200px;
+}
+
+.rental-info-title > h2 {
+    font-size: 25px;
+    font-weight: 600;
+    margin: 40px 0 0 0;
+}
+
+.rental-info-images {
+    display: flex;
+    gap: 12px;
+    width: 1190px;
+    height: 360px;
+}
+
+.rental-info-other-images {
+    display: flex;
+    width: 575px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.rental-info-other-images > img {
+    width: 280px;
+    height: 170px;
+}
+
+.rental-info-first-image > img {
+    width: 600px;
+    height: 355px;
+}
+
+.rental-info-general {
+    margin-top: -18px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.rental-info-general-rental-wrapper > h3 {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.rental-info-general-rental-wrapper > p {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.rental-info-general-renter {
+    margin-right: 15px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 30px;
+}
+
+.rental-info-general-renter > img {
+    height: 80px;
+    width: 80px;
+    border-radius: 100%;
+}
+
+.rental-info-general-renter-wrapper {
+    text-align: right;
+}
+
+.rental-info-general-renter-wrapper > h3 {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.rental-info-general-renter-wrapper > p {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.rental-info-hr {
+    width: 100%;
+    height: 0.5px;
+}
+
+.rental-info-amenities {
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.rental-info-amenities-wrapper {
+    display: flex;
+    margin-top: 35px;
+    row-gap: 30px;
+    column-gap: 100px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-flow: row wrap;
+}
+
+.rental-info-amenity {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    align-items: center;
+}
+
+.rental-info-amenity > p {
+    font-size: 18px;
+}
+
+.rental-info-amenity > img {
+    height: 40px;
+    width: 40px;
+}
+
+.rental-info-amenities > h3 {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.rental-info-requirements {
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.rental-info-requirements > h3 {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.rental-info-requirements-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 100px;
+}
+
+.rental-info-requirement-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.rental-info-requirement > p {
+    font-size: 18px;
+}
+
+.rental-info-map-container {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    width: 550px;
+    height: 350px;
+}
+
+.rental-info-map {
+    margin-top: -10px;
+}
+
+.rental-info-map > h3 {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.rental-info-contact {
+    cursor: pointer;
+    margin-top: 15px;
+    width: 200px;
+    height: 50px;
+    border: none;
+    border-radius: 12px;
+    background-color: #7d89dd;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+}
+
+.rental-info-contact > a {
+    color: white;
+}
+
+.rental-info-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rental-info-edit-btn {
+    margin: 45px 18px 0 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    background-color: #7d89dd;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    width: 85px;
+    padding: 15px 20px 15px 20px;;
+}
+
+.rental-info-edit-btn:hover {
+    background-color: #aeb6ea;
+}
+
+.rental-info-unavailable {
+    border: 2px solid black;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 350px;
+}
+
+.rental-info-unavailable > p {
+    text-align: center;
+}
+
+.map-container {
+    width: 400px;
+    height: 300px;
+}

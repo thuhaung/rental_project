@@ -1,0 +1,76 @@
+GET http://localhost:5000/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyMDhmMTEwMGFmY2ZhNTA5ZGM2MDAiLCJpYXQiOjE2NTI4NTEzMzMsImV4cCI6MTY1MjkzNzczM30.sD9_XpluoYIgAy2AOSXHIBkxC2BHMcjQ2H5_diGwri8
+###
+
+POST http://localhost:5000/register
+Content-Type: application/json
+
+{
+    "first_name": "Phong",
+    "middle_name": "Thanh",
+    "last_name": "Nguyen",
+    "birthdate": "2001-03-11",
+    "email": "phong.nguyen@email.com",
+    "password": "123456789",
+    "phone": "0123456789"
+}
+
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "ha.ung@email.com",
+    "password": "123456789"
+}
+
+###
+POST http://localhost:5000/token
+Content-Type: application/json
+
+{
+    "user_id": "627208f1100afcfa509dc600",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyMDhmMTEwMGFmY2ZhNTA5ZGM2MDAiLCJpYXQiOjE2NTI4NTEzMzN9.Niezk39JsosXuh0xgEfCL52M6NqOpstUrNgE1yFDtJc"
+}
+
+### 
+DELETE http://localhost:5000/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyMDhmMTEwMGFmY2ZhNTA5ZGM2MDAiLCJpYXQiOjE2NTI4NTE5MTksImV4cCI6MTY1MjkzODMxOX0.yolje7qiBFB2fuKZEUMNFDKHVJUb8LihGt9jqwRgufI
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyMDhmMTEwMGFmY2ZhNTA5ZGM2MDAiLCJpYXQiOjE2NTI4NTEzMzN9.Niezk39JsosXuh0xgEfCL52M6NqOpstUrNgE1yFDtJc"
+}
+
+###
+POST http://localhost:5000/advertisement/post
+Content-Type: application/json
+
+{
+    "user": "62720abc42fd932ccd1fed96",
+    "property_type": "Apartment",
+    "num_of_bedrooms": 1,
+    "num_of_bathrooms": 1,
+    "amenities": ["TV", "Kitchen", "Parking"],
+    "rent": 4000000,
+    "deposit": 2000000,
+    "electricity": 20000,
+    "water": 20000,
+    "address": {
+        "num": "611/40",
+        "street": "Dien Bien Phu",
+        "ward": "1",
+        "district": "3",
+        "city": "Ho Chi Minh City"
+    }
+}
+
+
+###
+GET http://localhost:5000/user/628fd3c41ce3583fa511e0c2
+
+###
+GET http://localhost:5000/rental/6290b946011eca47800788f1/all
+
+
+###
