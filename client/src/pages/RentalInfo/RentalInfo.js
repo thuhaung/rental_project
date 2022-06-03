@@ -45,6 +45,7 @@ function RentalInfo() {
                 setRental(item);
                 getRenter(item.user);
                 getImages(id, item.user);
+                //getLocation(item);
             }
         }).catch(error => console.log(error.message)); 
     }
@@ -64,14 +65,20 @@ function RentalInfo() {
             setImages(response.data);
         }).catch((error) => console.log(error.message));
     }
+    
+    const getLocation = async (rental) => {
+        /*const location = rental.address.num + " " + rental.address.street + " District " + rental.address.district + " " + rental.address.city;
+        axios.get("https://maps.googleapis.com/maps/api/geocode/json", {params: {address: location, key: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M"}})
+        .then((response) => {
+            setLat(response.data.results[0].geometry.location.lat);
+            setLng(response.data.results[0].geometry.location.lng);
+        })
+        .catch((error) => console.log(error.message));*/
+    }
 
     useEffect(() => {
         getRental();
 
-        const location = "22 Main St Boston MA";
-        axios.get("https://maps.googleapis.com/maps/api/geocode/json", {params: {address: location, key: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M"}})
-        .then((response) => console.log(response.data))
-        .catch((error) => console.log(error.message));
     }, []);
 
     const handleChange = (address) => {
@@ -91,18 +98,6 @@ function RentalInfo() {
             }
         }).catch((error) => console.log(error.message));
     }
-
-
-    useEffect(() => {
-        /*const script = document.createElement('script');
-      
-        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyC5qHhy7lazQbxUKO0WtOizl0ISGIsu18U&libraries=places";
-        script.async = true;
-        document.body.appendChild(script);
-        return () => {
-          document.body.removeChild(script);
-        }*/
-      }, []);
 
     return (
         <div className="rental-info-wrapper">
@@ -187,12 +182,13 @@ function RentalInfo() {
                 <hr className="rental-info-hr"></hr>
                 <div className="rental-info-map">
                     <h3>Location</h3>
-                    {
-                    <Map height={300} defaultCenter={[50.879, 4.6997]} defaultZoom={11}  provider={maptilerProvider}>
-                        <Marker width={50} anchor={[50.879, 4.6997]} />
-                    </Map>
+                    {/*
+                        lat && lng &&
+                        <Map height={300} defaultCenter={[lat, lng]} defaultZoom={11}  provider={maptilerProvider}>
+                            <Marker width={50} anchor={[lat, lng]} />
+                        </Map>
                     
-                    
+                    */
                     /*
                         <GoogleMap zoom={10} center={{lat: 44, lng: -80}} mapContainerClassName="map-container">
 

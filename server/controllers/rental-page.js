@@ -101,3 +101,15 @@ export const updateStatus = async (req, res) => {
         }
     }
 }
+
+export const getAllRentals = async (req, res) => {
+    try {
+        let rentals = await Rental.find({});
+        rentals = rentals.filter((rental) => {
+            return rental.is_available;
+        });
+        res.status(200).json(rentals);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
