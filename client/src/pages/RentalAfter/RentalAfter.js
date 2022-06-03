@@ -15,7 +15,7 @@ function RentalAfter(props) {
     useEffect(() => {
         setResult(rentals);
         console.log('Set succesfully');
-    });
+    },[rentals]);
 
     //Filter output
     function handleFilter(e) {
@@ -67,27 +67,27 @@ function RentalAfter(props) {
                                 rentalId={rental._id}
                                 userId={rental.user}
                             />
-                            /*
-                            <div className='rental-after-box-container'>
-                                <div className='rental-after-box1'>
-                                    <img className='rental-after-image' src={prod.images[0]} />
-                                    <table className='rental-after-list-info'>
-                                        <tr>
-                                            <td><img src={Rent} /></td>
-                                            <td>{prod.rent}{' '}VND/Month</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src={Location} /></td>
-                                            <td>{prod.address.num}{' '}
-                                                {prod.address.street},
-                                                Ward {prod.address.ward},
-                                                District {prod.address.district},
-                                                {prod.address.city} City</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                            */
+                            
+                            // <div className='rental-after-box-container'>
+                            //     <div className='rental-after-box1'>
+                            //         <img className='rental-after-image' src={prod.images[0]} />
+                            //         <table className='rental-after-list-info'>
+                            //             <tr>
+                            //                 <td><img src={Rent} /></td>
+                            //                 <td>{prod.rent}{' '}VND/Month</td>
+                            //             </tr>
+                            //             <tr>
+                            //                 <td><img src={Location} /></td>
+                            //                 <td>{prod.address.num}{' '}
+                            //                     {prod.address.street},
+                            //                     Ward {prod.address.ward},
+                            //                     District {prod.address.district},
+                            //                     {prod.address.city} City</td>
+                            //             </tr>
+                            //         </table>
+                            //     </div>
+                            // </div>
+                            
                         ))}
                     </div>
                 </div>
