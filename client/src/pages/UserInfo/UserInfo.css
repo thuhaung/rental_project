@@ -1,0 +1,62 @@
+.userinfo-container {
+    margin-top: 65px;
+    width: 100%;
+    height: 400px;
+    /* background-color: antiquewhite; */
+}
+
+.userinfo-background {
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(90deg, #AEB6EA 0%, #ECEEFA 100%);
+}
+
+.userinfo-avatar {
+    width: 234px;
+    height: 234px;
+    border: 6px solid #FFFFFF;
+    border-radius: 100%;
+    margin-left: 150px;
+    margin-top: -100px;
+}
+
+.userinfo-profile-wrapper {
+    margin-left: 410px;
+    margin-top: -160px;
+}
+
+.userinfo-option-wrapper {
+    display: flex;
+    margin-top: 90px;
+}
+
+.userinfo-option1 {
+    margin-left: 200px;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+}
+
+.userinfo-option1:hover{
+    cursor: pointer;
+    border-bottom: 5px solid #7d89dd;
+}
+
+.userinfo-option2{
+    margin-left: 200px;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+    border-bottom: 5px solid #7d89dd;
+}
+
+.userinfo-option2:hover{
+    cursor: pointer;
+}
+
+.userinfo-edit-wrapper{
+    box-shadow: inset 0px 1px 10px 2px rgba(147, 147, 147, 0.25);
+    height: 650px;
+    padding-top: 30px;
+    padding-left: 200px;
+}
