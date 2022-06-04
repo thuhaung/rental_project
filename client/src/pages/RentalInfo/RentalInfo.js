@@ -11,6 +11,7 @@ import AmenitiesIcon from '../../assets/AmenitiesIcon.js';
 import Cookies from "universal-cookie";
 import { Map, Marker } from "pigeon-maps";
 import { maptiler } from 'pigeon-maps/providers';
+import Footer from '../../components/Footer/Footer.js';
 
 
 function RentalInfo() {
@@ -214,6 +215,7 @@ function RentalInfo() {
                 }
                 
             </div>
+            <Footer />
         </div>
     )
 }

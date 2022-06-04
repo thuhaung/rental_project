@@ -66,7 +66,7 @@ function LoginPopup({ open, onClose }) {
                 setIsRegister(false);
             }
         }).catch((error) => {
-            console.log(error.message);
+            setErrorMessage("Email is not unique.");
         })
     }
 
@@ -77,8 +77,8 @@ function LoginPopup({ open, onClose }) {
                 <div className="inner-popup">
                     <h2>Welcome to Casa</h2>
                     <div className="sections">
-                        <h3 className={(!isRegister && "login-") + "section"} onClick={() => setIsRegister(false)}>Login</h3>
-                        <h3 className={(isRegister && "register-") + "section"}onClick={() => setIsRegister(true)}>Sign up</h3>
+                        <h3 className={(!isRegister && "login-") + "section"} onClick={() => {setIsRegister(false); setErrorMessage(""); setEmail(""); setPassword("")}}>Login</h3>
+                        <h3 className={(isRegister && "register-") + "section"}onClick={() => {setIsRegister(true); setErrorMessage(""); setEmail(""); setPassword("")}}>Sign up</h3>
                     </div>
                     <hr className="popup-line"></hr>
                     { errorMessage === null ? "" : 
@@ -90,11 +90,11 @@ function LoginPopup({ open, onClose }) {
                     <form className="login-form" onSubmit={handleLogin}>
                         <div className="login-form-div">
                             <label htmlFor="email" className="form-label">Email</label>
-                            <input type="text" className="form-input" id="email" placeholder="Enter email" autoComplete="off" required onChange={(e) => setEmail(e.target.value)}></input>
+                            <input type="text" className="form-input" id="email" value={email} placeholder="Enter email" autoComplete="off" required onChange={(e) => setEmail(e.target.value)}></input>
                         </div>
                         <div className="login-form-div">
                             <label htmlFor="password" className="form-label">Password</label>
-                            <input type="password" className="form-input" id="password" placeholder="Enter password" required onChange={(e) => setPassword(e.target.value)}></input>
+                            <input type="password" className="form-input" id="password" value={password} placeholder="Enter password" required onChange={(e) => setPassword(e.target.value)}></input>
                         </div>
                         <h4 className="forgot-password" onClick={() => setIsForgot(true)}>Forgot your password?</h4>
                         <div className="login-form-submit-div">
@@ -108,11 +108,11 @@ function LoginPopup({ open, onClose }) {
                     <form className="register-form" onSubmit={handleRegister}>
                         <div className="register-form-div">
                             <label htmlFor="email" className="form-label">Email</label>
-                            <input type="text" className="form-input" id="email" placeholder="Enter email" autoComplete="off" required onChange={(e) => setEmail(e.target.value)}></input>
+                            <input type="text" className="form-input" id="email" value={email} placeholder="Enter email" autoComplete="off" required onChange={(e) => setEmail(e.target.value)}></input>
                         </div>
                         <div className="register-form-div">
                             <label htmlFor="password" className="form-label">Password</label>
-                            <input type="password" className="form-input" id="password" placeholder="Enter password" required onChange={(e) => setPassword(e.target.value)}></input>
+                            <input type="password" className="form-input" id="password" value={password} placeholder="Enter password" required onChange={(e) => setPassword(e.target.value)}></input>
                         </div>
                         <div className="register-form-div">
                             <div className="register-form-name-div">

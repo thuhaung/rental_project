@@ -6,6 +6,7 @@ import Location from '../../assets/Location.svg'
 import Rent from '../../assets/Rent.svg'
 import Nav from '../../components/Nav/Nav';
 import RentalBox from "../../components/RentalBox/RentalBox.js";
+import Footer from '../../components/Footer/Footer';
 
 function RentalAfter(props) {
     const location = useLocation();
@@ -92,6 +93,7 @@ function RentalAfter(props) {
                     </div>
                 </div>
             }
+            
         </>
     )
 }

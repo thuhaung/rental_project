@@ -1,0 +1,72 @@
+.userinfo-container {
+    margin-top: 65px;
+    width: 100%;
+    height: 400px;
+}
+
+.userinfo-background {
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(90deg, #AEB6EA 0%, #ECEEFA 100%);
+}
+
+.userinfo-profile-wrapper {
+    display: flex;
+    margin-top: -100px;
+    margin-left: 240px;
+    gap: 30px;
+    align-items: flex-end;
+}
+
+.userinfo-profile-name > h2 {
+    font-size: 25px;
+    line-height: 0.5;
+}
+
+.userinfo-profile-name > p {
+    font-size: 22px;
+}
+
+.userinfo-avatar {
+    width: 200px;
+    height: 200px;
+    border: 6px solid #FFFFFF;
+    border-radius: 100%;   
+}
+
+.userinfo-option-wrapper {
+    display: flex;
+    margin-top: 64px;
+    gap: 150px;
+    margin-left: 260px;
+}
+
+.userinfo-option1 {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 29px;
+}
+
+.userinfo-option1:hover{
+    cursor: pointer;
+    padding-bottom: 10px;
+    border-bottom: 5px solid #7d89dd;
+}
+
+.userinfo-option2 {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 29px;
+    padding-bottom: 10px;
+    border-bottom: 5px solid #7d89dd;
+}
+
+.userinfo-option2:hover{
+    cursor: pointer;
+}
+
+.userinfo-edit-wrapper{
+    box-shadow: inset 0px 1px 13px 2px rgba(147, 147, 147, 0.25);
+    padding-top: 30px;
+    padding-left: 260px;
+}

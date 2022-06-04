@@ -11,6 +11,7 @@ import RentalBox from '../../components/RentalBox/RentalBox'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useNavigate } from "react-router-dom";
+import Footer from '../../components/Footer/Footer'
 
 
 function Rentals() {
@@ -109,6 +110,7 @@ function Rentals() {
           </Carousel >
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

@@ -108,10 +108,14 @@ export const newAttachment = async (req, res) => {
 export const getAttachment = async (req, res) => {
     const conversationId = req.params.conversationId;
     const messageId = req.params.messageId;
-    const { resources } = await cloudinary.v2.search.
+    try {
+        const { resources } = await cloudinary.v2.search.
                                                     expression(`public_id: chat/${conversationId}/${messageId}`).
                                                     sort_by("public_id", "desc").
                                                     execute();
-    const publicIds = resources.map(file => file.public_id);
-    res.status(200).send(publicIds);
+        const publicIds = resources.map(file => file.public_id);
+        res.status(200).send(publicIds);
+    } catch (error) {
+        res.status(500).send(error.message);
+    } 
 }

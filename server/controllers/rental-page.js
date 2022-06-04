@@ -45,26 +45,31 @@ export const search = async(req, res) => {
 }
 
 export const recentList = async (req, res) => {
-    let rentals = await Rental.find({});
+    try {
+        let rentals = await Rental.find({});
 
-    rentals = rentals.filter((rental) => {
-        return rental.is_available;
-    });
+        rentals = rentals.filter((rental) => {
+            return rental.is_available;
+        });
 
-    let recentList = [];
+        let recentList = [];
 
-    if (rentals.length >= 6) {
-        for (let i = (rentals.length - 1); i >= (rentals.length - 6); i--) {
-            recentList = recentList.concat([rentals[i]]);
+        if (rentals.length >= 6) {
+            for (let i = (rentals.length - 1); i >= (rentals.length - 6); i--) {
+                recentList = recentList.concat([rentals[i]]);
+            }
         }
-    }
-    else {
-        for (let i = (rentals.length - 1); i >= 0; i--) {
-            recentList = recentList.concat([rentals[i]]);
+        else {
+            for (let i = (rentals.length - 1); i >= 0; i--) {
+                recentList = recentList.concat([rentals[i]]);
+            }
         }
+        
+        res.status(200).json(recentList);
+    } catch (error) {
+        res.status(500).send(error.message);
     }
-    
-    res.status(200).json(recentList);
+
 }
 
 export const getRentalInfo = async (req, res) => {
