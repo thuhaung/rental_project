@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import cookieParser from "cookie-parser";
 import User from "../models/user.js";
 import jwt from "jsonwebtoken";
@@ -83,5 +84,55 @@ export const verifyUser = async (req, res) => {
         }
     } catch (error) {
         res.status(500).send(error.message);
+    }
+}
+
+export const editUserInfo = async (req, res) => {
+    const userId = req.params.id;
+    console.log(req.cookies["userId"]);
+    console.log(req.body);
+    try {
+        User.findOneAndUpdate({"_id" : userId}, req.body)
+            .then(async() => {
+                const updatedUser = await User.findById({_id : userId});
+                res.status(200).send(updatedUser);
+            }) ;
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
+
+export const editUserPassword = async (req, res) => {
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+    try {
+        if (await bcrypt.compare(req.body.currentPassword, user.password)) {
+            try {
+                const salt = await bcrypt.genSalt(); 
+                const hashedPassword = await bcrypt.hash(req.body.newPassword, salt); // hash user-provided password with salt
+                // const user = new User();
+                // for (var key in req.body) {
+                //     user[key] = req.body[key];
+                // }
+                // user.password = hashedPassword;
+                // const newUser = await user.save();
+                // res.status(201).send(newUser);
+                try {
+                    User.findOneAndUpdate({_id : user._id}, {password : hashedPassword})
+                        .then(() => {
+                            res.status(200).send("Update successfully");
+                        })
+                } catch (error) {
+                    res.status(500).send("Update failed");
+                }
+            } catch (error) {
+                res.status(400).json({message: error.message});
+            }
+        }
+        else {
+            res.status(500).send("Password does not match");
+        }
+    } catch (error) {
+        res.status(500).send(error);
     }
 }

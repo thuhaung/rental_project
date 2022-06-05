@@ -11,5 +11,6 @@ rentalPageRouter.get("/all", rental.getAllRentals);
 rentalPageRouter.get("/:id", rental.getRentalInfo);
 rentalPageRouter.get("/:id/all", rental.getUserRentals);
 rentalPageRouter.post("/update-status", authenticateToken, rental.updateStatus);
+rentalPageRouter.put("/:id", rental.editRentalInfo);
 
 export default rentalPageRouter;

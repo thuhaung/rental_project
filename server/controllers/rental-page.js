@@ -1,4 +1,6 @@
 import Rental from '../models/rental.js';
+import { cloudinary } from "../utils/cloudinary.js";
+
 
 export const search = async(req, res) => {
     const {city, district, price, street} = req.query;
@@ -117,4 +119,44 @@ export const getAllRentals = async (req, res) => {
     } catch (error) {
         res.status(500).send(error.message);
     }
+}
+
+export const editRentalInfo = async (req, res) => {
+    const rentalId = req.params.id;
+    const userId = req.cookies["userId"];
+    try {
+        const files = req.body.addImages;
+        let uploadedResponse;
+        for (let i in files) {
+            uploadedResponse = await cloudinary.v2.uploader.upload(files[i], {
+                public_id: `${rentalId}-image-${i}`,
+                folder: `rentals/${userId}/${rentalId}`,
+                resource_type: 'image'
+            });
+            console.log(uploadedResponse);
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+
+    try {
+        const publicIds = req.body.deleteImages;
+        let deletedResponse;
+        for (let i in publicIds) {
+            deletedResponse = await cloudinary.v2.uploader.destroy(publicIds[i]);
+            console.log(deletedResponse);
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+
+    try {
+         Rental.findOneAndUpdate({_id: rentalId}, req.body)
+            .then(() => {
+                res.status(200).send("Update successfully");
+            });
+    } catch (error) {
+        res.status(500).send("Update failed");
+    }
+
 }
