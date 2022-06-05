@@ -1,5 +1,4 @@
 import Rental from "../models/rental.js";
-import cookieParser from "cookie-parser";
 import { cloudinary } from "../utils/cloudinary.js";
 
 
