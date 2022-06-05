@@ -12,6 +12,7 @@ import Cookies from "universal-cookie";
 import { Map, Marker } from "pigeon-maps";
 import { maptiler } from 'pigeon-maps/providers';
 import Footer from '../../components/Footer/Footer.js';
+import verified from "../../assets/verified.png";
 
 
 function RentalInfo() {
@@ -138,7 +139,10 @@ function RentalInfo() {
                             renter &&
                             <div className="rental-info-general-renter-wrapper">
                                 <h3>{renter.last_name + " " + renter.middle_name + " " + renter.first_name}</h3>
-                                <p>Verified</p>
+                                <div className="user-info-is-verified">
+                                    <p>Verified</p>
+                                    <img src={verified} /> 
+                                </div>   
                             </div>
                         }
                         <img src={avatar} alt="avatar" />

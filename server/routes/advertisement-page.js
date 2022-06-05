@@ -8,7 +8,7 @@ const advertisementPageRouter = express.Router();
 
 advertisementPageRouter.post("/post", authenticateRentalToken, advertisement.newRental);
 //advertisementPageRouter.post("/upload-image", uploadRentalImage.array("images", 5), advertisement.uploadRentalImage);
-advertisementPageRouter.post("/images", advertisement.getRentalImages);
+advertisementPageRouter.get("/:userid/:rentalid/images", advertisement.getRentalImages);
 advertisementPageRouter.post("/upload-image", authenticateRentalToken, advertisement.uploadRentalImage);
 
 export default advertisementPageRouter;
