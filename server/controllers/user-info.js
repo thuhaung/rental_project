@@ -10,7 +10,6 @@ export const getUser = async (req, res) => {
     try {
         const user = await User.findOne({_id: req.user._id});
         res.status(200).json({user: user});
-        console.log(user);
     } catch (error) {
         res.status(500).json({message: error.message});
     }
@@ -38,6 +37,7 @@ export const sendEmail = async (req, res) => {
     const userId = req.cookies["userId"];
     const token = crypto.randomBytes(20).toString("hex");
 
+    await ConfirmationCode.deleteMany({user_id: userId});
     const entry = new ConfirmationCode({user_id: userId, code: token});
     const newEntry = await entry.save();
 
@@ -73,8 +73,9 @@ export const verifyUser = async (req, res) => {
         const entry = await ConfirmationCode.find({user_id: userId, code: confirmationCode});
         
         if (entry) {
-            ConfirmationCode.deleteMany({user_id: userId});
+            await ConfirmationCode.deleteMany({user_id: userId});
             await User.findByIdAndUpdate(userId, {is_verified: true});
+            res.cookie("isVerified", true);
             res.status(200).send("User is verified.");
         }
         else {

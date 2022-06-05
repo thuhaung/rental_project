@@ -5,19 +5,17 @@ import axios from "axios";
 
 const VerifiedRoute = ({ children }) => {
     const cookies = new Cookies();
-    const [isVerified, setIsVerified] = useState(false);
-    const userId = cookies.get("userId");
     const location = useLocation();
 
-    useEffect(() => {
+    /*useEffect(() => {
         axios.get(`http://localhost:5000/user/${userId}`).then((response) => {
             if (response.data) {
                 setIsVerified(response.data.is_verified);
             }
         }).catch((error) => console.log(error.message));
-    }, []);
+    }, [isVerified]);*/
     
-    return isVerified ? children : <Navigate to="/user/settings" state={{ verifiedSection: true }} replace/>
+    return cookies.get("isVerified") === "true" ? children : <Navigate to="/user/settings" state={{ from: location, verifiedSection: true }} replace/>
 
 }
 

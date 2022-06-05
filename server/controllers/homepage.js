@@ -32,6 +32,7 @@ export const userLogin = async (req, res) => {
 
             res.cookie("accessToken", token, { origin: "http://localhost:3000" });
             res.cookie("refreshToken", refreshToken, { httpOnly: true });
+            res.cookie("isVerified", user.is_verified);
             res.cookie("userId", user._id);
             
             res.status(200).json({accessToken: token, refreshToken: refreshToken, user_id: user._id});
@@ -109,6 +110,7 @@ export const userLogout = async (req, res) => {
         res.clearCookie("userId");
         res.clearCookie("accessToken");
         res.clearCookie("refreshToken");
+        res.clearCookie("isVerified");
         //res.status(204).send("Logged out.");
         res.end();
     } catch (error) {

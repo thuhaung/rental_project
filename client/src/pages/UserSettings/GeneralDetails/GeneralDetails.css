@@ -1,5 +1,5 @@
 .general-details-wrapper {
-    height: 640px;
+    height: 680px;
 }
 
 .general-details-info {
@@ -15,6 +15,7 @@
 
 .general-details-title > p {
     font-size: 20px;
+    line-height: 1.75;
 }
 
 .general-details-form {
@@ -33,7 +34,7 @@
 }
 
 .general-details-straightline {
-    width: 860px;
+    width: 870px;
     height: 1px;
     background-color: #D3D3D3;
     margin-top: 25px;
