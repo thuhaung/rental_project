@@ -27,7 +27,7 @@ function RoutePage() {
                 <Route path="/rental-after" element={<RentalAfter />} />
                 <Route path="/rentals/:id" element={<RentalInfo />} />
                 <Route path="/user/:id/rentals" element={<YourAdvertisements />} />
-                <Route path="/user/info" element={<PrivateRoute> <UserInfo /> </PrivateRoute>} />
+                <Route path="/user/:id/info" element={<UserInfo />} />
                 
                 {/* protected routes <Route element={<RequireAuth />}>  
                 <Route path="/advertise-place" element={<PrivateRoute> <AdvertisePlace /> </PrivateRoute>} />*/}

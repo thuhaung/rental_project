@@ -43,6 +43,10 @@
     align-items: center;
 }
 
+.user-info-is-verified > p {
+    font-size: 18px;
+}
+
 .user-info-is-verified > img {
     height: 22px;
     width: 22px;

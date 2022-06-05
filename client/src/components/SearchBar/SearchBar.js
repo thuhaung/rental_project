@@ -42,7 +42,6 @@ function SearchBar(props) {
   }
 
   const distance = (placeLat, placeLng, rentalLat, rentalLng) => {
-    console.log(placeLat + " " + rentalLat);
     var p = 0.017453292519943295;    // Math.PI / 180
     var c = Math.cos;
     var a = 0.5 - c((rentalLat - placeLat) * p)/2 + 
@@ -166,8 +165,8 @@ function SearchBar(props) {
           </div>
 
           <div className='searchbar-straight-line1'></div>
-          {/*
-            
+          {
+            /*
             <PlacesAutocomplete
             value={place}
             onChange={setPlace}
@@ -206,8 +205,8 @@ function SearchBar(props) {
               </div>
             )}
           </PlacesAutocomplete>
-            
-          */}
+           */
+          }
           
 
           <button className='searchbar-by-place-btn' type='submit'><p className='searchbar-btn-text'>Search</p></button>
