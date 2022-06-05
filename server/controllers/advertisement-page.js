@@ -40,14 +40,13 @@ export const uploadRentalImage = async (req, res) => {
 }
 
 export const getRentalImages = async (req, res) => {
-    const rentalId = req.body.rentalId;
-    const userId = req.body.userId;
+    const rentalId = req.params.rentalid;
+    const userId = req.params.userid;
     try {
-        const { resources } = await cloudinary.v2.search.
+        const { resources }  = await cloudinary.v2.search.
                                                     expression("folder: rentals/" + userId + "/" + rentalId + "/*").
                                                     sort_by("public_id", "desc").
                                                     execute();
-                                                     
         const publicIds = resources.map(file => file.public_id);
         res.status(200).send(publicIds);
     } catch (error) {

@@ -32,7 +32,7 @@ function Verification({ isVerified, from }) {
           {
             isVerified ? 
             <p>You are verified and authorized to advertise rentals.</p> :
-            <p>Your account has not been verified.</p>
+            <p>Your account has not been verified to advertise a place.</p>
           }
         </div>
       </div>

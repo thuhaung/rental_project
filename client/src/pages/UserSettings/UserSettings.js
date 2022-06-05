@@ -49,42 +49,45 @@ function UserSettings() {
         <div>
             <Nav />
             <div className='userinfo-container'>
-                <div className='userinfo-background'></div>
-                <div className='userinfo-profile-wrapper'>
-                    <img className='userinfo-avatar' src={Avatar} />
-                    <div className="userinfo-profile-name">
-                    <h2>Profile settings</h2>
-                    <p>{userInfo.last_name} {userInfo.middle_name} {userInfo.first_name}</p>
-                    </div>
-                </div>
                 
-                <div className='userinfo-option-wrapper'>
-                    <div className={styleDetail} onClick={() => {
-                        setOption('detail');
-                        setStyleDetail('userinfo-option2');
-                        setStylePass('userinfo-option1');
-                        setStyleVerify('userinfo-option1')
-                    }}>
-                        General Details
+                    <div className='userinfo-background'></div>
+                    <div className='userinfo-profile-wrapper'>
+                        <img className='userinfo-avatar' src={Avatar} />
+                        <div className="userinfo-profile-name">
+                        <h2>Profile settings</h2>
+                        <p>{userInfo.last_name} {userInfo.middle_name} {userInfo.first_name}</p>
+                        </div>
                     </div>
-                    <div className={stylePass} onClick={() => {
-                        setOption('password');
-                        setStylePass('userinfo-option2');
-                        setStyleDetail('userinfo-option1');
-                        setStyleVerify('userinfo-option1')
-                    }}>
-                        Password
+                    
+                    <div className='userinfo-option-wrapper'>
+                        <div className={styleDetail} onClick={() => {
+                            setOption('detail');
+                            setStyleDetail('userinfo-option2');
+                            setStylePass('userinfo-option1');
+                            setStyleVerify('userinfo-option1')
+                        }}>
+                            General Details
+                        </div>
+                        <div className={stylePass} onClick={() => {
+                            setOption('password');
+                            setStylePass('userinfo-option2');
+                            setStyleDetail('userinfo-option1');
+                            setStyleVerify('userinfo-option1')
+                        }}>
+                            Password
+                        </div>
+                        <div className={styleVerify} onClick={() => {
+                            setOption('verify');
+                            setStyleVerify('userinfo-option2');
+                            setStyleDetail('userinfo-option1');
+                            setStylePass('userinfo-option1');
+                        }}>
+                            Verification
+                        </div>
                     </div>
-                    <div className={styleVerify} onClick={() => {
-                        setOption('verify');
-                        setStyleVerify('userinfo-option2');
-                        setStyleDetail('userinfo-option1');
-                        setStylePass('userinfo-option1');
-                    }}>
-                        Verification
-                    </div>
-                </div>
+                
             </div>
+               
             
             <div className='userinfo-edit-wrapper'>
                 {(() => {
