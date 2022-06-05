@@ -13,10 +13,11 @@ import Footer from "../../components/Footer/Footer.js";
 function UserSettings() {
     const [userInfo, setUserInfo] = useState({});
     const location = useLocation();
-    const [option, setOption] = useState("detail");
-    const [styleDetail, setStyleDetail] = useState('userinfo-option2')
+    const from = location.state?.from?.pathname;
+    const [option, setOption] = useState(location?.state?.verifiedSection ? "verify" : "detail");
+    const [styleDetail, setStyleDetail] = useState(location?.state?.verifiedSection ? "userinfo-option1" :'userinfo-option2')
     const [stylePass, setStylePass] = useState('userinfo-option1')
-    const [styleVerify, setStyleVerify] = useState('userinfo-option1')
+    const [styleVerify, setStyleVerify] = useState(location?.state?.verifiedSection ? "userinfo-option2" : 'userinfo-option1')
     const cookies = new Cookies();
     
 
@@ -29,12 +30,12 @@ function UserSettings() {
     }
 
     useEffect(() => {
-        if (location.state.verifiedSection) {
+        /*if (location?.state?.verifiedSection) {
             setOption("verify");
             setStyleVerify('userinfo-option2');
             setStyleDetail('userinfo-option1');
             setStylePass('userinfo-option1');
-        }
+        }*/
         
         /*axios.get("http://localhost:5000/user", { withCredentials: true }).then((response) => {
             console.log(response.data);
@@ -92,14 +93,14 @@ function UserSettings() {
                             return <GeneralDetails
                                 email={userInfo.email}
                                 firstName={userInfo.first_name}
-                                middlename={userInfo.middle_name}
+                                middleName={userInfo.middle_name}
                                 lastName={userInfo.last_name} />
                             break;
                         case 'password':
                             return <Password />
                             break;
                         case 'verify':
-                            return <Verification isVerified={userInfo.is_verified} />
+                            return <Verification isVerified={userInfo.is_verified} from={from}/>
                             break;
                         default:
                             return null

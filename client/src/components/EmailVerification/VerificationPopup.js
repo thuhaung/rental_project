@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Timer from '../Timer/Timer';
 import "./VerificationPopup.css";
 
-function VerificationPopup({ open, onClose, onSend }) {
+function VerificationPopup({ open, onClose, onSend, from }) {
     const [isFinished, setIsFinished] = useState(false);
     const navigate = useNavigate();
     const [confirmationCode, setConfirmationCode] = useState("");
@@ -14,7 +14,13 @@ function VerificationPopup({ open, onClose, onSend }) {
         axios.post("http://localhost:5000/user/confirm-email/verify", { confirmationCode: confirmationCode }, { withCredentials: true }).then((response) => {
             if (response.data) {
                 onClose();
-                navigate("../user/settings");
+                if (from) {
+                    navigate(from, { replace: true });
+                }
+                else {
+                    navigate("../user/settings");
+                }
+                
             }
         }).catch((error) => {
             console.log(error.message)
@@ -38,7 +44,7 @@ function VerificationPopup({ open, onClose, onSend }) {
                         <p className="verification-popup-send-again" style={{cursor: isFinished ? "pointer" : "none"}} onClick={() => {setIsFinished(false); onSend(); setErrorMessage(""); setConfirmationCode("")}}>Didn't receive? Send again</p>
                         {
                             isFinished ? "" : 
-                            <Timer minute={1} second={0} onFinish={() => setIsFinished(true)}/>
+                            <Timer minute={1} second={30} onFinish={() => {setIsFinished(true)}}/>
                         }
                         
                     </div>

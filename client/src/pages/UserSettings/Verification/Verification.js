@@ -4,7 +4,7 @@ import "./Verification.css"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Verification({ isVerified }) {
+function Verification({ isVerified, from }) {
   const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
 
@@ -13,7 +13,13 @@ function Verification({ isVerified }) {
         if (response.data) {
           console.log(response.data);
         }
-      }).catch((error) => {
+      })
+      /*.then(() => {
+        if (fromLocation) {
+          navigate(fromLocation, { replace: true});
+        }
+      })*/
+      .catch((error) => {
         console.log(error.message);
       })
   }
@@ -34,7 +40,7 @@ function Verification({ isVerified }) {
         isVerified ? "" :
         <div className="verification-form">
            <button className="verification-btn" onClick={() => {setIsClicked(true); sendEmail()}}>Verify your email address</button>
-           <VerificationPopup open={isClicked} onClose={() => setIsClicked(false)} onSend={() => sendEmail()}/>
+           <VerificationPopup open={isClicked} from={from} onClose={() => setIsClicked(false)} onSend={() => sendEmail()}/>
         </div>
       }
     </div>

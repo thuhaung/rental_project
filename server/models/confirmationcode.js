@@ -5,8 +5,7 @@ const confirmationCodeSchema = mongoose.Schema({
     code: String,
     createdAt: { 
         type: Date, 
-        default: Date.now(), 
-        expires: 60
+        default: Date.now()
     },
 });
 
