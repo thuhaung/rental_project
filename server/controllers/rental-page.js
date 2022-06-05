@@ -129,7 +129,7 @@ export const editRentalInfo = async (req, res) => {
         let uploadedResponse;
         for (let i in files) {
             uploadedResponse = await cloudinary.v2.uploader.upload(files[i], {
-                public_id: `${rentalId}-image-${i}`,
+                public_id: `${rentalId}-image-${i+50}`,
                 folder: `rentals/${userId}/${rentalId}`,
                 resource_type: 'image'
             });
@@ -151,7 +151,7 @@ export const editRentalInfo = async (req, res) => {
     }
 
     try {
-         Rental.findOneAndUpdate({_id: rentalId}, req.body)
+         Rental.findOneAndUpdate({_id: rentalId}, req.body.info)
             .then(() => {
                 res.status(200).send("Update successfully");
             });
