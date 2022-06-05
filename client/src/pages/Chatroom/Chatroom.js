@@ -65,7 +65,7 @@ function Chatroom() {
     }
 
     const getRentalImage = async (rentalId, userId) => {
-        axios.post("http://localhost:5000/advertisement/images", {rentalId: rentalId, userId: userId}).then((response) => {
+        axios.get(`http://localhost:5000/advertisement/${userId}/${rentalId}/images`).then((response) => {
             if (response.data) {
                 setRentalImage(response.data[0]);
             }
