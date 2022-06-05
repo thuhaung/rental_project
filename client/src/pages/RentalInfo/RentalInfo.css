@@ -22,7 +22,7 @@
     width: 1200px;
 }
 
-.rental-info-general-card > h2 {
+.rental-info-title > h2 {
     font-size: 25px;
     font-weight: 600;
     margin: 40px 0 0 0;
@@ -182,6 +182,7 @@
 }
 
 .rental-info-contact {
+    cursor: pointer;
     margin-top: 15px;
     width: 200px;
     height: 50px;
@@ -192,4 +193,48 @@
     font-size: 20px;
     font-weight: 600;
     color: white;
+}
+
+.rental-info-contact > a {
+    color: white;
+}
+
+.rental-info-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rental-info-edit-btn {
+    margin: 45px 18px 0 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    background-color: #7d89dd;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    width: 85px;
+    padding: 15px 20px 15px 20px;;
+}
+
+.rental-info-edit-btn:hover {
+    background-color: #aeb6ea;
+}
+
+.rental-info-unavailable {
+    border: 2px solid black;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 350px;
+}
+
+.rental-info-unavailable > p {
+    text-align: center;
+}
+
+.map-container {
+    width: 400px;
+    height: 300px;
 }

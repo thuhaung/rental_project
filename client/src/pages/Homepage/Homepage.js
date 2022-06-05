@@ -6,6 +6,7 @@ import Nav from '../../components/Nav/Nav';
 import rent from "../../assets/homepage-rent-image.jpg";
 import advertise from "../../assets/homepage-advertise-image.jpg";
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
+import Footer from '../../components/Footer/Footer';
 
 function Homepage() {
   return (
@@ -32,6 +33,7 @@ function Homepage() {
           <img src={advertise} alt="advertise" />
         </div>
       </div>
+      <Footer />
     </div>
     
   )

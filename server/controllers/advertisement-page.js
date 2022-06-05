@@ -1,6 +1,4 @@
-import Cookies from "universal-cookie";
 import Rental from "../models/rental.js";
-import cookieParser from "cookie-parser";
 import { cloudinary } from "../utils/cloudinary.js";
 
 
@@ -41,14 +39,16 @@ export const uploadRentalImage = async (req, res) => {
 }
 
 export const getRentalImages = async (req, res) => {
-    const cookie = new Cookies(req.header.cookies);
-    const rentalId = req.body.rentalId;
-    const userId = req.body.userId;
-    const { resources } = await cloudinary.v2.search.
+    const rentalId = req.params.rentalid;
+    const userId = req.params.userid;
+    try {
+        const { resources }  = await cloudinary.v2.search.
                                                     expression("folder: rentals/" + userId + "/" + rentalId + "/*").
                                                     sort_by("public_id", "desc").
                                                     execute();
-                                                     
-    const publicIds = resources.map(file => file.public_id);
-    res.status(200).send(publicIds);
+        const publicIds = resources.map(file => file.public_id);
+        res.status(200).send(publicIds);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 }

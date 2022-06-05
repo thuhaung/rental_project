@@ -24,7 +24,8 @@ function DropdownMenu() {
         <div className="dropdown-menu">
             <ul className="dropdown-list">
                 <li className="dropdown-item"><Link to="/user/info">Profile</Link></li>
-                <li className="dropdown-item">Inbox</li>
+                <li className="dropdown-item"><Link to="/user/settings">Settings</Link></li>
+                <li className="dropdown-item"><Link to={`/user/${userId}/chatroom`}>Inbox</Link></li>
                 <li className="dropdown-item">Saved rentals</li>
                 <li className="dropdown-item"><Link to={`/user/${userId}/rentals`}>Your advertisements</Link></li>
                 <hr className="dropdown-line"></hr>

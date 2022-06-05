@@ -16,7 +16,7 @@ function RentalBox({ name, rentAmount, fullAddress, rentalId, userId }) {
     const navigate = useNavigate();
 
     const getImage = async () => {
-        axios.post("http://localhost:5000/advertisement/images", { rentalId: rentalId, userId: userId }).then((response) => {
+        axios.get(`http://localhost:5000/advertisement/${userId}/${rentalId}/images`).then((response) => {
             setImage(response.data[0]);
         }).catch((error) => console.log(error.message));
     }

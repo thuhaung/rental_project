@@ -18,6 +18,7 @@
 .rental-searchbar-container{
     display: flex;
     justify-content: center;
+    margin-top: -50px;
 }
 
 .rental-sub-container {

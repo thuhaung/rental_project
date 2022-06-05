@@ -1,21 +1,23 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Nav from "../../components/Nav/Nav.js";
 import "./RentalInfo.css";
 import { Image } from "cloudinary-react";
 import loading from "../../assets/loading-img.png";
 import avatar from "../../assets/profile-pic.jpg";
 import AmenitiesIcon from '../../assets/AmenitiesIcon.js';
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import PlacesAutocomplete, {
-    geocodeByAddress,
-    getLatLng,
-  } from "react-places-autocomplete";
+//import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import Cookies from "universal-cookie";
+import { Map, Marker } from "pigeon-maps";
+import { maptiler } from 'pigeon-maps/providers';
+import Footer from '../../components/Footer/Footer.js';
+import verified from "../../assets/verified.png";
+
 
 function RentalInfo() {
     const icons = AmenitiesIcon;
-    //const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M" });
+    //const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyC5qHhy7lazQbxUKO0WtOizl0ISGIsu18U" })
     const [rental, setRental] = useState("");
     const [rentalName, setRentalName] = useState("");
     const [address, setAddress] = useState("");
@@ -28,7 +30,14 @@ function RentalInfo() {
     const [renter, setRenter] = useState({});
     const [images, setImages] = useState([]);
     const { id } = useParams();
+    const cookies = new Cookies();
+    const userId = cookies.get("userId");
     const iconNames = ["Kitchen", "AC", "Parking", "Washer", "TV", "Wifi", "Fridge"];
+    const [lat, setLat] = useState();
+    const [lng, setLng] = useState();
+    const navigate = useNavigate();
+    const maptilerProvider = maptiler('CnzknMBRrl0lmKvk9umd', 'streets');
+
 
     const getRental = async () => {
         axios.get(`http://localhost:5000/rental/${id}`).then((response) => {
@@ -38,6 +47,7 @@ function RentalInfo() {
                 setRental(item);
                 getRenter(item.user);
                 getImages(id, item.user);
+                //getLocation(item);
             }
         }).catch(error => console.log(error.message)); 
     }
@@ -57,54 +67,50 @@ function RentalInfo() {
             setImages(response.data);
         }).catch((error) => console.log(error.message));
     }
+    
+    const getLocation = async (rental) => {
+        /*const location = rental.address.num + " " + rental.address.street + " District " + rental.address.district + " " + rental.address.city;
+        axios.get("https://maps.googleapis.com/maps/api/geocode/json", {params: {address: location, key: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M"}})
+        .then((response) => {
+            setLat(response.data.results[0].geometry.location.lat);
+            setLng(response.data.results[0].geometry.location.lng);
+        })
+        .catch((error) => console.log(error.message));*/
+    }
 
     useEffect(() => {
         getRental();
-    }, []);
 
-    /*
-    useEffect(() => {
-        if (rental) {
-            getRenter(rental.user);
-            setRentalName(rental.property_type + " for Rent at District " + rental.address.district);
-            setAmenities(rental.amenities);
-            setRent(rental.rent);
-            setDeposit(rental.deposit);
-            setElectricity(rental.electricity);
-            setWater(rental.water);
-            getImages(id, rental.user);
-            setAddress(rental.address);
-        }
-    }, []);*/
+    }, []);
 
     const handleChange = (address) => {
         setAddress(address);
     }
 
-    const handleSelect = (address) => {
-        geocodeByAddress(address)
-                                .then(results => getLatLng(results[0]))
-                                .then(latLng => console.log('Success', latLng))
-                                .catch(error => console.error('Error', error));
-    };
 
-
-    useEffect(() => {
-        const script = document.createElement('script');
-      
-        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyC5qHhy7lazQbxUKO0WtOizl0ISGIsu18U&libraries=places";
-        script.async = true;
-        document.body.appendChild(script);
-        return () => {
-          document.body.removeChild(script);
+    const contactRenter = () => {
+        const form = {
+            senderId: userId,
+            receiverId: rental.user,
+            rentalId: rental._id
         }
-      }, []);
+        axios.post("http://localhost:5000/chatroom/conversation", form).then((response) => {
+            if (response.data) {
+                navigate(`../user/${userId}/chatroom`);
+            }
+        }).catch((error) => console.log(error.message));
+    }
 
     return (
         <div className="rental-info-wrapper">
             <Nav />
             <div className="rental-info-general-card">
-                <h2>{rental && rental.property_type + " for Rent at District " + rental.address.district}</h2>
+                <div className="rental-info-title">
+                    <h2>{rental && rental.property_type + " for Rent at District " + rental.address.district}</h2>
+                    {
+                        rental && rental.user === userId && <button className="rental-info-edit-btn">Edit</button>
+                    }
+                </div>
                 <div className="rental-info-images">
                     <div className="rental-info-first-image">
                         { images[0] ? <Image key={0} cloud_name="heroinism" public_id={images[0]}/> : <img src={loading} alt="loading-img" />}
@@ -133,7 +139,10 @@ function RentalInfo() {
                             renter &&
                             <div className="rental-info-general-renter-wrapper">
                                 <h3>{renter.last_name + " " + renter.middle_name + " " + renter.first_name}</h3>
-                                <p>Verified</p>
+                                <div className="user-info-is-verified">
+                                    <p>Verified</p>
+                                    <img src={verified} /> 
+                                </div>   
                             </div>
                         }
                         <img src={avatar} alt="avatar" />
@@ -178,49 +187,39 @@ function RentalInfo() {
                 <hr className="rental-info-hr"></hr>
                 <div className="rental-info-map">
                     <h3>Location</h3>
-                    {
-                        rental && 
-                        /*<GoogleMap zoom={10} center={{lat: 44, lng: -80}} mapContainerClassName="rental-info-map-container">
+                    {/*
+                        lat && lng &&
+                        <Map height={300} defaultCenter={[lat, lng]} defaultZoom={11}  provider={maptilerProvider}>
+                            <Marker width={50} anchor={[lat, lng]} />
+                        </Map>
+                    
+                    */
+                    /*
+                        <GoogleMap zoom={10} center={{lat: 44, lng: -80}} mapContainerClassName="map-container">
 
-                        </GoogleMap>*/
-                        <PlacesAutocomplete value={address} onChange={handleChange} onSelect={handleSelect}>
-                            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                                <div>
-                                    <input
-                                    {...getInputProps({
-                                        placeholder: 'Search Places ...',
-                                        className: 'location-search-input',
-                                    })}
-                                    />
-                                    <div className="autocomplete-dropdown-container">
-                                    {loading && <div>Loading...</div>}
-                                    {suggestions.map(suggestion => {
-                                        const className = suggestion.active
-                                        ? 'suggestion-item--active'
-                                        : 'suggestion-item';
-                                        // inline style for demonstration purpose
-                                        const style = suggestion.active
-                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                                        return (
-                                        <div
-                                            {...getSuggestionItemProps(suggestion, {
-                                            className,
-                                            style,
-                                            })}
-                                        >
-                                            <span>{suggestion.description}</span>
-                                        </div>
-                                        );
-                                    })}
-                                    </div>
-                                </div>
-                                )}
-                        </PlacesAutocomplete>
-                    }
+                        </GoogleMap>
+                    */}
+                    
                 </div>
-                <button className="rental-info-contact">Contact Renter</button>
+                {
+                    rental ?
+                        (rental.is_available ?
+                            (rental.user !== userId ? 
+                            <button className="rental-info-contact" onClick={() => contactRenter()}>Contact Renter</button> 
+                            :
+                            ""
+                            )
+                            :
+                            <div className="rental-info-unavailable">
+                                <p>This rental is no longer available.</p>
+                            </div>
+                        )
+                        :
+                        ""
+                }
+                
             </div>
+            <Footer />
         </div>
     )
 }

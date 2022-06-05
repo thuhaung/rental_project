@@ -11,6 +11,7 @@ import RentalBox from '../../components/RentalBox/RentalBox'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useNavigate } from "react-router-dom";
+import Footer from '../../components/Footer/Footer'
 
 
 function Rentals() {
@@ -24,17 +25,14 @@ function Rentals() {
 
   //Get recent list from server
   useEffect(() => {
-    axios.get('http://localhost:5000/rental/recent-list')
-      .then(res => {
-        setItems(res.data);
-        console.log(res.data);
-        for (let i in res.data) {
-          setInfo(res.data[i]);
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    axios.get('http://localhost:5000/rental/recent-list').then(res => {
+      setItems(res.data);
+      for (let i in res.data) {
+        setInfo(res.data[i]);
+      }
+    }).catch(err => {
+      console.log(err)
+    })
   }, []);
 
   const setInfo = async (item) => {
@@ -81,9 +79,9 @@ function Rentals() {
           <h2>Most recent listings</h2>
           <Carousel className='rental-scroll-container' responsive={responsive}>
             {
-              items && items.map((item, index) => {
-                return <RentalBox  key={index} name={rentalName[index]} rentAmount={rent[index]} fullAddress={address[index]} rentalId={rentalId[index]} userId={userId[index]} />
-              })
+              items && rentalId && userId && items.map((item, index) => (
+                <RentalBox  key={index} name={rentalName[index]} rentAmount={rent[index]} fullAddress={address[index]} rentalId={rentalId[index]} userId={userId[index]} />
+              ))
             }
             
             {/*item ? (item.map(prod => (
@@ -109,6 +107,7 @@ function Rentals() {
           </Carousel >
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

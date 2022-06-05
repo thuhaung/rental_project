@@ -32,6 +32,7 @@ export const userLogin = async (req, res) => {
 
             res.cookie("accessToken", token, { origin: "http://localhost:3000" });
             res.cookie("refreshToken", refreshToken, { httpOnly: true });
+            res.cookie("isVerified", user.is_verified);
             res.cookie("userId", user._id);
             
             res.status(200).json({accessToken: token, refreshToken: refreshToken, user_id: user._id});
@@ -74,26 +75,32 @@ export const generateNewAccessToken = async (req, res) => {
 
 
 export const registerUser = async (req, res) => {
-    try {
-        const salt = await bcrypt.genSalt(); 
-        const hashedPassword = await bcrypt.hash(req.body.password, salt); // hash user-provided password with salt
-        const user = new User();
-        for (var key in req.body) {
-            user[key] = req.body[key];
-        }
-        user.password = hashedPassword;
-        const newUser = await user.save();
-        res.status(201).send(newUser);
-    } catch (error) {
-        res.status(400).json({message: error.message});
+    const email = req.body.email;
+    if (User.find({email: email})) {
+        res.status(400).send("Email is not unique.");
     }
+    else {
+        try {
+            const salt = await bcrypt.genSalt(); 
+            const hashedPassword = await bcrypt.hash(req.body.password, salt); // hash user-provided password with salt
+            const user = new User();
+            for (var key in req.body) {
+                user[key] = req.body[key];
+            }
+            user.password = hashedPassword;
+            const newUser = await user.save();
+            res.status(201).send(newUser);
+        } catch (error) {
+            res.status(400).json({message: error.message});
+        }
+    } 
 }
 
 
 export const userLogout = async (req, res) => {
     const cookies = new Cookies(req.headers.cookie);
     const refreshToken = cookies.get("refreshToken");
-    console.log("ayo");
+    console.log("Logged out.");
     const token = await RefreshToken.findOne({refreshToken: refreshToken});
     if (!token) {
         res.status(400).send("Token doesn't exist.");
@@ -103,11 +110,10 @@ export const userLogout = async (req, res) => {
         res.clearCookie("userId");
         res.clearCookie("accessToken");
         res.clearCookie("refreshToken");
+        res.clearCookie("isVerified");
         //res.status(204).send("Logged out.");
         res.end();
     } catch (error) {
         res.status(500).send(error.message);
     }
 }
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyMDhmMTEwMGFmY2ZhNTA5ZGM2MDAiLCJpc192ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNjUzMjA5NDc4fQ.JnP6XpUT3u-VUOPz92v4Te2h8ZXSrSDd2gQbZI8h5cE
-//

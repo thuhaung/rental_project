@@ -9,6 +9,11 @@ function LoginPopup({ open, onClose }) {
     const [isForgot, setIsForgot] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [date, setDate] = useState();
+    const [month, setMonth] = useState();
+    const [year, setYear] = useState();
     const [errorMessage, setErrorMessage] = useState();
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     
@@ -16,7 +21,7 @@ function LoginPopup({ open, onClose }) {
     const location = useLocation();
     const from = location.state?.from?.pathname;
 
-    const handleSubmit = (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
         const form = {
             email: email,
@@ -46,6 +51,25 @@ function LoginPopup({ open, onClose }) {
         })
     }
 
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        const birthdate = year + "-" + month + "-" + date;
+        const form = {
+            email: email,
+            password: password,
+            first_name: firstName,
+            last_name: lastName,
+            birthdate: birthdate
+        }
+        axios.post("http://localhost:5000/register", form).then((response) => {
+            if (response.data) {
+                setIsRegister(false);
+            }
+        }).catch((error) => {
+            setErrorMessage("Email is not unique.");
+        })
+    }
+
     return open ? (
         <div className="login-popup">
             {
@@ -53,8 +77,8 @@ function LoginPopup({ open, onClose }) {
                 <div className="inner-popup">
                     <h2>Welcome to Casa</h2>
                     <div className="sections">
-                        <h3 onClick={() => setIsRegister(false)}>Login</h3>
-                        <h3 onClick={() => setIsRegister(true)}>Sign up</h3>
+                        <h3 className={(!isRegister && "login-") + "section"} onClick={() => {setIsRegister(false); setErrorMessage(""); setEmail(""); setPassword("")}}>Login</h3>
+                        <h3 className={(isRegister && "register-") + "section"}onClick={() => {setIsRegister(true); setErrorMessage(""); setEmail(""); setPassword("")}}>Sign up</h3>
                     </div>
                     <hr className="popup-line"></hr>
                     { errorMessage === null ? "" : 
@@ -63,14 +87,14 @@ function LoginPopup({ open, onClose }) {
                         </p>
                     }
                     { !isRegister ?
-                    <form className="login-form" onSubmit={handleSubmit}>
+                    <form className="login-form" onSubmit={handleLogin}>
                         <div className="login-form-div">
                             <label htmlFor="email" className="form-label">Email</label>
-                            <input type="text" className="form-input" id="email" placeholder="Enter email" autoComplete="off" required onChange={(e) => setEmail(e.target.value)}></input>
+                            <input type="text" className="form-input" id="email" value={email} placeholder="Enter email" autoComplete="off" required onChange={(e) => setEmail(e.target.value)}></input>
                         </div>
                         <div className="login-form-div">
                             <label htmlFor="password" className="form-label">Password</label>
-                            <input type="password" className="form-input" id="password" placeholder="Enter password" required onChange={(e) => setPassword(e.target.value)}></input>
+                            <input type="password" className="form-input" id="password" value={password} placeholder="Enter password" required onChange={(e) => setPassword(e.target.value)}></input>
                         </div>
                         <h4 className="forgot-password" onClick={() => setIsForgot(true)}>Forgot your password?</h4>
                         <div className="login-form-submit-div">
@@ -81,48 +105,48 @@ function LoginPopup({ open, onClose }) {
                             <h4 className="forgot-password" onClick={() => setIsRegister(true)}>Register here</h4>
                         </div>
                     </form> : 
-                    <form className="register-form">
+                    <form className="register-form" onSubmit={handleRegister}>
                         <div className="register-form-div">
                             <label htmlFor="email" className="form-label">Email</label>
-                            <input type="text" className="form-input" id="email" placeholder="Enter email" autoComplete="off" required></input>
+                            <input type="text" className="form-input" id="email" value={email} placeholder="Enter email" autoComplete="off" required onChange={(e) => setEmail(e.target.value)}></input>
                         </div>
                         <div className="register-form-div">
                             <label htmlFor="password" className="form-label">Password</label>
-                            <input type="password" className="form-input" id="password" placeholder="Enter password" required></input>
+                            <input type="password" className="form-input" id="password" value={password} placeholder="Enter password" required onChange={(e) => setPassword(e.target.value)}></input>
                         </div>
                         <div className="register-form-div">
                             <div className="register-form-name-div">
                                 <div className="register-name-div">
                                     <label htmlFor="first-name" className="form-label">First name</label>
-                                    <input type="text" id="first-name" className="form-input" placeholder="Enter first name" required></input>
+                                    <input type="text" id="first-name" className="form-input" placeholder="Enter first name" required onChange={(e) => setFirstName(e.target.value)}></input>
                                 </div>
                                 <div className="register-name-div">
                                     <label htmlFor="last-name" className="form-label">Last name</label>
-                                    <input type="text" id="last-name" className="form-input" placeholder="Enter last name" required></input>
+                                    <input type="text" id="last-name" className="form-input" placeholder="Enter last name" required onChange={(e) => setLastName(e.target.value)}></input>
                                 </div>
                             </div>
                         </div>
                         <div className="register-form-div">
                             <label htmlFor="birthdate" className="form-label">Date of birth</label>
                             <div className="register-form-birthdate">
-                                <select className="register-form-select-month">
+                                <select className="register-form-select-month" onChange={(e) => setMonth(e.target.value)}>
                                     {
                                         months.map((month, index) => 
-                                            <option className="register-form-option" key={index} value={index}>{month}</option>
+                                            <option className="register-form-option" key={index} value={index + 1}>{month}</option>
                                         )
                                     }
                                 </select>
-                                <select className="register-form-select-date">
+                                <select className="register-form-select-date" onChange={(e) => setDate(e.target.value)}>
                                     {
                                         Array.from(new Array(31), (x, i) => i + 1).map((date, index) => 
                                             <option className="register-form-option" key={index} value={index + 1}>{date}</option>
                                         )
                                     }
                                 </select>
-                                <select className="register-form-select-year">
+                                <select className="register-form-select-year" onChange={(e) => setYear(e.target.value)}>
                                     {
-                                        Array.from(new Array(83), (x, i) => i + 1922).map((date, index) => 
-                                            <option className="register-form-option" key={index} value={index + 1}>{date}</option>
+                                        Array.from(new Array(83), (x, i) => i + 1922).map((year, index) => 
+                                            <option className="register-form-option" key={index} value={index + 1922}>{year}</option>
                                         )
                                     }
                                 </select>
