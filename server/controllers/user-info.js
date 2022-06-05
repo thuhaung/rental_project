@@ -9,7 +9,6 @@ import {} from "dotenv/config";
 
 export const getUser = async (req, res) => {
     try {
-        console.log(req.cookies["userId"]);
         const user = await User.findOne({_id: req.user._id});
         res.status(200).json({user: user});
     } catch (error) {
