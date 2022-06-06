@@ -94,13 +94,16 @@ function UserSettings() {
                     switch (option) {
                         case 'detail':
                             return <GeneralDetails
+                                userId={userInfo._id}
                                 email={userInfo.email}
                                 firstName={userInfo.first_name}
                                 middleName={userInfo.middle_name}
-                                lastName={userInfo.last_name} />
+                                lastName={userInfo.last_name} 
+                                phone={userInfo.phone}
+                                birthdate={userInfo.birthdate}/>
                             break;
                         case 'password':
-                            return <Password />
+                            return <Password userId={userInfo._id}/>
                             break;
                         case 'verify':
                             return <Verification isVerified={userInfo.is_verified} from={from}/>

@@ -33,6 +33,17 @@
     font-size: 18px;
 }
 
+.general-details-input-name{
+    margin-left: 40px;
+    width: 100px;
+    height: 50px;
+    background-color: #FFFFFF;
+    border: 1px solid #BCBCBC;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 18px;
+}
+
 .general-details-straightline {
     width: 870px;
     height: 1px;
