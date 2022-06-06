@@ -26,8 +26,10 @@ function DropdownMenu() {
                 <li className="dropdown-item"><Link to={`/user/${userId}/info`}>Profile</Link></li>
                 <li className="dropdown-item"><Link to="/user/settings">Settings</Link></li>
                 <li className="dropdown-item"><Link to={`/user/${userId}/chatroom`}>Inbox</Link></li>
+                {/*
                 <li className="dropdown-item">Saved rentals</li>
                 <li className="dropdown-item">Your advertisements</li>
+                 */}
                 <hr className="dropdown-line"></hr>
                 <li className="dropdown-item"><a href="#" onClick={handleLogOut}>Sign out</a></li>
             </ul>
