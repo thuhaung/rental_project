@@ -159,3 +159,13 @@ export const removeSavedRentals = async (req, res) => {
         res.status(500).send(error.message);
     }
 }
+
+export const getSavedRentals = async (req, res) => {
+    const userId = req.cookies["userId"];
+    try {
+        const user = await User.findOne({_id: userId});
+        res.status(200).send(user.saved_rentals);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}

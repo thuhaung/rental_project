@@ -9,6 +9,7 @@ userInfoRouter.get("/confirm-email", authenticateToken,  userInfo.sendEmail);
 userInfoRouter.post("/confirm-email/verify", authenticateToken, userInfo.verifyUser);
 userInfoRouter.post("/save-rentals", authenticateToken, userInfo.saveRentals);
 userInfoRouter.post("/remove-saved-rentals", authenticateToken, userInfo.removeSavedRentals);
+userInfoRouter.get("/saved-rentals/all", authenticateToken, userInfo.getSavedRentals);
 userInfoRouter.get("/:id", userInfo.getUserGeneralInfo);
 userInfoRouter.put("/:id", userInfo.editUserInfo);
 userInfoRouter.put("/password/:id", userInfo.editUserPassword);
