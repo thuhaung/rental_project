@@ -80,7 +80,11 @@ const userSchema = mongoose.Schema({
     updated_at: {
         type: Date,
         default: Date.now
-    }
+    },
+    saved_rentals: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Rental"
+    }]
 });
 
 

@@ -6,6 +6,7 @@ import crypto from "crypto";
 import ConfirmationCode from "../models/confirmationcode.js";
 import nodemailer from "nodemailer";
 import {} from "dotenv/config";
+import Rental from "../models/rental.js";
 
 export const getUser = async (req, res) => {
     try {
@@ -134,5 +135,27 @@ export const editUserPassword = async (req, res) => {
         }
     } catch (error) {
         res.status(500).send(error);
+    }
+}
+
+export const saveRentals = async (req, res) => {
+    const rentals = req.body.rentals;
+    const userId = req.cookies["userId"];
+    try {
+        await User.findOneAndUpdate({_id: userId}, { $push: { saved_rentals: rentals }});
+        res.status(200).send("Saved rentals updated.");
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
+export const removeSavedRentals = async (req, res) => {
+    const rentals = req.body.rentals;
+    const userId = req.cookies["userId"];
+    try {
+        await User.findOneAndUpdate({_id: userId}, { $pull: { saved_rentals: rentals }});
+        res.status(200).send("Saved rentals updated.");
+    } catch (error) {
+        res.status(500).send(error.message);
     }
 }
