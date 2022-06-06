@@ -127,6 +127,10 @@ input.login-submit-button {
     cursor: pointer;
 }
 
+input.login-submit-button:hover {
+    background-color: #aeb6ea;
+}
+
 .no-account-register-here {
     display: flex;
     justify-content: flex-start;

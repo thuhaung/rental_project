@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import Footer from "../../components/Footer/Footer.js";
 import { Link } from "react-router-dom";
 import "./Advertisements.css";
 import Background from "../../assets/Rectangle 31.png"
@@ -50,6 +51,7 @@ function Advertisements() {
           <button className='advertisement-btn'><Link style={{ color: 'white', fontSize: '25px', fontWeight: '600' }} to="/advertise-place">Let's go</Link></button>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

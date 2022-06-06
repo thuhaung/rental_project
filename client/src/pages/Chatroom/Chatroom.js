@@ -30,6 +30,7 @@ function Chatroom() {
     const navigate = useNavigate();
     const [images, setImages] = useState([]);
     const [state, setState] = useState(0);
+    const [currentDate, setCurrentDate] = useState(new Date())
     //const [message, setMessage] = useState();
     //const socket = io("http://localhost:5000/");
 
@@ -73,8 +74,10 @@ function Chatroom() {
     }
 
     useEffect(() => {
+        
+        
         getAllConversations();
-    }, [currentConversation, messages, state]);
+    }, [currentConversation, messages, state, currentDate]);
 
     const submitImage = (messageId) => {
         axios.post("http://localhost:5000/advertisement/upload-image", {image: selectedImage, conversationId: currentConversation._id, messageId: messageId}, { withCredentials: true }).then((response) => {
