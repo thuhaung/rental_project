@@ -80,7 +80,6 @@ export const getRentalImages = async (req, res) => {
         const publicIds = resources.map(file => file.public_id);
         res.status(200).send(publicIds);
     } catch (error) {
-        console.log(error);
         res.status(500).send(error.message);
     }
 }

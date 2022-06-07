@@ -45,7 +45,7 @@
 }
 
 .general-details-straightline {
-    width: 870px;
+    width: 845px;
     height: 1px;
     background-color: #D3D3D3;
     margin-top: 25px;
@@ -86,4 +86,35 @@
 .general-details-btn2:hover {
     background-color: #aeb6ea;
     
+}
+
+.general-details-birthdate {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 40px;
+    gap: 15px;
+}
+
+.general-details-select-date,
+.general-details-select-year,
+.general-details-select-month {
+    padding: 12px;
+    font-size: 18px;
+    font-weight: 400;
+    height: 48px;
+    background-color: white;
+    border: 1px solid #BCBCBC;
+    border-radius: 5px;
+}
+
+.general-details-select-date {
+    width: 80px;
+}
+
+.general-details-select-year {
+    width: 105px;
+}
+
+.general-details-select-month {
+    width: 153px;
 }

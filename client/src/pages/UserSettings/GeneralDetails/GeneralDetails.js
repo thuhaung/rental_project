@@ -11,6 +11,10 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
   const [userPhone,setUserPhone] = useState(phone);
   const [userBirthDate,setUserBirthDate] = useState(birthdate);
   const [message, setMessage] = useState("");
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const [date, setDate] = useState();
+  const [month, setMonth] = useState();
+  const [year, setYear] = useState();
   const ref = useRef()
 
   const submit = async () => {
@@ -34,7 +38,7 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
     setIsEdit(false)
   }
 
-  function handleReset(){
+  function handleReset() {
     setUserEmail(email)
     setUserFirstName(firstName)
     setUserMiddleName(middleName)
@@ -45,8 +49,8 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
   }
 
   useEffect(()=>{
-    handleReset()
-  },[])
+    handleReset();
+  }, [])
 
   return (
     <div className="general-details-wrapper">  
@@ -70,11 +74,11 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
       <form className="general-details-form">
         <table className="general-details-table">
           <tr className="general-details-row">
-            <td><b style={{ fontSize: '20px' }}>Email</b></td>
+            <td><b style={{ fontSize: '20px', fontWeight: "500" }}>Email</b></td>
             <td colSpan="5" ><input className='general-details-input'
             value={userEmail} 
             type='text' 
-            placeholder={email} 
+            placeholder={isEdit && email} 
             disabled={!isEdit && "disabled"} 
             onChange={(e) => setUserEmail(e.target.value)}/></td>
           </tr>
@@ -82,27 +86,27 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
             <td colSpan="6"><div className='general-details-straightline'></div></td>
           </tr>
           <tr className="general-details-row">
-            <td><b style={{ fontSize: '20px' }}>First Name</b></td>
+            <td><b style={{ fontSize: '20px', fontWeight: "500" }}>First Name</b></td>
             <td><input className='general-details-input-name' 
             value={userFirstName} 
             type='text' 
-            placeholder={firstName} 
+            placeholder={isEdit && firstName} 
             disabled={!isEdit && "disabled"} 
             onChange={(e) => setUserFirstName(e.target.value)}/></td>
 
-            <td><b style={{ fontSize: '20px' }}>Middle Name</b></td>
+            <td><b style={{ fontSize: '20px', fontWeight: "500" }}>Middle Name</b></td>
             <td><input className='general-details-input-name' 
             value={userMiddleName} 
             type='text' 
-            placeholder={middleName} 
+            placeholder={isEdit && middleName} 
             disabled={!isEdit && "disabled"} 
             onChange={(e) => setUserMiddleName(e.target.value)}/></td>
 
-            <td><b style={{ fontSize: '20px' }}>Last Name</b></td>
+            <td><b style={{ fontSize: '20px', fontWeight: "500" }}>Last Name</b></td>
             <td><input className='general-details-input-name' 
             value={userLastName} 
             type='text' 
-            placeholder={lastName} 
+            placeholder={isEdit && lastName} 
             disabled={!isEdit && "disabled"} 
             onChange={(e) => setUserLastName(e.target.value)}/></td>
           </tr>
@@ -110,11 +114,11 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
             <td colSpan="6"><div className='general-details-straightline'></div></td>
           </tr>
           <tr className="general-details-row">
-            <td><b style={{ fontSize: '20px' }}>Phone</b></td>
+            <td><b style={{ fontSize: '20px', fontWeight: "500" }}>Phone</b></td>
             <td colSpan='5' ><input className='general-details-input' 
             value={userPhone} 
             type='text' 
-            placeholder={phone} 
+            placeholder={isEdit && phone} 
             disabled={!isEdit && "disabled"} 
             onChange={(e) => setUserPhone(e.target.value)}/></td>
           </tr>
@@ -122,16 +126,46 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
             <td colSpan="6"><div className='general-details-straightline'></div></td>
           </tr>
           <tr className="general-details-row">
-            <td><b style={{ fontSize: '20px' }}>BirthDay</b></td>
-            <td colSpan='5'><input className='general-details-input'  
-            value={userBirthDate} 
-            type='text' 
-            placeholder={birthdate}
-            ref={ref}
-            onFocus={() => (ref.current.type = "date")}
-            onBlur={() => (ref.current.type = "date")}
-            disabled={!isEdit && "disabled"} 
-            onChange={(e) => setUserBirthDate(e.target.value)}/></td>
+            <td><b style={{ fontSize: '20px', fontWeight: "500" }}>Birthdate</b></td>
+            <td colSpan='5'>
+              
+              <div className="general-details-birthdate">
+                <select className="general-details-select-month"  disabled={!isEdit && "disabled"} onChange={(e) => setMonth(e.target.value)}>
+                    {
+                        months.map((month, index) => 
+                            <option className="general-details-option" key={index} value={index + 1}>{month}</option>
+                        )
+                    }
+                </select>
+                <select className="general-details-select-date" disabled={!isEdit && "disabled"} onChange={(e) => setDate(e.target.value)}>
+                    {
+                        Array.from(new Array(31), (x, i) => i + 1).map((date, index) => 
+                            <option className="general-details-option" key={index} value={index + 1}>{date}</option>
+                        )
+                    }
+                </select>
+                <select className="general-details-select-year" disabled={!isEdit && "disabled"} onChange={(e) => setYear(e.target.value)}>
+                    {
+                        Array.from(new Array(83), (x, i) => i + 1922).map((year, index) => 
+                            <option className="general-details-option" key={index} value={index + 1922}>{year}</option>
+                        )
+                    }
+                </select>
+              </div>
+              {
+                /*
+                <input className='general-details-input'  
+                value={userBirthDate} 
+                type='text' 
+                placeholder={birthdate}
+                ref={ref}
+                onFocus={() => (ref.current.type = "date")}
+                onBlur={() => (ref.current.type = "date")}
+                disabled={!isEdit && "disabled"} 
+                onChange={(e) => setUserBirthDate(e.target.value)}/>
+                */
+              }
+              </td>
           </tr>
         </table>
         
