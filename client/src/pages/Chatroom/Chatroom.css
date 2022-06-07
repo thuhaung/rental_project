@@ -140,7 +140,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 }
 
 .chatroom-box-user-info {
@@ -165,7 +165,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    align-items: flex-start;
     gap: 20px;
     width: inherit;
     padding-bottom: 15px;

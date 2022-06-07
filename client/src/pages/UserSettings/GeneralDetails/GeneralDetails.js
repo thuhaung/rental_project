@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState,useRef } from 'react'
+import React, { useState,useRef, useEffect } from 'react'
 import './GeneralDetails.css'
 
 function GeneralDetails({ userId, email, firstName, middleName, lastName, phone, birthdate}) {
@@ -43,6 +43,10 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
     setUserBirthDate(birthdate)
     setIsEdit(false)
   }
+
+  useEffect(()=>{
+    handleReset()
+  },[])
 
   return (
     <div className="general-details-wrapper">  

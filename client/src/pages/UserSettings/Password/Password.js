@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import "./Password.css";
 
 function Password({userId}) {
@@ -37,6 +37,10 @@ function Password({userId}) {
     setNewPass("")
     setIsEdit(false)
   }
+
+  useEffect(()=>{
+    handleReset()
+  },[])
 
   return (
     <div className="password-wrapper">
