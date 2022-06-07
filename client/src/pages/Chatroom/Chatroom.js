@@ -72,7 +72,7 @@ function Chatroom() {
 
     useEffect(() => {
         getAllConversations();
-    }, [currentConversation, messages, state]);
+    }, [currentConversation, messages]);
 
     const submitImage = (messageId) => {
         axios.post("http://localhost:5000/advertisement/upload-image", {image: selectedImage, conversationId: currentConversation._id, messageId: messageId}, { withCredentials: true }).then((response) => {
@@ -207,16 +207,7 @@ function Chatroom() {
                         <img src= {avatar} alt="avatar" />
                         <h3>{currentReceiver ? currentReceiver?.first_name + " • " : ""}  {currentRental ? (currentRental.user === userId ? "Your District " : "Their District ") + currentRental?.address?.district + " " + currentRental?.property_type : ""}</h3>
                     </div>
-                    <div className="chatroom-box-messages">
-                        <div className="their-chatroom-box-message">
-                            <p>Test message</p>
-                            
-                        </div>
-                        <div className="their-chatroom-box-message">
-                            <p>Test message</p>
-                            
-                        </div>
-                        
+                    <div className="chatroom-box-messages">   
                         {
                             messages && messages.map((message, index) => (
                                 <div key={index} className={(message.sender === userId? "your-" : "their-") + "chatroom-box-message"}>

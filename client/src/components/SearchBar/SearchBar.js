@@ -84,14 +84,14 @@ function SearchBar(props) {
   }
 
   useEffect(() => {
-    /*axios.get("http://localhost:5000/rental/all").then((response) => {
+    axios.get("http://localhost:5000/rental/all").then((response) => {
       if (response.data);
         setRentals(response.data);
         for (let i in response.data) {
           getCoord(response.data[i]);
         }
     })
-    .catch((error) => console.log(error.message));*/
+    .catch((error) => console.log(error.message));
   }, []);
 
   return (
@@ -166,7 +166,7 @@ function SearchBar(props) {
 
           <div className='searchbar-straight-line1'></div>
           {
-            /*
+            
             <PlacesAutocomplete
             value={place}
             onChange={setPlace}
@@ -205,7 +205,7 @@ function SearchBar(props) {
               </div>
             )}
           </PlacesAutocomplete>
-           */
+           
           }
           
 
