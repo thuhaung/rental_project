@@ -41,13 +41,20 @@ function SearchBar(props) {
     }
   }
 
+  const rad = function(x) {
+    return x * Math.PI / 180;
+  };
+
   const distance = (placeLat, placeLng, rentalLat, rentalLng) => {
-    var p = 0.017453292519943295;    // Math.PI / 180
-    var c = Math.cos;
-    var a = 0.5 - c((rentalLat - placeLat) * p)/2 + 
-            c(placeLat * p) * c(rentalLat * p) * 
-            (1 - c((rentalLng - placeLng) * p))/2;
-    return 12742 * Math.asin(Math.sqrt(a));
+    var R = 6378137; 
+    var dLat = rad(rentalLat - placeLat);
+    var dLong = rad(rentalLng - placeLng);
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(rad(placeLat)) * Math.cos(rad(rentalLat)) *
+      Math.sin(dLong / 2) * Math.sin(dLong / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
+    return d/1000;
   }
 
   const handleSelect = async (value) => {
@@ -59,10 +66,25 @@ function SearchBar(props) {
   
   const getCoord = async (rental) => {
     const location = rental.address.num + " " + rental.address.street + " District " + rental.address.district + " " + rental.address.city;
-    axios.get("https://maps.googleapis.com/maps/api/geocode/json", {params: {address: location, key: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M"}})
+    /*axios.get("https://maps.googleapis.com/maps/api/geocode/json", {params: {address: location, key: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M"}})
     .then((response) => {
+      if (response.ok) {
         setRentalLats(prev => [...prev, response.data.results[0].geometry.location.lat]);
         setRentalLngs(prev => [...prev, response.data.results[0].geometry.location.lng]);
+      }
+      else if (response.status === "OVER_QUERY_LIMIT") {
+        setTimeout(function() {
+          getCoord(rental);
+        }, 200);
+      }
+    })
+    .catch((error) => console.log(error.message));*/
+    axios.get("http://www.mapquestapi.com/geocoding/v1/address", {params: {location: location, key: "vAXPgGrAWlncdLPGJS9BWGp8IkNzatEy"}})
+    .then((response) => {
+      if (response.data) {
+        setRentalLats(prev => [...prev, response.data.results[0].locations[0].latLng.lat]);
+        setRentalLngs(prev => [...prev, response.data.results[0].locations[0].latLng.lng]);
+      }
     })
     .catch((error) => console.log(error.message));
   }
@@ -166,7 +188,7 @@ function SearchBar(props) {
 
           <div className='searchbar-straight-line1'></div>
           {
-            
+            /*
             <PlacesAutocomplete
             value={place}
             onChange={setPlace}
@@ -205,7 +227,7 @@ function SearchBar(props) {
               </div>
             )}
           </PlacesAutocomplete>
-           
+           */
           }
           
 
