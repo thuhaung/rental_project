@@ -22,8 +22,7 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
     userFirstName == '' || 
     userMiddleName == '' || 
     userLastName == '' || 
-    userPhone == '' || 
-    userBirthDate == '')
+    userPhone == '')
       alert('Do not leave blank inputs')
     else{
     const form = {
