@@ -18,6 +18,14 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
   const ref = useRef()
 
   const submit = async () => {
+    if (userEmail == '' || 
+    userFirstName == '' || 
+    userMiddleName == '' || 
+    userLastName == '' || 
+    userPhone == '' || 
+    userBirthDate == '')
+      alert('Do not leave blank inputs')
+    else{
     const form = {
       email: userEmail,
       first_name: userFirstName,
@@ -36,6 +44,7 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
     }).catch((error) => {
       setMessage(error.message);
     })
+  }
   }
 
   function handleReset() {

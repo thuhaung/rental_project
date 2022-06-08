@@ -62,7 +62,7 @@ ul {
 .main-sections {
     display: flex;
     justify-content: space-between;
-    margin-left: 585px;
+    margin-left: 545px;
     gap: 55px;
 }
 
