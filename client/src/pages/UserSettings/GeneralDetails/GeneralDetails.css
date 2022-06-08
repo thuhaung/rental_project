@@ -118,3 +118,8 @@
 .general-details-select-month {
     width: 153px;
 }
+
+#inputID::placeholder{
+    color: black;
+    opacity: 1;
+}

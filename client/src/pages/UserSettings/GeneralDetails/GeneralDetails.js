@@ -31,11 +31,11 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
       if (response.data) {
         setMessage("Information is successfully changed.");
         alert('Information is successfully changed.')
+        setIsEdit(false)
       }
     }).catch((error) => {
       setMessage(error.message);
     })
-    setIsEdit(false)
   }
 
   function handleReset() {
@@ -78,7 +78,8 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
             <td colSpan="5" ><input className='general-details-input'
             value={userEmail} 
             type='text' 
-            placeholder={isEdit && email} 
+            id='inputID'
+            placeholder={email} 
             disabled={!isEdit && "disabled"} 
             onChange={(e) => setUserEmail(e.target.value)}/></td>
           </tr>
@@ -89,8 +90,9 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
             <td><b style={{ fontSize: '20px', fontWeight: "500" }}>First Name</b></td>
             <td><input className='general-details-input-name' 
             value={userFirstName} 
-            type='text' 
-            placeholder={isEdit && firstName} 
+            type='text'
+            id='inputID' 
+            placeholder={firstName} 
             disabled={!isEdit && "disabled"} 
             onChange={(e) => setUserFirstName(e.target.value)}/></td>
 
@@ -98,7 +100,8 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
             <td><input className='general-details-input-name' 
             value={userMiddleName} 
             type='text' 
-            placeholder={isEdit && middleName} 
+            id='inputID'
+            placeholder={middleName} 
             disabled={!isEdit && "disabled"} 
             onChange={(e) => setUserMiddleName(e.target.value)}/></td>
 
@@ -106,7 +109,8 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
             <td><input className='general-details-input-name' 
             value={userLastName} 
             type='text' 
-            placeholder={isEdit && lastName} 
+            id='inputID'
+            placeholder={lastName} 
             disabled={!isEdit && "disabled"} 
             onChange={(e) => setUserLastName(e.target.value)}/></td>
           </tr>
@@ -118,7 +122,8 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
             <td colSpan='5' ><input className='general-details-input' 
             value={userPhone} 
             type='text' 
-            placeholder={isEdit && phone} 
+            id='inputID'
+            placeholder={phone} 
             disabled={!isEdit && "disabled"} 
             onChange={(e) => setUserPhone(e.target.value)}/></td>
           </tr>
