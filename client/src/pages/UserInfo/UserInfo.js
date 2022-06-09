@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 function UserInfo() {
     const [user, setUser] = useState({});
@@ -18,10 +19,11 @@ function UserInfo() {
     const [styleRentals, setStyleRentals] = useState('userinfo-option2')
     const [styleSaved, setStyleSaved] = useState('userinfo-option1')
     const { id } = useParams();
+    const axiosPrivate = useAxiosPrivate();
     const [rentals, setRentals] = useState([]);
 
     const getUserInfo = async () => {
-        axios.get(`http://localhost:5000/user/${id}`).then((response) => {
+        axiosPrivate.get(`/user/${id}`).then((response) => {
             setUser(response.data);
         }).catch((error) => {
             console.log(error.message);
@@ -29,7 +31,7 @@ function UserInfo() {
     }
 
     const getRentals = async () => {
-        axios.get(`http://localhost:5000/rental/${id}/all`).then((response) => {
+        axiosPrivate.get(`/rental/${id}/all`).then((response) => {
             if (response.data) {
                 setRentals(response.data);
             }
@@ -37,7 +39,7 @@ function UserInfo() {
     }
 
     const getSavedRentals = async () => {
-        axios.get("http://localhost:5000/user/saved-rentals/all", { withCredentials: true }).then((response) => {
+        axiosPrivate.get("/user/saved-rentals/all").then((response) => {
             if (response.data) {
                 setRentals(response.data);
             }

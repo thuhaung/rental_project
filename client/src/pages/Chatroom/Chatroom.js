@@ -10,6 +10,7 @@ import axios from 'axios';
 import Cookies from "universal-cookie";
 import { Image } from "cloudinary-react";
 import photo from "../../assets/images-icon.png";
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 function Chatroom() {
     const icons = AmenitiesIcon;
@@ -29,10 +30,11 @@ function Chatroom() {
     const [selectedImage, setSelectedImage] = useState();
     const navigate = useNavigate();
     const [images, setImages] = useState([]);
-    const [state, setState] = useState(0);
+    const axiosPrivate = useAxiosPrivate();
+    const [isAvailable, setIsAvailable] = useState(true);
 
     const getAllConversations = async () => {
-        axios.get(`http://localhost:5000/chatroom/conversation/${userId}`).then((response) => {
+        axiosPrivate.get(`/chatroom/conversation/${userId}`).then((response) => {
             if (response.data) {
                 setConversations(response.data);
                 for (let i in response.data) {
@@ -47,7 +49,7 @@ function Chatroom() {
     }
 
     const getAllReceiverNames = async (receiverId) => {
-        axios.get(`http://localhost:5000/user/${receiverId}`).then((response) => {
+        axiosPrivate.get(`/user/${receiverId}`).then((response) => {
             if (response.data) {
                 setReceivers(prev => [...prev, response.data]);
             }
@@ -55,7 +57,7 @@ function Chatroom() {
     }
 
     const getAllRentalInfo = async (rentalId) => {
-        axios.get(`http://localhost:5000/rental/${rentalId}`).then((response) => {
+        axiosPrivate.get(`/rental/${rentalId}`).then((response) => {
             if (response.data) {
                 setRentals(prev => [...prev, response.data]);
             }
@@ -63,7 +65,7 @@ function Chatroom() {
     }
 
     const getRentalImage = async (rentalId, userId) => {
-        axios.get(`http://localhost:5000/advertisement/${userId}/${rentalId}/images`).then((response) => {
+        axiosPrivate.get(`/advertisement/${userId}/${rentalId}/images`).then((response) => {
             if (response.data) {
                 setRentalImage(response.data[0]);
             }
@@ -75,7 +77,7 @@ function Chatroom() {
     }, [currentConversation, messages]);
 
     const submitImage = (messageId) => {
-        axios.post("http://localhost:5000/advertisement/upload-image", {image: selectedImage, conversationId: currentConversation._id, messageId: messageId}, { withCredentials: true }).then((response) => {
+        axiosPrivate.post("/advertisement/upload-image", {image: selectedImage, conversationId: currentConversation._id, messageId: messageId}).then((response) => {
           if (response.data) {
               console.log("ok");
           }
@@ -85,7 +87,7 @@ function Chatroom() {
     }
 
     const saveImage = async (messageId, conversationId) => {
-        axios.post("http://localhost:5000/chatroom/message/upload-image", {image: selectedImage, messageId: messageId, conversationId: conversationId}, {withCredentials: true}).then((response) => {
+        axiosPrivate.post("/chatroom/message/upload-image", {image: selectedImage, messageId: messageId, conversationId: conversationId}).then((response) => {
             if (response.data) {
                 console.log("Image uploaded.");
             }
@@ -100,7 +102,7 @@ function Chatroom() {
                 sender: userId,
                 text: text,
             }
-            axios.post("http://localhost:5000/chatroom/message", form).then((response) => {
+            axiosPrivate.post("/chatroom/message", form).then((response) => {
                 if (response.data) {
                     console.log("ok");
                 }
@@ -112,7 +114,7 @@ function Chatroom() {
                 sender: userId,
                 contains_image: true
             }
-            axios.post("http://localhost:5000/chatroom/message", form).then((response) => {
+            axiosPrivate.post("/chatroom/message", form).then((response) => {
                 if (response.data) {
                     saveImage(response.data._id, response.data.conversation);
                 }
@@ -123,7 +125,7 @@ function Chatroom() {
     }
 
     const getMessages = async (conversationId) => {
-        axios.get(`http://localhost:5000/chatroom/message/${conversationId}`).then((response) => {
+        axiosPrivate.get(`/chatroom/message/${conversationId}`).then((response) => {
             if (response.data) {
                 setMessages(response.data);
                 for (let i in response.data) {
@@ -141,7 +143,7 @@ function Chatroom() {
     }
 
     const getMessageStatus = async (messageId) => {
-        axios.get(`http://localhost:5000/chatroom/message/${messageId}/set-status`).then((response) => {
+        axiosPrivate.get(`/chatroom/message/${messageId}/set-status`).then((response) => {
             if (response.data) {
                 console.log(response.data);
             }
@@ -149,7 +151,7 @@ function Chatroom() {
     }
 
     const getImage = async (conversationId, messageId) => {
-        axios.get(`http://localhost:5000/chatroom/message/${conversationId}/${messageId}/image`).then((response) => {
+        axiosPrivate.get(`/chatroom/message/${conversationId}/${messageId}/image`).then((response) => {
             if (response.data) {
                 setImages(prev => [...prev, {messageId: messageId, image: response.data}]);
             }
@@ -174,7 +176,7 @@ function Chatroom() {
     }
 
     const closeDeal = async (rentalId) => {
-        axios.post("http://localhost:5000/rental/update-status", { rentalId: rentalId }, { withCredentials: true }).then((response) => {
+        axiosPrivate.post("/rental/update-status", { rentalId: rentalId }).then((response) => {
             if (response.data) {
                 console.log(response.data);
             } 
@@ -191,7 +193,7 @@ function Chatroom() {
                     <div className="chatroom-listing">
                         {
                             receivers && conversations.map((convo, index) => (
-                                <div key={index} className={"chatroom-listing-item" + (currentRental ? (currentRental._id === rentals[index]._id ? "-active" : "") : "")} onClick={() => {setCurrentConversation(convo); setCurrentReceiver(receivers[index]); setCurrentRental(rentals[index]); getRentalImage(rentals[index]._id, rentals[index].user); getMessages(convo._id); setText("")}}>
+                                <div key={index} className={"chatroom-listing-item" + (currentRental ? (currentRental._id === rentals[index]._id ? "-active" : "") : "")} onClick={() => {setCurrentConversation(convo); setIsAvailable(rentals[index].is_available); setCurrentReceiver(receivers[index]); setCurrentRental(rentals[index]); getRentalImage(rentals[index]._id, rentals[index].user); getMessages(convo._id); setText("")}}>
                                     <img src={avatar} alt="avatar" />
                                     <div className="chatroom-listing-item-preview">
                                         <h3>{receivers && receivers[index]?.first_name} • {rentals && (rentals[index]?.user === userId ? "Your District " : "Their District ") + rentals[index]?.address?.district + " " + rentals[index]?.property_type}</h3>
@@ -239,14 +241,14 @@ function Chatroom() {
                             :
                             (
                                 currentRental && currentRental.is_available ? 
-                                <input type="text" placeholder="Send a message..." value={text} className="chatroom-box-input" onChange={(e) => setText(e.target.value)}/>
+                                <input type="text" placeholder="Send a message..." value={text} disabled={isAvailable ? "" : "disabled"} className="chatroom-box-input" onChange={(e) => setText(e.target.value)}/>
                                 : <input type="text" disabled={true} placeholder="Send a message..." value={text} className="chatroom-box-input" onChange={(e) => setText(e.target.value)}/>
                             )
                         }
                         <button className="chatroom-box-send-btn" onClick={(e) => {sendMessage(e); getMessages(currentConversation._id)}}>Send</button>
                     </div>
                 </div>
-                <div className="chatroom-rental">
+                <div className="chatroom-rental" onClick={() => setCurrentRental(currentRental)}>
                     {
                         rentals && currentRental && rentalImage &&
                         <>
@@ -269,15 +271,15 @@ function Chatroom() {
                                 currentRental ?
                                     (currentRental.user === userId ?
                                         (
-                                            currentRental.is_available ? 
-                                            <button className="chatroom-rental-btn" onClick={() => {closeDeal(currentRental._id); setState(prev => prev + 1)}}>Close deal</button>
+                                            isAvailable ?
+                                            <button className="chatroom-rental-btn" onClick={() => {closeDeal(currentRental._id); setIsAvailable(false)}}>Close deal</button>
                                             : 
                                             <div className="chatroom-rental-success">
                                                 <p>Deal complete</p>
                                             </div>
                                         ) :
                                         (
-                                            !currentRental.is_available ?
+                                            !isAvailable ?
                                             <div className="chatroom-rental-not-available">
                                                 <p>Rental is no longer available</p>
                                             </div> 

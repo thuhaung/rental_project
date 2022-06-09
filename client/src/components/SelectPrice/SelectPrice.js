@@ -71,7 +71,7 @@ function SelectPrice({ onClickRent, onClickDeposit, onClickElectricity, onClickW
                 <div className="select-price-count">
                     <p onClick={decrementRent}>-</p>
                     <div className="select-price-box">
-                        <h3>{rent}</h3>
+                        <input type="text" value={rent} onChange={(e) => setRent(parseInt(e.target.value))}/>
                     </div>
                     <p onClick={incrementRent}>+</p>
                 </div>
@@ -81,7 +81,7 @@ function SelectPrice({ onClickRent, onClickDeposit, onClickElectricity, onClickW
                 <div className="select-price-count">
                     <p onClick={decrementDeposit}>-</p>
                     <div className="select-price-box">
-                        <h3>{deposit}</h3>
+                        <input type="text" value={deposit} onChange={(e) => setDeposit(parseInt(e.target.value))}/>
                     </div>
                     <p onClick={incrementDeposit}>+</p>
                 </div>
@@ -91,7 +91,7 @@ function SelectPrice({ onClickRent, onClickDeposit, onClickElectricity, onClickW
                 <div className="select-price-count">
                     <p onClick={decrementWater}>-</p>
                     <div className="select-price-box">
-                        <h3>{water}</h3>
+                        <input type="text" value={water} onChange={(e) => setWater(parseInt(e.target.value))}/>
                     </div>
                     <p onClick={incrementWater}>+</p>
                 </div>
@@ -101,7 +101,7 @@ function SelectPrice({ onClickRent, onClickDeposit, onClickElectricity, onClickW
                 <div className="select-price-count">
                     <p onClick={decrementElectricity}>-</p>
                     <div className="select-price-box">
-                        <h3>{electricity}</h3>
+                        <input type="text" value={electricity} onChange={(e) => setElectricity(parseInt(e.target.value))}/>
                     </div>
                     <p onClick={incrementElectricity}>+</p>
                 </div>
