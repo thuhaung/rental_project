@@ -4,8 +4,6 @@ import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import Router from "./routes/routes.js";
-import { Server } from "socket.io";
-import http from "http";
 
 
 const app = express();
@@ -34,36 +32,3 @@ mongoose.connect(CONNECTION_URL)
 //httpServer.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
 
 const server = app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
-
-/*const io = new Server(server, {
-    pingTimeout: 60000,
-    cors: {
-        origin: "http://localhost:3000"
-    }
-});
-
-io.on("Connection", (socket) => {
-    console.log("Connected to socket.io");
-
-    socket.on("setup", (userId) => {
-        socket.join(userId);
-        console.log(userId);
-        socket.emit("Connected");
-    });
-
-    socket.on("Join chat", (conversationId) => {
-        socket.join(conversationId);
-        console.log("User joined conversation.");
-        socket.emit("Connected");
-    });
-
-    socket.on("New message", (messageId) => {
-        const conversationId = messageId.conversation;
-        conversationId.members.forEach(member => {
-            if (member._id === messageId.sender) return;
-            socket.in(member._id).emit("Message received", messageId);
-        });
-    });
- 
-})
-*/

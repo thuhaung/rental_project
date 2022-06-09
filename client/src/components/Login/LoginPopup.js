@@ -70,6 +70,22 @@ function LoginPopup({ open, onClose }) {
         })
     }
 
+    const handleForgotPass = async (e) => {
+        e.preventDefault();
+        axios.post("http://localhost:5000/user/password/recover", { email: email }).then((response) => {
+            if (response.status === 200) {
+                setIsForgot(false);
+                setEmail("");
+                setErrorMessage("");
+            }
+            else {
+                setErrorMessage("Email not found.");
+            }
+        }).catch((error) => {
+            setErrorMessage("Email not found.");
+        });
+    }
+
     return open ? (
         <div className="login-popup">
             {
@@ -96,7 +112,7 @@ function LoginPopup({ open, onClose }) {
                             <label htmlFor="password" className="form-label">Password</label>
                             <input type="password" className="form-input" id="password" value={password} placeholder="Enter password" required onChange={(e) => setPassword(e.target.value)}></input>
                         </div>
-                        <h4 className="forgot-password" onClick={() => setIsForgot(true)}>Forgot your password?</h4>
+                        <h4 className="forgot-password" onClick={() => {setIsForgot(true); setErrorMessage("");}}>Forgot your password?</h4>
                         <div className="login-form-submit-div">
                             <input type="submit" className="login-submit-button" value="Submit"/>
                         </div>
@@ -165,14 +181,19 @@ function LoginPopup({ open, onClose }) {
                         <h2>Forgot your password?</h2>
                         <h3>Enter your email address and we'll send you a link to reset your password</h3>
                         <hr className="popup-line"></hr>
-                        <form className="forgot-password-form">
+                        { errorMessage === null ? "" : 
+                            <p>
+                                {errorMessage}
+                            </p>
+                        }
+                        <form className="forgot-password-form" onSubmit={(e) => handleForgotPass(e)}>
                             <label htmlFor="email" className="form-label">Email</label>
-                            <input type="text" className="form-input" placeholder="Enter your email" required />
+                            <input type="text" className="form-input" placeholder="Enter your email" required onChange={(e) => setEmail(e.target.value)}/>
                             <input type="submit" value="Submit" className="login-submit-button" />
                         </form>
                         <div className="know-password">
                             <p>Know your password?</p>
-                            <p style={{"font-weight": "700", "color": "#7d89dd", "cursor": "pointer"}} onClick={() => setIsForgot(false)}>Sign in</p>
+                            <p style={{"font-weight": "700", "color": "#7d89dd", "cursor": "pointer"}} onClick={() => {setIsForgot(false); setErrorMessage(""); setEmail("")}}>Sign in</p>
                         </div>
                         <button className="close-button" onClick={onClose}>x</button>
                     </div>

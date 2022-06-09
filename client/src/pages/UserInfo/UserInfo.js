@@ -6,25 +6,38 @@ import Avatar from '../../assets/profile-pic.jpg'
 import verified from "../../assets/verified.png";
 import RentalBox from "../../components/RentalBox/RentalBox.js";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 function UserInfo() {
     const [user, setUser] = useState({});
+    const cookies = new Cookies();
+    const userId = cookies.get("userId"); 
     const [option, setOption] = useState("rentals");
     const [styleRentals, setStyleRentals] = useState('userinfo-option2')
     const [styleSaved, setStyleSaved] = useState('userinfo-option1')
+    const { id } = useParams();
     const [rentals, setRentals] = useState([]);
 
-    const getUserInfo = () => {
-        axios.get("http://localhost:5000/user", { withCredentials: true }).then((response) => {
-            setUser(response.data.user);
+    const getUserInfo = async () => {
+        axios.get(`http://localhost:5000/user/${id}`).then((response) => {
+            setUser(response.data);
         }).catch((error) => {
             console.log(error.message);
         })
     }
 
-    const getRentals = () => {
-        axios.get(`http://localhost:5000/rental/${user._id}/all`).then((response) => {
+    const getRentals = async () => {
+        axios.get(`http://localhost:5000/rental/${id}/all`).then((response) => {
+            if (response.data) {
+                setRentals(response.data);
+            }
+        }).catch((error) => console.log(error.message));
+    }
+
+    const getSavedRentals = async () => {
+        axios.get("http://localhost:5000/user/saved-rentals/all", { withCredentials: true }).then((response) => {
             if (response.data) {
                 setRentals(response.data);
             }
@@ -57,7 +70,7 @@ function UserInfo() {
 
     useEffect(() => {
         getUserInfo();
-    }, []);
+    }, [rentals]);
 
     return (
         <div className="user-info-wrapper">
@@ -87,13 +100,16 @@ function UserInfo() {
                     }}>
                         Rentals
                     </div>
-                    <div className={styleSaved} onClick={() => {
-                        setOption("saved");
-                        setStyleRentals('user-info-option1');
-                        setStyleSaved('user-info-option2');
-                    }}>
-                        Saved homes
-                    </div>
+                    {
+                        userId === id ? 
+                        <div className={styleSaved} onClick={() => {
+                            setOption("saved");
+                            setStyleRentals('user-info-option1');
+                            setStyleSaved('user-info-option2');
+                        }}>
+                            Saved rentals
+                        </div> : ""
+                    }
                 </div>
             </div>
             <div className='user-info-edit-wrapper'>
@@ -135,7 +151,39 @@ function UserInfo() {
                             );
                             break;
                         case 'saved':
-                            
+                            /*getSavedRentals();
+                            return (
+                                rentals.length > 0 ?
+                                <div className="user-info-show-rentals">
+                                    <div className="user-info-result-filter-box">
+                                        <p className='user-info-result-text1'>Saved Rentals</p>
+                                        <p className='user-info-result-text2'>{rentals && rentals.length} rentals Sort by{' '}
+                                        <select className='user-info-after-filter' onChange={handleFilter}>
+                                            <option value='descending'>Highest to Lowest Price</option>
+                                            <option value='ascending'>Lowest to Highest Price</option>
+                                            <option value='most'>Most Amenities</option>
+                                        </select></p>
+                                    </div>
+                                    <div className="user-info-show-rentals-listing">
+                                        {
+                                            rentals && rentals.map(rental => (
+                                                <RentalBox 
+                                                    name={rental.property_type + " for Rent at District " + rental.address.district}
+                                                    rentAmount={rental.rent}
+                                                    fullAddress={rental.address}
+                                                    rentalId={rental._id}
+                                                    userId={rental.user}
+                                                />
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                                :
+                                <div className="user-info-show-no-rentals">
+                                    <p>You don't have any saved rentals yet. Explore </p> 
+                                    <h3><Link to="/advertise-place">here.</Link></h3>
+                                </div>
+                            );*/
                             break;
                         default:
                             return null;

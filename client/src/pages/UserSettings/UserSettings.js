@@ -9,6 +9,7 @@ import GeneralDetails from './GeneralDetails/GeneralDetails';
 import Password from './Password/Password';
 import Verification from './Verification/Verification';
 import Footer from "../../components/Footer/Footer.js";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 function UserSettings() {
     const [userInfo, setUserInfo] = useState({});
@@ -18,11 +19,12 @@ function UserSettings() {
     const [styleDetail, setStyleDetail] = useState(location?.state?.verifiedSection ? "userinfo-option1" :'userinfo-option2')
     const [stylePass, setStylePass] = useState('userinfo-option1')
     const [styleVerify, setStyleVerify] = useState(location?.state?.verifiedSection ? "userinfo-option2" : 'userinfo-option1')
+    const axiosPrivate = useAxiosPrivate();
     const cookies = new Cookies();
     
 
     const getUserInfo = () => {
-        axios.get("http://localhost:5000/user", { withCredentials: true }).then((response) => {
+        axiosPrivate.get("/user").then((response) => {
             setUserInfo(response.data.user);
         }).catch((error) => {
             console.log(error.message);
@@ -94,13 +96,16 @@ function UserSettings() {
                     switch (option) {
                         case 'detail':
                             return <GeneralDetails
+                                userId={userInfo._id}
                                 email={userInfo.email}
                                 firstName={userInfo.first_name}
                                 middleName={userInfo.middle_name}
-                                lastName={userInfo.last_name} />
+                                lastName={userInfo.last_name} 
+                                phone={userInfo.phone}
+                                birthdate={userInfo.birthdate}/>
                             break;
                         case 'password':
-                            return <Password />
+                            return <Password userId={userInfo._id}/>
                             break;
                         case 'verify':
                             return <Verification isVerified={userInfo.is_verified} from={from}/>

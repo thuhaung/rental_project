@@ -85,16 +85,30 @@
 
 .rental-info-general-renter-wrapper {
     text-align: right;
+    display: flex;
+    flex-direction: column;
+}
+
+.rental-info-is-verified {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+}
+
+.rental-info-is-verified > p {
+    font-size: 18px;
+}
+
+.rental-info-is-verified > img {
+    height: 23px;
+    width: 23px;
 }
 
 .rental-info-general-renter-wrapper > h3 {
     font-size: 20px;
     font-weight: 400;
-}
-
-.rental-info-general-renter-wrapper > p {
-    font-size: 18px;
-    font-weight: 300;
+    line-height: 0.1;
 }
 
 .rental-info-hr {

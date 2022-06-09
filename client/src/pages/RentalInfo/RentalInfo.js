@@ -62,7 +62,7 @@ function RentalInfo() {
     }
 
     const getImages = async (rentalId, userId) => {
-        axios.post("http://localhost:5000/advertisement/images", { rentalId: rentalId, userId: userId }).then((response) => {
+        axios.get(`http://localhost:5000/advertisement/${userId}/${rentalId}/images`).then((response) => {
             console.log(response.data);
             setImages(response.data);
         }).catch((error) => console.log(error.message));
@@ -104,6 +104,7 @@ function RentalInfo() {
     return (
         <div className="rental-info-wrapper">
             <Nav />
+            
             <div className="rental-info-general-card">
                 <div className="rental-info-title">
                     <h2>{rental && rental.property_type + " for Rent at District " + rental.address.district}</h2>
@@ -135,17 +136,18 @@ function RentalInfo() {
                         }
                     </div>
                     <div className="rental-info-general-renter">
+                    
                         {
                             renter &&
                             <div className="rental-info-general-renter-wrapper">
                                 <h3>{renter.last_name + " " + renter.middle_name + " " + renter.first_name}</h3>
-                                <div className="user-info-is-verified">
+                                <div className="rental-info-is-verified">
                                     <p>Verified</p>
                                     <img src={verified} /> 
                                 </div>   
                             </div>
                         }
-                        <img src={avatar} alt="avatar" />
+                        <img src={avatar} alt="avatar" style={{cursor: "pointer"}} onClick={() => navigate(`../user/${rental.user}/info`)}/>
                     </div>
                 </div>
                 <hr className="rental-info-hr"></hr>
@@ -185,15 +187,16 @@ function RentalInfo() {
                     </div>
                 </div>
                 <hr className="rental-info-hr"></hr>
+                
                 <div className="rental-info-map">
                     <h3>Location</h3>
-                    {/*
+                    {  /*
                         lat && lng &&
                         <Map height={300} defaultCenter={[lat, lng]} defaultZoom={11}  provider={maptilerProvider}>
                             <Marker width={50} anchor={[lat, lng]} />
                         </Map>
+                        */
                     
-                    */
                     /*
                         <GoogleMap zoom={10} center={{lat: 44, lng: -80}} mapContainerClassName="map-container">
 
@@ -219,7 +222,6 @@ function RentalInfo() {
                 }
                 
             </div>
-            <Footer />
         </div>
     )
 }

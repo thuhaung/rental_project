@@ -3,16 +3,18 @@ import Cookies from "universal-cookie";
 import React from 'react'
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import "./DropdownMenu.css";
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 function DropdownMenu() {
     const navigate = useNavigate();
     const cookie = new Cookies;
     const userId = cookie.get("userId");
+    const axiosPrivate = useAxiosPrivate();
 
     const handleLogOut = (e) => {
         e.preventDefault();
 
-        axios.delete("http://localhost:5000/logout", { withCredentials: true }).then((response) => {
+        axiosPrivate.delete("/logout").then((response) => {
             console.log("Logged out.");
             navigate("/");
         }).catch((error) => {
@@ -23,11 +25,13 @@ function DropdownMenu() {
     return (
         <div className="dropdown-menu">
             <ul className="dropdown-list">
-                <li className="dropdown-item"><Link to="/user/info">Profile</Link></li>
+                <li className="dropdown-item"><Link to={`/user/${userId}/info`}>Profile</Link></li>
                 <li className="dropdown-item"><Link to="/user/settings">Settings</Link></li>
                 <li className="dropdown-item"><Link to={`/user/${userId}/chatroom`}>Inbox</Link></li>
+                {/*
                 <li className="dropdown-item">Saved rentals</li>
-                <li className="dropdown-item"><Link to={`/user/${userId}/rentals`}>Your advertisements</Link></li>
+                <li className="dropdown-item">Your advertisements</li>
+                 */}
                 <hr className="dropdown-line"></hr>
                 <li className="dropdown-item"><a href="#" onClick={handleLogOut}>Sign out</a></li>
             </ul>

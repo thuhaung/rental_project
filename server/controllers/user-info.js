@@ -6,6 +6,8 @@ import crypto from "crypto";
 import ConfirmationCode from "../models/confirmationcode.js";
 import nodemailer from "nodemailer";
 import {} from "dotenv/config";
+import Rental from "../models/rental.js";
+import ForgotPass from "../models/forgotpass.js";
 
 export const getUser = async (req, res) => {
     try {
@@ -33,6 +35,74 @@ export const getUserGeneralInfo = async (req, res) => {
         res.status(500).json({message: error.message});
     }
 }
+
+export const forgotPassword = async (req, res) => {
+    const email = req.body.email;
+    try {
+        const user = await User.findOne({email: email});
+        if (user) {
+            const token = crypto.randomBytes(10).toString("hex");
+            await ForgotPass.deleteMany({email: email});
+
+            const salt = await bcrypt.genSalt(); 
+            const hashedToken = await bcrypt.hash(token, salt);
+            const entry = new ForgotPass({email: email, code: hashedToken});
+            const newEntry = await entry.save();
+
+            const transport = nodemailer.createTransport({
+                service: "Gmail",
+                auth: {
+                user: "thuha.ung01@gmail.com",
+                pass: "rlwxcdgdatqflrlz",
+                },
+            });
+                
+            await transport.sendMail({
+                from: "thuha.ung01@gmail.com",
+                to: "thu.ha2897@gmail.com",
+                subject: "Casa Password Recovery",
+                html: `<h1>Email Confirmation</h1>
+                    <h2>Hello,</h2>
+                    <p>Click on this like to make a new password for your account.</p>
+                    <h2><a href="http://localhost:3000/recover-password/${token}">http://localhost:3000/recover-password/${token}</a></h2>
+                    </div>`,
+            });
+
+            res.status(200).send("Email sent.");
+        }
+        else {
+            res.status(400).send("Email not found.");
+        }
+    } catch (error) {
+        res.status(400).send("Email not found.");
+    }
+    
+}
+
+export const verifyCode = async (req, res) => {
+    const code = req.body.code;
+    try {
+        const entries = await ForgotPass.find({});
+        let count = 0;
+        for (let i in entries) {
+            if (await bcrypt.compare(code, entries[i].code)) {
+                res.status(200).send("Valid token.");
+                break;
+            }
+            else {
+                count++;
+            }
+        }
+        if (count === entries.length) {
+            res.status(400).send();
+        }
+    
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+    
+}
+
 
 export const sendEmail = async (req, res) => {
     const userId = req.cookies["userId"];
@@ -71,8 +141,7 @@ export const verifyUser = async (req, res) => {
     const userId = req.cookies["userId"];
     const confirmationCode = req.body.confirmationCode;
     try {
-        const entry = await ConfirmationCode.find({user_id: userId, code: confirmationCode});
-        
+        const entry = await ConfirmationCode.findOne({user_id: userId, code: confirmationCode});
         if (entry) {
             await ConfirmationCode.deleteMany({user_id: userId});
             await User.findByIdAndUpdate(userId, {is_verified: true});
@@ -134,5 +203,43 @@ export const editUserPassword = async (req, res) => {
         }
     } catch (error) {
         res.status(500).send(error);
+    }
+}
+
+export const saveRentals = async (req, res) => {
+    const rentals = req.body.rentals;
+    const userId = req.cookies["userId"];
+    try {
+        await User.findOneAndUpdate({_id: userId}, { $push: { saved_rentals: rentals }});
+        res.status(200).send("Saved rentals updated.");
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
+export const removeSavedRentals = async (req, res) => {
+    const rentals = req.body.rentals;
+    const userId = req.cookies["userId"];
+    try {
+        await User.findOneAndUpdate({_id: userId}, { $pull: { saved_rentals: rentals }});
+        res.status(200).send("Saved rentals updated.");
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
+export const getSavedRentals = async (req, res) => {
+    const userId = req.cookies["userId"];
+    try {
+        const user = await User.findOne({_id: userId});
+        const saved_rentals = user.saved_rentals;
+        let rentals = [];
+        for (let i in saved_rentals) {
+            const rental = await Rental.findOne({_id: saved_rentals[i]})
+            rentals.push(rental);
+        }
+        res.status(200).send(rentals);
+    } catch (error) {
+        res.status(500).send(error.message);
     }
 }

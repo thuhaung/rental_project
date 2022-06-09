@@ -1,5 +1,7 @@
 import Rental from "../models/rental.js";
 import { cloudinary } from "../utils/cloudinary.js";
+import bucket from "../helper/bucket.js";
+import getPublicUrl from "../helper/public-url.js";
 
 
 export const newRental = async (req, res) => {
@@ -37,6 +39,35 @@ export const uploadRentalImage = async (req, res) => {
         console.log(error.message);
     }
 }
+
+/*export const uploadRentalImage = async (req, res) => {
+    const cookie = new Cookies();
+    const userId = req.cookies["userId"];
+    const rentalId = req.body.rentalId;
+    
+    try {
+        const files = req.body.images;
+        if (files) {
+            for (let i in files) {
+                const blob = bucket.file(`${userId}/${rentalId}/${files[i].originalname}`);
+                const blobStream = blob.createWriteStream();
+                blobStream.on("error", (error) => {
+                    console.log(error);
+                })
+                blobStream.on("finish", () => {
+                    const publicUrl = getPublicUrl("rental-project", `${blob.name}`);
+                    return blob.makePublic().then(() => {
+                        req.file.gcsUrl = publicUrl();
+                    });
+                });
+            }
+            res.status(200).send("Uploaded.")
+        }
+    } catch (error) {
+        
+    }
+
+}*/
 
 export const getRentalImages = async (req, res) => {
     const rentalId = req.params.rentalid;

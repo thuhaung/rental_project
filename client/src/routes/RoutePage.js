@@ -13,6 +13,7 @@ import YourAdvertisements from '../pages/YourAdvertisements/YourAdvertisements.j
 import Chatroom from '../pages/Chatroom/Chatroom.js'
 import VerifiedRoute from '../components/PrivateRoute/VerifiedRoute.js'
 import UserInfo from "../pages/UserInfo/UserInfo.js";
+import RecoverPass from "../pages/RecoverPass/RecoverPass.js";
 
 function RoutePage() {
   return (
@@ -27,7 +28,8 @@ function RoutePage() {
                 <Route path="/rental-after" element={<RentalAfter />} />
                 <Route path="/rentals/:id" element={<RentalInfo />} />
                 <Route path="/user/:id/rentals" element={<YourAdvertisements />} />
-                <Route path="/user/info" element={<PrivateRoute> <UserInfo /> </PrivateRoute>} />
+                <Route path="/user/:id/info" element={<UserInfo />} />
+                <Route path="/recover-password/:code" element={<RecoverPass />} />
                 
                 {/* protected routes <Route element={<RequireAuth />}>  
                 <Route path="/advertise-place" element={<PrivateRoute> <AdvertisePlace /> </PrivateRoute>} />*/}

@@ -30,8 +30,6 @@ function Chatroom() {
     const navigate = useNavigate();
     const [images, setImages] = useState([]);
     const [state, setState] = useState(0);
-    //const [message, setMessage] = useState();
-    //const socket = io("http://localhost:5000/");
 
     const getAllConversations = async () => {
         axios.get(`http://localhost:5000/chatroom/conversation/${userId}`).then((response) => {
@@ -65,7 +63,7 @@ function Chatroom() {
     }
 
     const getRentalImage = async (rentalId, userId) => {
-        axios.post("http://localhost:5000/advertisement/images", {rentalId: rentalId, userId: userId}).then((response) => {
+        axios.get(`http://localhost:5000/advertisement/${userId}/${rentalId}/images`).then((response) => {
             if (response.data) {
                 setRentalImage(response.data[0]);
             }
@@ -74,7 +72,7 @@ function Chatroom() {
 
     useEffect(() => {
         getAllConversations();
-    }, [currentConversation, messages, state]);
+    }, [currentConversation, messages]);
 
     const submitImage = (messageId) => {
         axios.post("http://localhost:5000/advertisement/upload-image", {image: selectedImage, conversationId: currentConversation._id, messageId: messageId}, { withCredentials: true }).then((response) => {
@@ -204,21 +202,12 @@ function Chatroom() {
                         }
                     </div>
                 </div>
-                <div className="chatroom-box">
+                <div className="chatroom-box" onClick={() => getMessages(currentConversation._id)}>
                     <div className="chatroom-box-user-info">
                         <img src= {avatar} alt="avatar" />
                         <h3>{currentReceiver ? currentReceiver?.first_name + " • " : ""}  {currentRental ? (currentRental.user === userId ? "Your District " : "Their District ") + currentRental?.address?.district + " " + currentRental?.property_type : ""}</h3>
                     </div>
-                    <div className="chatroom-box-messages">
-                        <div className="their-chatroom-box-message">
-                            <p>Test message</p>
-                            
-                        </div>
-                        <div className="their-chatroom-box-message">
-                            <p>Test message</p>
-                            
-                        </div>
-                        
+                    <div className="chatroom-box-messages">   
                         {
                             messages && messages.map((message, index) => (
                                 <div key={index} className={(message.sender === userId? "your-" : "their-") + "chatroom-box-message"}>
