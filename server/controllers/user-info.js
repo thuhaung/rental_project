@@ -141,8 +141,7 @@ export const verifyUser = async (req, res) => {
     const userId = req.cookies["userId"];
     const confirmationCode = req.body.confirmationCode;
     try {
-        const entry = await ConfirmationCode.find({user_id: userId, code: confirmationCode});
-        
+        const entry = await ConfirmationCode.findOne({user_id: userId, code: confirmationCode});
         if (entry) {
             await ConfirmationCode.deleteMany({user_id: userId});
             await User.findByIdAndUpdate(userId, {is_verified: true});

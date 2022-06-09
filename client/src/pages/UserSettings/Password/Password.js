@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState,useEffect } from 'react'
+import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
 import "./Password.css";
 
 function Password({userId}) {
@@ -8,8 +9,9 @@ function Password({userId}) {
   const [currPass, setCurrPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [confirmNew, setConfirmNew] = useState("");
+  const axiosPrivate = useAxiosPrivate();
 
-  const url = `http://localhost:5000/user/password/${userId}`
+  const url = `/user/password/${userId}`
 
   const submit = async () => {
     if (newPass == '' || confirmNew == '' || currPass == '')
@@ -19,7 +21,7 @@ function Password({userId}) {
         currentPassword: currPass,
         newPassword: newPass
       }
-      axios.put(url, form, { withCredentials: true }).then((response) => {
+      axiosPrivate.put(url, form).then((response) => {
         // setMessage("Information is successfully updated.");
         alert('Password is changed successfully')
         setIsEdit(false);
@@ -64,21 +66,21 @@ function Password({userId}) {
       <form className="general-details-form">
         <table>
           <tr>
-            <td><b style={{ fontSize: '20px' }}>Current Password</b></td>
+            <td><b style={{ fontSize: '20px', fontWeight: "500" }}>Current Password</b></td>
             <td><input className='password-input' type='password' disabled={!isEdit && "disabled"} value={currPass} onChange={(e) => setCurrPass(e.target.value)} ></input></td>
           </tr>
           <tr>
               <td colSpan="2"><div className='password-straightline'></div></td>
             </tr>
           <tr>
-            <td><b style={{ fontSize: '20px' }}>New Password</b></td>
+            <td><b style={{ fontSize: '20px', fontWeight: "500" }}>New Password</b></td>
             <td><input className='password-input' type='password' disabled={!isEdit && "disabled"} value={newPass} onChange={(e) => setNewPass(e.target.value)} ></input></td>
           </tr>
           <tr>
               <td colSpan="2"><div className='password-straightline'></div></td>
             </tr>
           <tr>
-            <td><b style={{ fontSize: '20px' }}>Confirm new Password</b></td>
+            <td><b style={{ fontSize: '20px', fontWeight: "500" }}>Confirm new Password</b></td>
             <td><input className='password-input' type='password' disabled={!isEdit && "disabled"} value={confirmNew} onChange={(e) => setConfirmNew(e.target.value)} ></input></td>
           </tr>
         </table>

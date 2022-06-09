@@ -26,8 +26,7 @@ const useAxiosPrivate = () => {
                     originalConfig._retry = true;
                     try {
                         const rs = await axios.post("http://localhost:5000/refresh", { refreshToken: localStorage.getItem("refreshToken") });
-                        cookies.set("accessToken", rs.data.accessToken);
-                        console.log(cookies.get("accessToken"));
+                        cookies.set("accessToken", rs.data.accessToken, { path: "/", overwrite: true });
                         return axiosPrivate(originalConfig);
                     } catch (err) {
                         return Promise.reject(err);

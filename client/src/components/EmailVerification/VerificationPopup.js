@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import Timer from '../Timer/Timer';
 import "./VerificationPopup.css";
 
@@ -9,10 +10,11 @@ function VerificationPopup({ open, onClose, onSend, from }) {
     const navigate = useNavigate();
     const [confirmationCode, setConfirmationCode] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const axiosPrivate = useAxiosPrivate();
 
     const submit = async () => {
-        axios.post("http://localhost:5000/user/confirm-email/verify", { confirmationCode: confirmationCode }, { withCredentials: true }).then((response) => {
-            if (response.data) {
+        axiosPrivate.post("/user/confirm-email/verify", { confirmationCode: confirmationCode }).then((response) => {
+            if (response.status === 200) {
                 onClose();
                 if (from) {
                     navigate(from, { replace: true });
@@ -20,7 +22,9 @@ function VerificationPopup({ open, onClose, onSend, from }) {
                 else {
                     navigate("../user/settings");
                 }
-                
+            }
+            else if (response.status === 400) {
+                setErrorMessage("Incorrect code.");
             }
         }).catch((error) => {
             console.log(error.message)

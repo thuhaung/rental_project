@@ -2,14 +2,16 @@ import React, { useState } from 'react'
 import VerificationPopup from '../../../components/EmailVerification/VerificationPopup'
 import "./Verification.css"
 import axios from "axios";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate.js";
 import { useNavigate } from "react-router-dom";
 
 function Verification({ isVerified, from }) {
   const [isClicked, setIsClicked] = useState(false);
+  const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
 
   const sendEmail = async () => {
-      axios.get("http://localhost:5000/user/confirm-email", { withCredentials: true }).then((response) => {
+      axiosPrivate.get("/user/confirm-email").then((response) => {
         if (response.data) {
           console.log(response.data);
         }

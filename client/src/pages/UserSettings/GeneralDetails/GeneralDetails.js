@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState,useRef, useEffect } from 'react'
 import './GeneralDetails.css'
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate.js";
 
 function GeneralDetails({ userId, email, firstName, middleName, lastName, phone, birthdate}) {
   const [isEdit, setIsEdit] = useState(false);
@@ -10,40 +11,40 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
   const [userLastName, setUserLastName] = useState(lastName);
   const [userPhone,setUserPhone] = useState(phone);
   const [userBirthDate,setUserBirthDate] = useState(birthdate);
+  const UTCBirthDate = new Date(birthdate);
   const [message, setMessage] = useState("");
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const [date, setDate] = useState();
-  const [month, setMonth] = useState();
-  const [year, setYear] = useState();
-  const ref = useRef()
+  const [date, setDate] = useState(UTCBirthDate.getDate());
+  const [month, setMonth] = useState(UTCBirthDate.getMonth());
+  const [year, setYear] = useState(UTCBirthDate.getFullYear());
+  const ref = useRef();
+  const axiosPrivate = useAxiosPrivate();
 
   const submit = async () => {
-    if (userEmail == '' || 
-    userFirstName == '' || 
-    userMiddleName == '' || 
-    userLastName == '' || 
-    userPhone == '')
+    if (userEmail == '' || userFirstName == '' || userMiddleName == '' || userLastName == '' || userPhone == '') {
       alert('Do not leave blank inputs')
-    else{
-    const form = {
-      email: userEmail,
-      first_name: userFirstName,
-      middle_name: userMiddleName,
-      last_name: userLastName,
-      phone: userPhone,
-      birthdate: userBirthDate
     }
-    axios.put(`http://localhost:5000/user/${userId}`, form, { withCredentials: true }).then((response) => {
-      console.log(response)
-      if (response.data) {
-        setMessage("Information is successfully changed.");
-        alert('Information is successfully changed.')
-        setIsEdit(false)
+    else {
+      const formBirthDate = year + "-" + month + "-" + date;
+      const form = {
+        email: userEmail,
+        first_name: userFirstName,
+        middle_name: userMiddleName,
+        last_name: userLastName,
+        phone: userPhone,
+        birthdate: formBirthDate
       }
-    }).catch((error) => {
-      setMessage(error.message);
-    })
-  }
+      axiosPrivate.put(`/user/${userId}`, form).then((response) => {
+        console.log(response)
+        if (response.data) {
+          setMessage("Information is successfully changed.");
+          alert('Information is successfully changed.')
+          setIsEdit(false)
+        }
+      }).catch((error) => {
+        setMessage(error.message);
+      })
+    }
   }
 
   function handleReset() {
@@ -104,8 +105,8 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
             disabled={!isEdit && "disabled"} 
             onChange={(e) => setUserFirstName(e.target.value)}/></td>
 
-            <td><b style={{ fontSize: '20px', fontWeight: "500" }}>Middle Name</b></td>
-            <td><input className='general-details-input-name' 
+            <td><b style={{ fontSize: '20px', fontWeight: "500", "marginLeft": "25px"}}>Middle Name</b></td>
+            <td><input className='general-details-input-name' style={{"marginLeft": "10px"}}
             value={userMiddleName} 
             type='text' 
             id='inputID'
@@ -113,8 +114,8 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
             disabled={!isEdit && "disabled"} 
             onChange={(e) => setUserMiddleName(e.target.value)}/></td>
 
-            <td><b style={{ fontSize: '20px', fontWeight: "500" }}>Last Name</b></td>
-            <td><input className='general-details-input-name' 
+            <td><b style={{ fontSize: '20px', fontWeight: "500", "marginLeft": "25px"}}>Last Name</b></td>
+            <td><input className='general-details-input-name' style={{"marginLeft": "10px"}}
             value={userLastName} 
             type='text' 
             id='inputID'
@@ -146,21 +147,21 @@ function GeneralDetails({ userId, email, firstName, middleName, lastName, phone,
                 <select className="general-details-select-month"  disabled={!isEdit && "disabled"} onChange={(e) => setMonth(e.target.value)}>
                     {
                         months.map((month, index) => 
-                            <option className="general-details-option" key={index} value={index + 1}>{month}</option>
+                            <option className="general-details-option" key={index} value={index + 1} selected={index === UTCBirthDate.getMonth()}>{month}</option>
                         )
                     }
                 </select>
                 <select className="general-details-select-date" disabled={!isEdit && "disabled"} onChange={(e) => setDate(e.target.value)}>
                     {
                         Array.from(new Array(31), (x, i) => i + 1).map((date, index) => 
-                            <option className="general-details-option" key={index} value={index + 1}>{date}</option>
+                            <option className="general-details-option" key={index} value={index + 1} selected={index + 1 === UTCBirthDate.getDate()}>{date}</option>
                         )
                     }
                 </select>
                 <select className="general-details-select-year" disabled={!isEdit && "disabled"} onChange={(e) => setYear(e.target.value)}>
                     {
                         Array.from(new Array(83), (x, i) => i + 1922).map((year, index) => 
-                            <option className="general-details-option" key={index} value={index + 1922}>{year}</option>
+                            <option className="general-details-option" key={index} value={index + 1922} selected={index === (UTCBirthDate.getFullYear() - 1922)}>{year}</option>
                         )
                     }
                 </select>

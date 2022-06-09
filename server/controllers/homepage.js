@@ -65,8 +65,8 @@ export const generateNewAccessToken = async (req, res) => {
     try {
         // generate new access token
         const newAccessToken = jwt.sign({_id: user._id, is_verified: user.is_verified}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "2d"});
-        cookies.set("accessToken", newAccessToken);
-        console.log("New accessToken: " + cookies.get("accessToken"));
+        //res.set("accessToken", newAccessToken, { origin: "http://localhost:3000" });
+        //console.log("New accessToken: " + cookies.get("accessToken"));
         return res.status(200).send({accessToken: newAccessToken});
     } catch (error) {
         res.status(400).send(error.message);   
