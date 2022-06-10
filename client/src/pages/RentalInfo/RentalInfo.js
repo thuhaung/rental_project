@@ -13,6 +13,7 @@ import { Map, Marker } from "pigeon-maps";
 import { maptiler } from 'pigeon-maps/providers';
 import Footer from '../../components/Footer/Footer.js';
 import verified from "../../assets/verified.png";
+import useAxiosPrivate from '../../hooks/useAxiosPrivate.js';
 
 
 function RentalInfo() {
@@ -37,6 +38,7 @@ function RentalInfo() {
     const [lng, setLng] = useState();
     const navigate = useNavigate();
     const maptilerProvider = maptiler('CnzknMBRrl0lmKvk9umd', 'streets');
+    const axiosPrivate = useAxiosPrivate();
 
 
     const getRental = async () => {
@@ -94,7 +96,7 @@ function RentalInfo() {
             receiverId: rental.user,
             rentalId: rental._id
         }
-        axios.post("http://localhost:5000/chatroom/conversation", form).then((response) => {
+        axiosPrivate.post("/chatroom/conversation", form).then((response) => {
             if (response.data) {
                 navigate(`../user/${userId}/chatroom`);
             }

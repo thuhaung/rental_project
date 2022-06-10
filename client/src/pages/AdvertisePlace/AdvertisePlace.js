@@ -10,6 +10,7 @@ import AddressForm from '../../components/AddressForm/AddressForm';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 function Advertisements() {
   const [propertyType, setPropertyType] = useState("");
@@ -27,6 +28,7 @@ function Advertisements() {
   const [city, setCity] = useState("");
   const [images, setImages] = useState([]);
   const [address, setAddress] = useState({});
+  const axiosPrivate = useAxiosPrivate();
 
   const [formSection, setFormSection] = useState(1);
   const questions = ["Which of these best describes your place?", "Where is your place located?", "What kinds of room does your place have?", "What does your place offer?", "How much does renting your place cost?", "Add some photos of your place"];
@@ -102,7 +104,7 @@ function Advertisements() {
   const submitImages = (data) => {
     const rentalId = data;
     console.log("rental id in submit images " + rentalId);
-    axios.post("http://localhost:5000/advertisement/upload-image", {images: images, rentalId: rentalId}, { withCredentials: true }).then((response) => {
+    axiosPrivate.post("/advertisement/upload-image", {images: images, rentalId: rentalId}).then((response) => {
       if (response.data) {
           console.log("ok");
       }
@@ -138,33 +140,31 @@ function Advertisements() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!propertyType) {
-      setErrorMessage("Please choose a property type at the beginning of the form.");
+    if (!propertyType || !street || !num || !district || !city || !deposit || !rent || !electricity || !water) {
+      alert("Please fill in all parts of the form.")
     }
-    else if (!street || !num || !district || !city) {
-      setErrorMessage("Please fill in all address information.");
-    }
-    
-    const form = {
-      "user": userId,
-      "property_type": propertyType,
-      "num_of_bedrooms": bedroomNum,
-      "num_of_bathrooms": bathroomNum,
-      "amenities": amenities,
-      "rent": rent,
-      "deposit": deposit,
-      "water": water,
-      "electricity": electricity,
-      "address": address
-    }
-    axios.post("http://localhost:5000/advertisement/post", form, { withCredentials: true }).then((response) => {
-      if (response.data) {
-        console.log("rental id from axios: " + response.data);
-        //setRentalId(response.data);
-        submitImages(response.data);
-        setFormConfirmed(true);
+    else {
+      const form = {
+        "user": userId,
+        "property_type": propertyType,
+        "num_of_bedrooms": bedroomNum,
+        "num_of_bathrooms": bathroomNum,
+        "amenities": amenities,
+        "rent": rent,
+        "deposit": deposit,
+        "water": water,
+        "electricity": electricity,
+        "address": address
       }
-    }).catch((error) => console.log(error.message));
+      axiosPrivate.post("/advertisement/post", form).then((response) => {
+        if (response.data) {
+          console.log("rental id from axios: " + response.data);
+          //setRentalId(response.data);
+          submitImages(response.data);
+          setFormConfirmed(true);
+        }
+      }).catch((error) => console.log(error.message));
+    }
   }
 
   return (
