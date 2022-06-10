@@ -9,7 +9,7 @@ export const newConversation = async (req, res) => {
         rental: req.body.rentalId
     })
     try {
-        const conversation = await Conversation.find({ "members": newConversation.members });
+        const conversation = await Conversation.find({ "rental": newConversation.rental, "members": newConversation.members });
         if (conversation.length == 0) {
             try {
                 const savedConversation = await newConversation.save();

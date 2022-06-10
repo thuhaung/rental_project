@@ -49,7 +49,7 @@ function RentalInfo() {
                 setRental(item);
                 getRenter(item.user);
                 getImages(id, item.user);
-                //getLocation(item);
+                getLocation(item);
             }
         }).catch(error => console.log(error.message)); 
     }
@@ -71,13 +71,13 @@ function RentalInfo() {
     }
     
     const getLocation = async (rental) => {
-        /*const location = rental.address.num + " " + rental.address.street + " District " + rental.address.district + " " + rental.address.city;
+        const location = rental.address.num + " " + rental.address.street + " District " + rental.address.district + " " + rental.address.city;
         axios.get("https://maps.googleapis.com/maps/api/geocode/json", {params: {address: location, key: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M"}})
         .then((response) => {
             setLat(response.data.results[0].geometry.location.lat);
             setLng(response.data.results[0].geometry.location.lng);
         })
-        .catch((error) => console.log(error.message));*/
+        .catch((error) => console.log(error.message));
     }
 
     useEffect(() => {
@@ -96,6 +96,7 @@ function RentalInfo() {
             receiverId: rental.user,
             rentalId: rental._id
         }
+        console.log(form);
         axiosPrivate.post("/chatroom/conversation", form).then((response) => {
             if (response.data) {
                 navigate(`../user/${userId}/chatroom`);
@@ -192,12 +193,12 @@ function RentalInfo() {
                 
                 <div className="rental-info-map">
                     <h3>Location</h3>
-                    {  /*
+                    {  
                         lat && lng &&
                         <Map height={300} defaultCenter={[lat, lng]} defaultZoom={11}  provider={maptilerProvider}>
                             <Marker width={50} anchor={[lat, lng]} />
                         </Map>
-                        */
+                        
                     
                     /*
                         <GoogleMap zoom={10} center={{lat: 44, lng: -80}} mapContainerClassName="map-container">

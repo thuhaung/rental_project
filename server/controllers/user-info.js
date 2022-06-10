@@ -79,6 +79,31 @@ export const forgotPassword = async (req, res) => {
     
 }
 
+export const resetPassword = async (req, res) => {
+    const email = req.body.email;
+    try {
+        const user = await User.findOne({email: email});
+        if (user) {
+            const salt = await bcrypt.genSalt(); 
+            const hashedPassword = await bcrypt.hash(req.body.newPassword, salt);
+            try {
+                User.findOneAndUpdate({_id : user._id}, {password : hashedPassword})
+                    .then(() => {
+                        res.status(200).send("Update successfully");
+                    })
+            } catch (error) {
+                res.status(500).send("Update failed");
+            }
+            res.status(200).send("Password reset.");
+        }
+        else {
+            res.status(400).send("Email not found.");
+        }
+    } catch (error) {
+        res.status(400).send("Email not found.");
+    }
+}
+
 export const verifyCode = async (req, res) => {
     const code = req.body.code;
     try {
@@ -86,7 +111,7 @@ export const verifyCode = async (req, res) => {
         let count = 0;
         for (let i in entries) {
             if (await bcrypt.compare(code, entries[i].code)) {
-                res.status(200).send("Valid token.");
+                res.status(200).send(entries[i].email);
                 break;
             }
             else {

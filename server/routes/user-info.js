@@ -14,6 +14,7 @@ userInfoRouter.get("/:id", userInfo.getUserGeneralInfo);
 userInfoRouter.put("/:id", authenticateToken, userInfo.editUserInfo);
 userInfoRouter.post("/password/recover", userInfo.forgotPassword);
 userInfoRouter.post("/password/recover/verify", userInfo.verifyCode);
+userInfoRouter.post("/password/recover/new-password", userInfo.resetPassword);
 userInfoRouter.put("/password/:id", authenticateToken, userInfo.editUserPassword);
 
 
