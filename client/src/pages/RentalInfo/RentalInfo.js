@@ -27,25 +27,10 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate.js';
 
 
 function RentalInfo() {
-<<<<<<< HEAD
-    //const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyC5qHhy7lazQbxUKO0WtOizl0ISGIsu18U" })
-    // const [rentalName, setRentalName] = useState("");
-    // const [address, setAddress] = useState("");
-    // const [district, setDistrict] = useState("");
-    // const [amenities, setAmenities] = useState([]);
-    // const [rent, setRent] = useState("");
-    // const [deposit, setDeposit] = useState("");
-    // const [water, setWater] = useState("");
-    // const [electricity, setElectricity] = useState("");
-    const [lat, setLat] = useState();
-    const [lng, setLng] = useState();
-    const maptilerProvider = maptiler('CnzknMBRrl0lmKvk9umd', 'streets');
-=======
     const [lat, setLat] = useState();
     const [lng, setLng] = useState();
     const maptilerProvider = maptiler('CnzknMBRrl0lmKvk9umd', 'streets');
     const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyC5qHhy7lazQbxUKO0WtOizl0ISGIsu18U" })
->>>>>>> 8a73d773177684537f65e55d61feb9422a959ce5
     const icons = AmenitiesIcon;
     const [rental, setRental] = useState("");
     const [renter, setRenter] = useState({});
