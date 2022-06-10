@@ -262,6 +262,18 @@ function RentalInfo() {
                 }
             }).catch((error) => console.log(error.message));
     }
+    const handleSaveForLater = async () => {
+        // console.log('rental', rental, 'and userId', cookies)
+        axiosPrivate.put("/user/save-rentals",{
+            rental,
+            cookies
+        }).then((response) => {
+            // console.log('rental response save', response)
+        }).catch((error) => {
+            console.log(error.message);
+        })
+        alert('Added to "Saved Rentals". You can visit them later in your profile.')
+    }
     /**************** End of defining states and functions for Editing Rental Page****************/
     
     const showModal = () => (
@@ -386,7 +398,8 @@ function RentalInfo() {
                 <div className="rental-info-title">
                     <h2>{rental && rental.property_type + " for Rent at District " + rental.address.district}</h2>
                     {
-                        rental && rental.user === userId && <button className="rental-info-edit-btn" onClick={openModal}>Edit</button>  
+                        (rental && rental.user === userId) ? <button className="rental-info-edit-btn" onClick={openModal}>Edit</button>
+                        :<button className="rental-info-save-btn" onClick={handleSaveForLater}>Save for later</button>  
                     }
                 </div>
                 <div className='rental-page-edit__modal'>

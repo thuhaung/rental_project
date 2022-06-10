@@ -153,7 +153,7 @@ function UserInfo() {
                             );
                             break;
                         case 'saved':
-                            /*getSavedRentals();
+                            getSavedRentals();
                             return (
                                 rentals.length > 0 ?
                                 <div className="user-info-show-rentals">
@@ -185,7 +185,7 @@ function UserInfo() {
                                     <p>You don't have any saved rentals yet. Explore </p> 
                                     <h3><Link to="/advertise-place">here.</Link></h3>
                                 </div>
-                            );*/
+                            );
                             break;
                         default:
                             return null;
