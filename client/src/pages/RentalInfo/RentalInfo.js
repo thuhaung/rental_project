@@ -7,7 +7,7 @@ import { Image } from "cloudinary-react";
 import loading from "../../assets/loading-img.png";
 import avatar from "../../assets/profile-pic.jpg";
 import AmenitiesIcon from '../../assets/AmenitiesIcon.js';
-//import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import Cookies from "universal-cookie";
 import { Map, Marker } from "pigeon-maps";
 import { maptiler } from 'pigeon-maps/providers';
@@ -27,6 +27,10 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate.js';
 
 
 function RentalInfo() {
+    const [lat, setLat] = useState();
+    const [lng, setLng] = useState();
+    const maptilerProvider = maptiler('CnzknMBRrl0lmKvk9umd', 'streets');
+    const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyC5qHhy7lazQbxUKO0WtOizl0ISGIsu18U" })
     const icons = AmenitiesIcon;
     const [rental, setRental] = useState("");
     const [renter, setRenter] = useState({});
