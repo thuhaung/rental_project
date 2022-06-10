@@ -9,8 +9,9 @@
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    margin-bottom: -20px;
+    align-items: center;
+    /* gap: 20px; */
+    /* margin-bottom: -20px; */
 }
 
 .address-form-wrapper > h2 {

@@ -22,13 +22,13 @@ function AddressForm({ onClickAddress, streetVar, numVar, wardVar, districtVar, 
 
     return (
         <div className="address-form-wrapper">
-            <h2>Enter your address</h2>
+            {/* <h2>Enter your address</h2> */}
             <div className="address-form-main">
-                <input type="text" className="address-form-start" placeholder={street ? street : "Street"} onChange={(e) => setStreet(e.target.value)}/>
-                <input type="text" placeholder={num ? num : "Building number"} onChange={(e) => setNum(e.target.value)}/>
-                <input type="text" placeholder={ward ? ward : "Ward"} onChange={(e) => setWard(e.target.value)}/>
-                <input type="text" placeholder={district ? district : "District"} onChange={(e) => setDistrict(e.target.value)}/>
-                <input type="text" placeholder={city ? city : "City"} onChange={(e) => setCity(e.target.value)}/>
+                <input type="text" className="address-form-start" value={street} placeholder={street ? street : "Street"} onChange={(e) => setStreet(e.target.value)}/>
+                <input type="text" value={num} placeholder={num ? num : "Building number"} onChange={(e) => setNum(e.target.value)}/>
+                <input type="text" value={ward} placeholder={ward ? ward : "Ward"} onChange={(e) => setWard(e.target.value)}/>
+                <input type="text" value={district} placeholder={district ? district : "District"} onChange={(e) => setDistrict(e.target.value)}/>
+                <input type="text" value={city} placeholder={city ? city : "City"} onChange={(e) => setCity(e.target.value)}/>
                 <input type="text" className="address-form-end" placeholder="Vietnam" readOnly={true}/>
             </div>
         </div>
