@@ -7,7 +7,7 @@
 
 .rooms-wrapper {
     margin-bottom: 65px;
-    margin-left: 20px;
+    /* margin-left: 20px; */
     display: flex; 
     flex-direction: column;
 }
@@ -21,25 +21,25 @@
 .rooms-form > h2 {
     font-weight: 500;
     padding-top: 7px;
-    font-size: 26px;
+    font-size: 18px;
 }
 
 .rooms-count {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    gap: 18px;
+    /* gap: 18px; */
     width: 120px;
 }
 
 .rooms-count > h3 {
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .rooms-count > p {
     font-weight: 800;
-    padding-top: 4px;
+    /* padding-top: 4px; */
     border-radius: 100%;
     text-align: center;
     width: 30px;
@@ -51,7 +51,7 @@
 .rooms-count > p:active {
     cursor: pointer;
     font-weight: 800;
-    padding-top: 4px;
+    /* padding-top: 4px; */
     border-radius: 100%;
     text-align: center;
     width: 30px;
