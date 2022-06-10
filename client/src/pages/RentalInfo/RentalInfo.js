@@ -100,6 +100,7 @@ function RentalInfo() {
             receiverId: rental.user,
             rentalId: rental._id
         }
+        console.log(form);
         axiosPrivate.post("/chatroom/conversation", form).then((response) => {
             if (response.data) {
                 navigate(`../user/${userId}/chatroom`);
@@ -465,12 +466,12 @@ function RentalInfo() {
                 
                 <div className="rental-info-map">
                     <h3>Location</h3>
-                    {  /*
+                    {  
                         lat && lng &&
                         <Map height={300} defaultCenter={[lat, lng]} defaultZoom={11}  provider={maptilerProvider}>
                             <Marker width={50} anchor={[lat, lng]} />
                         </Map>
-                        */
+                        
                     
                     /*
                         <GoogleMap zoom={10} center={{lat: 44, lng: -80}} mapContainerClassName="map-container">

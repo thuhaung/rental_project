@@ -34,6 +34,7 @@ export const authenticateRentalToken = (req, res, next) => {
     }
     try {
         const verification = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        console.log(verification.is_verified);
         if (verification.is_verified === false) {
             res.status(400).send("User must be verify their government ID to advertise.");
         }
