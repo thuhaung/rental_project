@@ -7,7 +7,7 @@ import { Image } from "cloudinary-react";
 import loading from "../../assets/loading-img.png";
 import avatar from "../../assets/profile-pic.jpg";
 import AmenitiesIcon from '../../assets/AmenitiesIcon.js';
-import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+//import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import Cookies from "universal-cookie";
 import { Map, Marker } from "pigeon-maps";
 import { maptiler } from 'pigeon-maps/providers';
@@ -27,7 +27,6 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate.js';
 
 
 function RentalInfo() {
-<<<<<<< HEAD
     //const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyC5qHhy7lazQbxUKO0WtOizl0ISGIsu18U" })
     // const [rentalName, setRentalName] = useState("");
     // const [address, setAddress] = useState("");
@@ -40,12 +39,6 @@ function RentalInfo() {
     const [lat, setLat] = useState();
     const [lng, setLng] = useState();
     const maptilerProvider = maptiler('CnzknMBRrl0lmKvk9umd', 'streets');
-=======
-    const [lat, setLat] = useState();
-    const [lng, setLng] = useState();
-    const maptilerProvider = maptiler('CnzknMBRrl0lmKvk9umd', 'streets');
-    const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyC5qHhy7lazQbxUKO0WtOizl0ISGIsu18U" })
->>>>>>> 8a73d773177684537f65e55d61feb9422a959ce5
     const icons = AmenitiesIcon;
     const [rental, setRental] = useState("");
     const [renter, setRenter] = useState({});
@@ -140,7 +133,6 @@ function RentalInfo() {
             // console.log('FUCK', reader.result)
             reader.onloadend = () => {
                 setEditingImages(prev => [...prev, reader.result]);
-                setAddedImages(prev => [...prev, reader.result])
             }
         }  
     }
@@ -193,10 +185,8 @@ function RentalInfo() {
      const [editingWard, setEditingWard] = useState("");
      const [editingDistrict, setEditingDistrict] = useState("");
      const [editingCity, setEditingCity] = useState("");
-     const [editingaAddress, setEditingAddress] = useState({});
      const [editingImages, setEditingImages] = useState([]);
-     const [removedImages, setRemovedImages] = useState([]);
-     const [addedImages, setAddedImages] = useState([]);
+     const [editingaAddress, setEditingAddress] = useState({});
 
     const handleAddress = (val) => {
         setEditingStreet(val.street);
@@ -233,23 +223,17 @@ function RentalInfo() {
       const handleWater = (val) => {
         setEditingWater(val);
       }
-    const checkImageForUpdate = () => {
+    const checkImageForUpdate = (arr) => {
         let initialImages = images;
-        let oldImages = removedImages;
-        // Return the delete images. 
-        let checkedImages = {
-            addImages: [],
-            deletedImages: []
-        }
-        checkedImages.deletedImages = oldImages.filter(img => initialImages.indexOf(img) > -1);
-        console.log('checkedImages.deletedImages',checkedImages.deletedImages)
-        
+        let newImages = editingImages;
+        // Return the delete images
+
+        // Return the new images
     }
     const updateRentalGeneral = () => {
-        checkImageForUpdate()
         const updatedRental = {
-            addImages: [addedImages],
-            deleteImages: [removedImages],
+            addImages: [],
+            deleteImages: [],
             info: new RentalGeneral(
                 userId,
                 rental.property_type,
@@ -272,22 +256,10 @@ function RentalInfo() {
                 withCredentials: true 
             }).then((response) => {
                 if (response.data) {
-                    // Reload page with updated data
-                    window.location.reload()
+                    // updateRentalImage(response.data);
+                    console.log('fuckkkkkkkk', response.data)
                 }
             }).catch((error) => console.log(error.message));
-    }
-    const handleSaveForLater = async () => {
-        // console.log('rental', rental, 'and userId', cookies)
-        axiosPrivate.put("/user/save-rentals",{
-            rental,
-            cookies
-        }).then((response) => {
-            // console.log('rental response save', response)
-        }).catch((error) => {
-            console.log(error.message);
-        })
-        alert('Added to "Saved Rentals". You can visit them later in your profile.')
     }
     /**************** End of defining states and functions for Editing Rental Page****************/
     
@@ -365,7 +337,6 @@ function RentalInfo() {
                                                 className="rental-image-remove-btn" 
                                                 onClick={() => {
                                                     setEditingImages(editingImages.filter((item) => item !== image)); 
-                                                    setRemovedImages(editingImages.filter((item) => item == image))
                                                 }}>
                                                 Remove
                                             </button>
@@ -391,17 +362,14 @@ function RentalInfo() {
                     </div>
                 }
             </div>
-            <hr></hr>
-            <div style={formElementStyle}>
-                <div className="rental-save-btn" onClick={(e) => {
-                    updateRentalGeneral();
-                    setIsOpen(false);
-                    
-                }}>
-                    Save
-                </div>
+            <div className="rental-save-btn" style={formElementStyle} onClick={(e) => {
+                updateRentalGeneral();
+                // updateRentalImage(e);
+                setIsOpen(false);
+                
+            }}>
+              Save
             </div>
-            
         </Modal>
     )
 
@@ -413,8 +381,7 @@ function RentalInfo() {
                 <div className="rental-info-title">
                     <h2>{rental && rental.property_type + " for Rent at District " + rental.address.district}</h2>
                     {
-                        (rental && rental.user === userId) ? <button className="rental-info-edit-btn" onClick={openModal}>Edit</button>
-                        :<button className="rental-info-save-btn" onClick={handleSaveForLater}>Save for later</button>  
+                        rental && rental.user === userId && <button className="rental-info-edit-btn" onClick={openModal}>Edit</button>  
                     }
                 </div>
                 <div className='rental-page-edit__modal'>
