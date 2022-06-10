@@ -27,18 +27,6 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate.js';
 
 
 function RentalInfo() {
-    //const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyC5qHhy7lazQbxUKO0WtOizl0ISGIsu18U" })
-    // const [rentalName, setRentalName] = useState("");
-    // const [address, setAddress] = useState("");
-    // const [district, setDistrict] = useState("");
-    // const [amenities, setAmenities] = useState([]);
-    // const [rent, setRent] = useState("");
-    // const [deposit, setDeposit] = useState("");
-    // const [water, setWater] = useState("");
-    // const [electricity, setElectricity] = useState("");
-    // const [lat, setLat] = useState();
-    // const [lng, setLng] = useState();
-    // const maptilerProvider = maptiler('CnzknMBRrl0lmKvk9umd', 'streets');
     const icons = AmenitiesIcon;
     const [rental, setRental] = useState("");
     const [renter, setRenter] = useState({});
@@ -132,6 +120,7 @@ function RentalInfo() {
             // console.log('FUCK', reader.result)
             reader.onloadend = () => {
                 setEditingImages(prev => [...prev, reader.result]);
+                setAddedImages(prev => [...prev, reader.result])
             }
         }  
     }
@@ -184,8 +173,10 @@ function RentalInfo() {
      const [editingWard, setEditingWard] = useState("");
      const [editingDistrict, setEditingDistrict] = useState("");
      const [editingCity, setEditingCity] = useState("");
-     const [editingImages, setEditingImages] = useState([]);
      const [editingaAddress, setEditingAddress] = useState({});
+     const [editingImages, setEditingImages] = useState([]);
+     const [removedImages, setRemovedImages] = useState([]);
+     const [addedImages, setAddedImages] = useState([]);
 
     const handleAddress = (val) => {
         setEditingStreet(val.street);
@@ -222,17 +213,23 @@ function RentalInfo() {
       const handleWater = (val) => {
         setEditingWater(val);
       }
-    const checkImageForUpdate = (arr) => {
+    const checkImageForUpdate = () => {
         let initialImages = images;
-        let newImages = editingImages;
-        // Return the delete images
-
-        // Return the new images
+        let oldImages = removedImages;
+        // Return the delete images. 
+        let checkedImages = {
+            addImages: [],
+            deletedImages: []
+        }
+        checkedImages.deletedImages = oldImages.filter(img => initialImages.indexOf(img) > -1);
+        console.log('checkedImages.deletedImages',checkedImages.deletedImages)
+        
     }
     const updateRentalGeneral = () => {
+        checkImageForUpdate()
         const updatedRental = {
-            addImages: [],
-            deleteImages: [],
+            addImages: [addedImages],
+            deleteImages: [removedImages],
             info: new RentalGeneral(
                 userId,
                 rental.property_type,
@@ -255,8 +252,8 @@ function RentalInfo() {
                 withCredentials: true 
             }).then((response) => {
                 if (response.data) {
-                    // updateRentalImage(response.data);
-                    console.log('fuckkkkkkkk', response.data)
+                    // Reload page with updated data
+                    window.location.reload()
                 }
             }).catch((error) => console.log(error.message));
     }
@@ -336,6 +333,7 @@ function RentalInfo() {
                                                 className="rental-image-remove-btn" 
                                                 onClick={() => {
                                                     setEditingImages(editingImages.filter((item) => item !== image)); 
+                                                    setRemovedImages(editingImages.filter((item) => item == image))
                                                 }}>
                                                 Remove
                                             </button>
@@ -361,14 +359,17 @@ function RentalInfo() {
                     </div>
                 }
             </div>
-            <div className="rental-save-btn" style={formElementStyle} onClick={(e) => {
-                updateRentalGeneral();
-                // updateRentalImage(e);
-                setIsOpen(false);
-                
-            }}>
-              Save
+            <hr></hr>
+            <div style={formElementStyle}>
+                <div className="rental-save-btn" onClick={(e) => {
+                    updateRentalGeneral();
+                    setIsOpen(false);
+                    
+                }}>
+                    Save
+                </div>
             </div>
+            
         </Modal>
     )
 
