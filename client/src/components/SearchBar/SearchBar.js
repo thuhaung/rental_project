@@ -188,7 +188,7 @@ function SearchBar(props) {
 
           <div className='searchbar-straight-line1'></div>
           {
-            
+            /*
             <PlacesAutocomplete
             value={place}
             onChange={setPlace}
@@ -227,7 +227,7 @@ function SearchBar(props) {
               </div>
             )}
           </PlacesAutocomplete>
-           
+           */
           }
           
 
