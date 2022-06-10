@@ -13,33 +13,48 @@ import { Map, Marker } from "pigeon-maps";
 import { maptiler } from 'pigeon-maps/providers';
 import Footer from '../../components/Footer/Footer.js';
 import verified from "../../assets/verified.png";
+import AddressForm from '../../components/AddressForm/AddressForm.js';
+import Rooms from '../../components/Rooms/Rooms.js';
+import SelectAmenities from '../../components/SelectAmenities/SelectAmenities.js';
+import SelectPrice from '../../components/SelectPrice/SelectPrice.js';
+import ImageUpload from '../../components/ImageUpload/ImageUpload.js';
+import Modal from 'react-modal';
+import "../../components/ImageUpload/ImageUpload.css";
+import icon from "../../assets/images-icon.png";
+import { RentalImage, RentalGeneral } from '../../model/Rental.js';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate.js';
 
 
+
 function RentalInfo() {
-    const icons = AmenitiesIcon;
     //const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyC5qHhy7lazQbxUKO0WtOizl0ISGIsu18U" })
+    // const [rentalName, setRentalName] = useState("");
+    // const [address, setAddress] = useState("");
+    // const [district, setDistrict] = useState("");
+    // const [amenities, setAmenities] = useState([]);
+    // const [rent, setRent] = useState("");
+    // const [deposit, setDeposit] = useState("");
+    // const [water, setWater] = useState("");
+    // const [electricity, setElectricity] = useState("");
+    // const [lat, setLat] = useState();
+    // const [lng, setLng] = useState();
+    // const maptilerProvider = maptiler('CnzknMBRrl0lmKvk9umd', 'streets');
+    const icons = AmenitiesIcon;
     const [rental, setRental] = useState("");
-    const [rentalName, setRentalName] = useState("");
-    const [address, setAddress] = useState("");
-    const [district, setDistrict] = useState("");
-    const [amenities, setAmenities] = useState([]);
-    const [rent, setRent] = useState("");
-    const [deposit, setDeposit] = useState("");
-    const [water, setWater] = useState("");
-    const [electricity, setElectricity] = useState("");
     const [renter, setRenter] = useState({});
     const [images, setImages] = useState([]);
     const { id } = useParams();
     const cookies = new Cookies();
     const userId = cookies.get("userId");
     const iconNames = ["Kitchen", "AC", "Parking", "Washer", "TV", "Wifi", "Fridge"];
-    const [lat, setLat] = useState();
-    const [lng, setLng] = useState();
     const navigate = useNavigate();
-    const maptilerProvider = maptiler('CnzknMBRrl0lmKvk9umd', 'streets');
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+    const formElementStyle = {
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center'
+    }
     const axiosPrivate = useAxiosPrivate();
-
 
     const getRental = async () => {
         axios.get(`http://localhost:5000/rental/${id}`).then((response) => {
@@ -65,8 +80,9 @@ function RentalInfo() {
 
     const getImages = async (rentalId, userId) => {
         axios.get(`http://localhost:5000/advertisement/${userId}/${rentalId}/images`).then((response) => {
-            console.log(response.data);
+            // console.log('image???', response.data);
             setImages(response.data);
+            // setImages([])
         }).catch((error) => console.log(error.message));
     }
     
@@ -85,9 +101,9 @@ function RentalInfo() {
 
     }, []);
 
-    const handleChange = (address) => {
-        setAddress(address);
-    }
+    // const handleChange = (address) => {
+    //     setAddress(address);
+    // }
 
 
     const contactRenter = () => {
@@ -104,6 +120,259 @@ function RentalInfo() {
         }).catch((error) => console.log(error.message));
     }
 
+    const handlePreviewImage = (e) => {
+        const files = e.target.files
+        previewImage(files)
+    }
+    const previewImage = (files) => {
+        // console.log('files???', files)
+        for (let i in files) {
+            const reader = new FileReader();
+            // console.log('reader fuck', reader)
+            reader.readAsDataURL(files[i]);
+            // console.log('FUCK', reader.result)
+            reader.onloadend = () => {
+                setEditingImages(prev => [...prev, reader.result]);
+            }
+        }  
+    }
+    function openModal() {
+        console.log('rental fuck', rental)
+
+        // Set address
+        setEditingAddress(rental.address)
+        setEditingStreet(rental.address.street)
+        setEditingCity(rental.address.city)
+        setEditingDistrict(rental.address.district)
+        setEditingNum(rental.address.num)
+        setEditingWard(rental.address.ward)
+
+        // Set room
+        setEditingBedroomNum(rental.num_of_bedrooms)
+        setEditingBathroomNum(rental.num_of_bathrooms)
+
+        // Set amenities
+        setEditingAmenities(rental.amenities)
+
+        // Set image
+        setEditingImages(images)
+
+        // Set price
+        setEditingRent(rental.rent)
+        setEditingDeposit(rental.deposit)
+        setEditingWater(rental.water)
+        setEditingElectricity(rental.electricity)
+
+        // Set modal
+        setIsOpen(true);
+    
+      }
+    function closeModal() {
+    setIsOpen(false);
+    }
+
+    /**************** States & Functions for Editing Rental Page ****************/
+
+     const [editingBedroomNum, setEditingBedroomNum] = useState();
+     const [editingBathroomNum, setEditingBathroomNum] = useState();
+     const [editingAmenities, setEditingAmenities] = useState([]);
+     const [editingDeposit, setEditingDeposit] = useState();
+     const [editingRent, setEditingRent] = useState();
+     const [editingElectricity, setEditingElectricity] = useState();
+     const [editingWater, setEditingWater] = useState();
+     const [editingStreet, setEditingStreet] = useState("");
+     const [editingNum, setEditingNum] = useState("");
+     const [editingWard, setEditingWard] = useState("");
+     const [editingDistrict, setEditingDistrict] = useState("");
+     const [editingCity, setEditingCity] = useState("");
+     const [editingImages, setEditingImages] = useState([]);
+     const [editingaAddress, setEditingAddress] = useState({});
+
+    const handleAddress = (val) => {
+        setEditingStreet(val.street);
+        setEditingNum(val.num);
+        setEditingWard(val.ward);
+        setEditingDistrict(val.district);
+        setEditingCity(val.city);
+        setEditingAddress(val);
+    }
+    const handleBedroom = (val) => {
+        setEditingBedroomNum(val);
+      }
+    
+      const handleBathroom = (val) => {
+        setEditingBathroomNum(val);
+      }
+    
+      const handleAmenities = (arr) => {
+        setEditingAmenities(arr);
+      }
+    
+      const handleRent = (val) => {
+        setEditingRent(val);
+      }
+    
+      const handleDeposit = (val) => {
+        setEditingDeposit(val);
+      }
+    
+      const handleElectricity = (val) => {
+        setEditingElectricity(val);
+      }
+    
+      const handleWater = (val) => {
+        setEditingWater(val);
+      }
+    const checkImageForUpdate = (arr) => {
+        let initialImages = images;
+        let newImages = editingImages;
+        // Return the delete images
+
+        // Return the new images
+    }
+    const updateRentalGeneral = () => {
+        const updatedRental = {
+            addImages: [],
+            deleteImages: [],
+            info: new RentalGeneral(
+                userId,
+                rental.property_type,
+                editingBedroomNum,
+                editingBathroomNum,
+                editingAmenities,
+                editingRent,
+                editingDeposit,
+                editingWater,
+                editingElectricity,
+                editingaAddress
+            )
+        }
+        
+        console.log('updatedRental', updatedRental)
+        axios.put(
+            `http://localhost:5000/rental/${rental._id}`, 
+            updatedRental, 
+            { 
+                withCredentials: true 
+            }).then((response) => {
+                if (response.data) {
+                    // updateRentalImage(response.data);
+                    console.log('fuckkkkkkkk', response.data)
+                }
+            }).catch((error) => console.log(error.message));
+    }
+    /**************** End of defining states and functions for Editing Rental Page****************/
+    
+    const showModal = () => (
+        rental && 
+        <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+        >
+            <div style={formElementStyle}>
+                <AddressForm 
+                    onClickAddress={handleAddress}
+                    streetVar={editingStreet}
+                    numVar={editingNum}
+                    wardVar={editingWard}
+                    districtVar={editingDistrict}
+                    cityVar={editingCity}
+                />
+            </div>
+            <div style={formElementStyle}>
+                <Rooms
+                    onClickBedroom={handleBedroom}
+                    onClickBathroom={handleBathroom}
+                    numBed={editingBedroomNum}
+                    numBath={editingBathroomNum}
+                />
+            </div>
+            <div style={formElementStyle}>
+                <SelectAmenities
+                    onClick={handleAmenities}
+                    active={editingAmenities}
+                />
+            </div>
+            <div style={formElementStyle}>
+                <SelectPrice
+                    onClickRent={handleRent}
+                    onClickDeposit={handleDeposit}
+                    onClickElectricity={handleElectricity}
+                    onClickWater={handleWater}
+                    rentVar={editingRent}
+                    depositVar={editingDeposit}
+                    electricityVar={editingElectricity}
+                    waterVar={editingWater}
+                />
+            </div>
+            <div style={formElementStyle} className="rental-image-wrapper">
+                {
+                    editingImages.length > 0 ?
+                    <div className="rental-image-upload-wrapper">
+                        <div className="rental-image-upload">
+                            <h2>Add up to 5 photos</h2>
+                            <label 
+                                className="rental-image-upload-label" 
+                                style={{display: editingImages.length === 5 ? "none" : "block"}}>
+                                <input 
+                                    type="file" 
+                                    multiple 
+                                    onChange={handlePreviewImage} 
+                                    accept="image/png, image/jpeg, image/jpg, image/webp"/>
+                                Upload
+                            </label>
+                        </div>
+                        <div className="rental-image-list">
+                            {
+                                editingImages && editingImages.map((image, index) => {
+                                    console.log('editing image after upload', editingImages)
+                                    return(
+                                        <div className="rental-image-specific">
+                                            {
+                                                image.includes('data:image') 
+                                                ? <img key={index} src={image}/>
+                                                : <Image key={index} cloud_name="heroinism" public_id={image}/>
+                                            }
+                                            <button 
+                                                className="rental-image-remove-btn" 
+                                                onClick={() => {
+                                                    setEditingImages(editingImages.filter((item) => item !== image)); 
+                                                }}>
+                                                Remove
+                                            </button>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        
+                    </div>
+                    :
+                    <div className="rental-image-first-upload-wrapper">
+                        <div className="rental-image-upload-first-time">
+                            <div className="rental-image-upload-first-time-illustration">
+                                <img src={icon} alt="image-upload"/>
+                                <h2>Add up to 5 photos</h2>
+                            </div>
+                            <label className="rental-image-first-time-upload-label">
+                                <input type="file" multiple onChange={handlePreviewImage} accept="image/png, image/jpeg, image/jpg, image/webp"/>
+                                <u>Upload from your device</u>
+                            </label>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div className="rental-save-btn" style={formElementStyle} onClick={(e) => {
+                updateRentalGeneral();
+                // updateRentalImage(e);
+                setIsOpen(false);
+                
+            }}>
+              Save
+            </div>
+        </Modal>
+    )
+
     return (
         <div className="rental-info-wrapper">
             <Nav />
@@ -112,8 +381,11 @@ function RentalInfo() {
                 <div className="rental-info-title">
                     <h2>{rental && rental.property_type + " for Rent at District " + rental.address.district}</h2>
                     {
-                        rental && rental.user === userId && <button className="rental-info-edit-btn">Edit</button>
+                        rental && rental.user === userId && <button className="rental-info-edit-btn" onClick={openModal}>Edit</button>  
                     }
+                </div>
+                <div className='rental-page-edit__modal'>
+                    {showModal()}
                 </div>
                 <div className="rental-info-images">
                     <div className="rental-info-first-image">

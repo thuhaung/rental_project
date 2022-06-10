@@ -30,7 +30,6 @@ function ImageUpload({ onClickImage, onSubmit }) {
             const reader = new FileReader();
             reader.readAsDataURL(files[i]);
             reader.onloadend = () => {
-                console.log(reader.result);
                 setSelectedImages(prev => [...prev, reader.result]);
             }
         }  
@@ -71,12 +70,17 @@ function ImageUpload({ onClickImage, onSubmit }) {
                     <div className="rental-image-list">
                         {
                             selectedImages && 
-                            
                             selectedImages.map((image, index) => {
                                 return (
                                     <div key={index} className="rental-image-specific">
                                         <img src={image} alt={`img-${index}`} />
-                                        <button className="rental-image-remove-btn" onClick={() => {setSelectedImages(selectedImages.filter((item) => item !== image)); setFiles(files.filter((item, i) => i !== index))}}>Remove</button>
+                                        <button 
+                                            className="rental-image-remove-btn" 
+                                            onClick={() => {
+                                                setSelectedImages(selectedImages.filter((item) => item !== image)); 
+                                                setFiles(files.filter((item, i) => i !== index))}}>
+                                            Remove
+                                        </button>
                                     </div>
                                 )
                             })
