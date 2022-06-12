@@ -12,8 +12,8 @@
     align-items: center;
     flex-wrap: wrap;
     width: 580px;
-    /* margin-bottom: -80px;
-    margin-left: 50px; */
+    margin-bottom: -50px;
+    margin-left: 50px;
 }
 
 .select-amenities-box {

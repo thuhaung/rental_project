@@ -52,14 +52,14 @@ export const forgotPassword = async (req, res) => {
             const transport = nodemailer.createTransport({
                 service: "Gmail",
                 auth: {
-                user: "thuha.ung01@gmail.com",
-                pass: "rlwxcdgdatqflrlz",
+                    user: "email",
+                    pass: "pass",
                 },
             });
                 
             await transport.sendMail({
-                from: "thuha.ung01@gmail.com",
-                to: "thu.ha2897@gmail.com",
+                from: "email",
+                to: "pass",
                 subject: "Casa Password Recovery",
                 html: `<h1>Email Confirmation</h1>
                     <h2>Hello,</h2>
@@ -140,15 +140,15 @@ export const sendEmail = async (req, res) => {
     const transport = nodemailer.createTransport({
         service: "Gmail",
         auth: {
-          user: "thuha.ung01@gmail.com",
-          pass: "rlwxcdgdatqflrlz",
+          user: "email",
+          pass: "pass",
         },
     });
 
     try {
         await transport.sendMail({
-            from: "thuha.ung01@gmail.com",
-            to: "thu.ha2897@gmail.com",
+            from: "email",
+            to: "pass",
             subject: "Casa Email Verification",
             html: `<h1>Email Confirmation</h1>
                 <h2>Hello,</h2>
@@ -204,13 +204,6 @@ export const editUserPassword = async (req, res) => {
             try {
                 const salt = await bcrypt.genSalt(); 
                 const hashedPassword = await bcrypt.hash(req.body.newPassword, salt); // hash user-provided password with salt
-                // const user = new User();
-                // for (var key in req.body) {
-                //     user[key] = req.body[key];
-                // }
-                // user.password = hashedPassword;
-                // const newUser = await user.save();
-                // res.status(201).send(newUser);
                 try {
                     User.findOneAndUpdate({_id : user._id}, {password : hashedPassword})
                         .then(() => {

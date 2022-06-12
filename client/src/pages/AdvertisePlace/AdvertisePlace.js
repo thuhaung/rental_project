@@ -143,6 +143,9 @@ function Advertisements() {
     if (!propertyType || !street || !num || !district || !city || !deposit || !rent || !electricity || !water) {
       alert("Please fill in all parts of the form.")
     }
+    else if (rent < 0 || deposit < 0 || electricity < 0 || water < 0) {
+      alert("Financial requirements cannot be negative.");
+    }
     else {
       const form = {
         "user": userId,

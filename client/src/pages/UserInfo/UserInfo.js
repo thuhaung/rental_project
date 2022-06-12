@@ -10,6 +10,8 @@ import Cookies from "universal-cookie";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import UserRentals from './UserRentals/UserRentals';
+import UserSaved from './UserSaved/UserSaved';
 
 function UserInfo() {
     const [user, setUser] = useState({});
@@ -118,7 +120,8 @@ function UserInfo() {
                 {(() => {
                     switch (option) {
                         case 'rentals':
-                            getRentals();
+                            return <UserRentals userId={id}/>
+                            /*getRentals();
                             return (
                                 rentals.length > 0 ?
                                 <div className="user-info-show-rentals">
@@ -150,10 +153,11 @@ function UserInfo() {
                                     <p>Have a place to advertise? Explore your options </p> 
                                     <h3><Link to="/advertise-place">here.</Link></h3>
                                 </div>
-                            );
+                            );*/
                             break;
                         case 'saved':
-                            getSavedRentals();
+                            return <UserSaved />
+                            /*getSavedRentals();
                             return (
                                 rentals.length > 0 ?
                                 <div className="user-info-show-rentals">
@@ -185,7 +189,7 @@ function UserInfo() {
                                     <p>You don't have any saved rentals yet. Explore </p> 
                                     <h3><Link to="/advertise-place">here.</Link></h3>
                                 </div>
-                            );
+                            );*/
                             break;
                         default:
                             return null;
