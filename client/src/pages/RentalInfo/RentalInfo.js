@@ -25,12 +25,10 @@ import { RentalImage, RentalGeneral } from '../../model/Rental.js';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate.js';
 
 
-
 function RentalInfo() {
     const [lat, setLat] = useState();
     const [lng, setLng] = useState();
     const maptilerProvider = maptiler('CnzknMBRrl0lmKvk9umd', 'streets');
-    const { isLoaded } = useLoadScript({ googleMapsApiKey: "AIzaSyC5qHhy7lazQbxUKO0WtOizl0ISGIsu18U" })
     const icons = AmenitiesIcon;
     const [rental, setRental] = useState("");
     const [renter, setRenter] = useState({});
@@ -41,11 +39,13 @@ function RentalInfo() {
     const iconNames = ["Kitchen", "AC", "Parking", "Washer", "TV", "Wifi", "Fridge"];
     const navigate = useNavigate();
     const [modalIsOpen, setIsOpen] = React.useState(false);
+
     const formElementStyle = {
         display: 'flex', 
         alignItems: 'center', 
         justifyContent: 'center'
     }
+
     const axiosPrivate = useAxiosPrivate();
 
     const getRental = async () => {
@@ -56,7 +56,7 @@ function RentalInfo() {
                 setRental(item);
                 getRenter(item.user);
                 getImages(id, item.user);
-                //getLocation(item);
+                getLocation(item);
             }
         }).catch(error => console.log(error.message)); 
     }
@@ -72,30 +72,23 @@ function RentalInfo() {
 
     const getImages = async (rentalId, userId) => {
         axios.get(`http://localhost:5000/advertisement/${userId}/${rentalId}/images`).then((response) => {
-            // console.log('image???', response.data);
             setImages(response.data);
-            // setImages([])
         }).catch((error) => console.log(error.message));
     }
     
     const getLocation = async (rental) => {
-        /*const location = rental.address.num + " " + rental.address.street + " District " + rental.address.district + " " + rental.address.city;
-        axios.get("https://maps.googleapis.com/maps/api/geocode/json", {params: {address: location, key: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M"}})
+        const location = rental.address.num + " " + rental.address.street + " District " + rental.address.district + " " + rental.address.city;
+        axios.get("https://maps.googleapis.com/maps/api/geocode/json", {params: {address: location, key: "API_KEY"}})
         .then((response) => {
             setLat(response.data.results[0].geometry.location.lat);
             setLng(response.data.results[0].geometry.location.lng);
         })
-        .catch((error) => console.log(error.message));*/
+        .catch((error) => console.log(error.message));
     }
 
     useEffect(() => {
         getRental();
-
     }, []);
-
-    // const handleChange = (address) => {
-    //     setAddress(address);
-    // }
 
 
     const contactRenter = () => {
@@ -116,23 +109,19 @@ function RentalInfo() {
         const files = e.target.files
         previewImage(files)
     }
+
     const previewImage = (files) => {
-        // console.log('files???', files)
         for (let i in files) {
             const reader = new FileReader();
-            // console.log('reader fuck', reader)
             reader.readAsDataURL(files[i]);
-            // console.log('FUCK', reader.result)
             reader.onloadend = () => {
                 setEditingImages(prev => [...prev, reader.result]);
                 setAddedImages(prev => [...prev, reader.result])
             }
         }  
     }
-    function openModal() {
-        console.log('rental fuck', rental)
 
-        // Set address
+    function openModal() {
         setEditingAddress(rental.address)
         setEditingStreet(rental.address.street)
         setEditingCity(rental.address.city)
@@ -159,9 +148,10 @@ function RentalInfo() {
         // Set modal
         setIsOpen(true);
     
-      }
+    }
+
     function closeModal() {
-    setIsOpen(false);
+        setIsOpen(false);
     }
 
     /**************** States & Functions for Editing Rental Page ****************/
@@ -191,33 +181,35 @@ function RentalInfo() {
         setEditingCity(val.city);
         setEditingAddress(val);
     }
+
     const handleBedroom = (val) => {
         setEditingBedroomNum(val);
-      }
+    }
     
-      const handleBathroom = (val) => {
+    const handleBathroom = (val) => {
         setEditingBathroomNum(val);
-      }
+    }
     
-      const handleAmenities = (arr) => {
+    const handleAmenities = (arr) => {
         setEditingAmenities(arr);
-      }
+    }
     
-      const handleRent = (val) => {
+    const handleRent = (val) => {
         setEditingRent(val);
-      }
+    }
     
-      const handleDeposit = (val) => {
+    const handleDeposit = (val) => {
         setEditingDeposit(val);
-      }
+    }
     
-      const handleElectricity = (val) => {
+    const handleElectricity = (val) => {
         setEditingElectricity(val);
-      }
+    }
     
-      const handleWater = (val) => {
+    const handleWater = (val) => {
         setEditingWater(val);
-      }
+    }
+
     const checkImageForUpdate = () => {
         let initialImages = images;
         let oldImages = removedImages;
@@ -227,9 +219,9 @@ function RentalInfo() {
             deletedImages: []
         }
         checkedImages.deletedImages = oldImages.filter(img => initialImages.indexOf(img) > -1);
-        console.log('checkedImages.deletedImages',checkedImages.deletedImages)
-        
+        console.log('checkedImages.deletedImages',checkedImages.deletedImages);
     }
+    
     const updateRentalGeneral = () => {
         checkImageForUpdate()
         const updatedRental = {
@@ -249,30 +241,24 @@ function RentalInfo() {
             )
         }
         
-        console.log('updatedRental', updatedRental)
-        axios.put(
-            `http://localhost:5000/rental/${rental._id}`, 
-            updatedRental, 
-            { 
-                withCredentials: true 
-            }).then((response) => {
-                if (response.data) {
-                    // Reload page with updated data
-                    window.location.reload()
-                }
-            }).catch((error) => console.log(error.message));
+        axiosPrivate.put(`http://localhost:5000/rental/${rental._id}`, updatedRental).then((response) => {
+            if (response.data) {
+                window.location.reload()
+            }
+        }).catch((error) => console.log(error.message));
     }
+
     const handleSaveForLater = async () => {
-        // console.log('rental', rental, 'and userId', cookies)
-        axiosPrivate.put("/user/save-rentals",{
-            rental,
-            cookies
+        axiosPrivate.post("/user/save-rentals", {
+            rentals: rental._id
         }).then((response) => {
-            // console.log('rental response save', response)
+            if (response.data) {
+                alert('Added to "Saved Rentals". You can visit them later in your profile.');
+            }
         }).catch((error) => {
             console.log(error.message);
         })
-        alert('Added to "Saved Rentals". You can visit them later in your profile.')
+        
     }
     /**************** End of defining states and functions for Editing Rental Page****************/
     
@@ -483,37 +469,29 @@ function RentalInfo() {
                 
                 <div className="rental-info-map">
                     <h3>Location</h3>
-                    {  /*
+                    {  
                         lat && lng &&
                         <Map height={300} defaultCenter={[lat, lng]} defaultZoom={11}  provider={maptilerProvider}>
                             <Marker width={50} anchor={[lat, lng]} />
                         </Map>
-                        */
-                    
-                    /*
-                        <GoogleMap zoom={10} center={{lat: 44, lng: -80}} mapContainerClassName="map-container">
-
-                        </GoogleMap>
-                    */}
-                    
+                    }
                 </div>
-                {
-                    rental ?
-                        (rental.is_available ?
-                            (rental.user !== userId ? 
-                            <button className="rental-info-contact" onClick={() => contactRenter()}>Contact Renter</button> 
-                            :
-                            ""
+                    {
+                        rental ?
+                            (rental.is_available ?
+                                (rental.user !== userId ? 
+                                    <button className="rental-info-contact" onClick={() => contactRenter()}>Contact Renter</button> 
+                                    :
+                                    ""
+                                )
+                                :
+                                <div className="rental-info-unavailable">
+                                    <p>This rental is no longer available.</p>
+                                </div>
                             )
                             :
-                            <div className="rental-info-unavailable">
-                                <p>This rental is no longer available.</p>
-                            </div>
-                        )
-                        :
-                        ""
-                }
-                
+                            ""
+                    }
             </div>
         </div>
     )

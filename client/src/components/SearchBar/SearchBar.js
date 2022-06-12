@@ -33,8 +33,6 @@ function SearchBar(props) {
       //get search result
       const req = await axios.get('http://localhost:5000/rental/search',
         { params: data });
-      // console.log('This is search output:', req.data)
-      //Pass search result to rent page after filter
       navigate('/rental-after', { state: { data: req.data } });
     } catch (err) {
       console.log(err)
@@ -66,20 +64,7 @@ function SearchBar(props) {
   
   const getCoord = async (rental) => {
     const location = rental.address.num + " " + rental.address.street + " District " + rental.address.district + " " + rental.address.city;
-    /*axios.get("https://maps.googleapis.com/maps/api/geocode/json", {params: {address: location, key: "AIzaSyCEKMFxGQT1dKWt2ljFcG5I2C9lSFxCe_M"}})
-    .then((response) => {
-      if (response.ok) {
-        setRentalLats(prev => [...prev, response.data.results[0].geometry.location.lat]);
-        setRentalLngs(prev => [...prev, response.data.results[0].geometry.location.lng]);
-      }
-      else if (response.status === "OVER_QUERY_LIMIT") {
-        setTimeout(function() {
-          getCoord(rental);
-        }, 200);
-      }
-    })
-    .catch((error) => console.log(error.message));*/
-    axios.get("http://www.mapquestapi.com/geocoding/v1/address", {params: {location: location, key: "vAXPgGrAWlncdLPGJS9BWGp8IkNzatEy"}})
+    axios.get("http://www.mapquestapi.com/geocoding/v1/address", {params: {location: location, key: "API_KEY"}})
     .then((response) => {
       if (response.data) {
         setRentalLats(prev => [...prev, response.data.results[0].locations[0].latLng.lat]);
@@ -188,51 +173,31 @@ function SearchBar(props) {
 
           <div className='searchbar-straight-line1'></div>
           {
-            /*
-            <PlacesAutocomplete
-            value={place}
-            onChange={setPlace}
-            onSelect={handleSelect}
-          >
-            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-              <div>
-                <input 
-                  {...getInputProps({
-                    placeholder: "Enter a place",
-                    className: 'searchbar-by-place-input',
-                  })}
-                />
-                <div className="searchbar-autocomplete-dropdown-container">
-                  {loading && <div>Loading...</div>}
-                  {suggestions.map(suggestion => {
-                    const className = suggestion.active
-                      ? 'suggestion-item-active'
-                      : 'suggestion-item';
-                    // inline style for demonstration purpose
-                    const style = suggestion.active
-                      ? { backgroundColor: '#dadada', cursor: 'pointer' }
-                      : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                    return (
-                      <div
-                        {...getSuggestionItemProps(suggestion, {
-                          className,
-                          style,
-                        })}
-                      >
-                        <span>{suggestion.description}</span>
-                      </div>
-                    );
-                  })}
+            <PlacesAutocomplete value={place} onChange={setPlace} onSelect={handleSelect}>
+              {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                <div>
+                  <input {...getInputProps({placeholder: "Enter a place", className: 'searchbar-by-place-input'})}/>
+                    <div className="searchbar-autocomplete-dropdown-container">
+                      {loading && <div>Loading...</div>}
+                      {suggestions.map(suggestion => {
+                        const className = suggestion.active ? 
+                          'suggestion-item-active'
+                          : 'suggestion-item';
+                        const style = suggestion.active ? 
+                          { backgroundColor: '#dadada', cursor: 'pointer' }
+                          : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                        return (
+                          <div {...getSuggestionItemProps(suggestion, {className, style})}>
+                            <span>{suggestion.description}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
                 </div>
-              </div>
-            )}
-          </PlacesAutocomplete>
-           */
+              )}
+            </PlacesAutocomplete>
           }
-          
-
           <button className='searchbar-by-place-btn' type='submit'><p className='searchbar-btn-text'>Search</p></button>
-
         </form>
       }
       
